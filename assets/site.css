@@ -77,6 +77,16 @@ a { color: var(--ink); }
   margin-right: 12px;
   margin-top: -2px;
 }
+.hero-eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin-left: 12px;
+  margin-top: -2px;
+}
 
 /* ── Type scale ────────────────────────────────────────────── */
 .display {
