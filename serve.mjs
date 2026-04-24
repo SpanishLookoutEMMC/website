@@ -3,7 +3,7 @@ import { readFile } from 'fs/promises';
 import { extname, join } from 'path';
 
 const PORT = 3000;
-const ROOT = '.';
+const ROOT = 'dist';
 
 const MIME = {
   '.html': 'text/html',

@@ -15,6 +15,5 @@ node_modules/
 .env
 .env.local
 
-# Generated output
-news/*.html
-events/*.html
+# Build output
+dist/
