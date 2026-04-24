@@ -12,7 +12,7 @@ const CHURCH = {
   email: "splemmchurch@gmail.com",
   phone: "+501 000‑0000",
   youtube: "https://www.youtube.com/@SpanishLookoutEMMC",
-  gmaps: "https://maps.google.com/?q=Spanish+Lookout+EMMC",
+  gmaps: "https://www.google.com/maps/place/EMMC/@17.2649496,-89.0383405,16.29z/data=!4m6!3m5!1s0x8f5e61eadaa1883b:0x9c3ebc322b9a607!8m2!3d17.2650988!4d-89.035188!16s%2Fg%2F1tfyfmtx?entry=ttu&g_ep=EgoyMDI2MDQyMS4wIKXMDSoASAFQAw%3D%3D",
 };
 
 const SCRIPTURES = [
