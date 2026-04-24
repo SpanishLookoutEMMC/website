@@ -77,107 +77,12 @@ current: events
 
 <section class="sec-pad">
   <div class="wrap">
-    <div class="label">This week</div>
-    <hr class="hr" style="margin-top:8px;">
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">20</div>
-        <div class="dow">Mon</div>
-      </div>
-      <div>
-        <h3>Congregational Meeting</h3>
-        <div class="time">Monday evening <span class="dot">·</span> 7:30 PM</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">21</div>
-        <div class="dow">Tue</div>
-      </div>
-      <div>
-        <h3>How to Teach the Bible · class</h3>
-        <div class="time">Tuesday evening <span class="dot">·</span> 7:30 PM</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">22</div>
-        <div class="dow">Wed</div>
-      </div>
-      <div>
-        <h3>Youth &amp; Young Adults Bible Study</h3>
-        <div class="time">Wednesday evening <span class="dot">·</span> 7:30 PM</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">23</div>
-        <div class="dow">Thu</div>
-      </div>
-      <div>
-        <h3>Ladies' Night</h3>
-        <div class="time">Thursday evening <span class="dot">·</span> 7:30 PM</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">24</div>
-        <div class="dow">Fri</div>
-      </div>
-      <div>
-        <h3>Youth &amp; Young Adults Games Night</h3>
-        <div class="time">Friday evening <span class="dot">·</span> 7:30 PM</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <div class="label" style="margin-top:48px;">Coming up</div>
-    <hr class="hr" style="margin-top:8px;">
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">24<span style="font-size:22px; color:var(--muted);">–26</span></div>
-        <div class="dow">Fri–Sun</div>
-      </div>
-      <div>
-        <h3>Girls' Camp</h3>
-        <div class="time">Friday through Sunday <span class="dot">·</span> multi-day</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="event-row" href="#">
-      <div class="event-date">
-        <div class="mon">Apr</div>
-        <div class="day">28</div>
-        <div class="dow">Tue</div>
-      </div>
-      <div>
-        <h3>Men's Breakfast</h3>
-        <div class="time">Tuesday morning</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
+    {{events-list}}
 
     <div style="margin-top: 48px; padding: 24px 28px; background: var(--paper); border: 1px dashed var(--ink-line); max-width: 760px;">
       <div class="label">About events</div>
       <p style="margin: 8px 0 0; font-size: 14.5px; color: var(--text); line-height: 1.7;">
-        Events are managed as simple <code style="font-family:monospace;">.md</code> files in an <code style="font-family:monospace;">events/</code> folder alongside the site — same pattern as news. Each file holds a date, title, time, and optional description; past events fall off automatically.
+        Events are managed as simple <code style="font-family:monospace;">.md</code> files in an <code style="font-family:monospace;">events/</code> folder alongside the site. Each file holds a date, title, time, and optional description; past events fall off automatically.
       </p>
     </div>
   </div>

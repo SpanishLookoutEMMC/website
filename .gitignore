@@ -14,3 +14,7 @@ node_modules/
 # Local dev
 .env
 .env.local
+
+# Generated output
+news/*.html
+events/*.html
