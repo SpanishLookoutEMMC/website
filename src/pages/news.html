@@ -13,46 +13,12 @@ current: news
 
 <section class="sec-pad">
   <div class="wrap">
-    <a class="news-row" href="news/2026-04-20-easter-service.html">
-      <div class="date">April 20, 2026</div>
-      <div>
-        <h3>Easter Sunday service · 10 AM</h3>
-        <div class="blurb">Our Easter service gathered the congregation around the good news of the resurrection, with baptisms to follow in the weeks ahead.</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="news-row" href="news/2026-04-13-youth-baptism.html">
-      <div class="date">April 13, 2026</div>
-      <div>
-        <h3>Youth baptism · seven new members welcomed</h3>
-        <div class="blurb">On a Sunday afternoon with friends and family gathered, seven young people from our congregation publicly professed their faith in Jesus.</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="news-row" href="news/2026-04-06-spring-potluck.html">
-      <div class="date">April 6, 2026</div>
-      <div>
-        <h3>Spring potluck &amp; fellowship lunch</h3>
-        <div class="blurb">Tables stretched down the hall for our spring potluck — a simple afternoon of food, conversation, and life shared together.</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
-
-    <a class="news-row" href="news/2026-03-22-disciples-series.html">
-      <div class="date">March 22, 2026</div>
-      <div>
-        <h3>New sermon series · &ldquo;Disciples&rdquo;</h3>
-        <div class="blurb">A new Sunday series exploring what it means to actually follow Jesus — a few weeks on prayer, service, and the ordinary life of discipleship.</div>
-      </div>
-      <div class="arrow">→</div>
-    </a>
+    {{news-list}}
 
     <div style="margin-top: 40px; padding: 24px 28px; background: var(--paper); border: 1px dashed var(--ink-line); max-width: 760px;">
       <div class="label">About news</div>
       <p style="margin: 8px 0 0; font-size: 14.5px; color: var(--text); line-height: 1.7;">
-        News articles are added by the church over time. Each article lives as a simple file and is listed here, newest first.
+        News articles are added as simple <code style="font-family:monospace;">.md</code> files in a <code style="font-family:monospace;">news/</code> folder alongside the site. Each article is listed here automatically, newest first.
       </p>
     </div>
   </div>
