@@ -3,6 +3,13 @@ import { join } from 'path';
 import { marked } from 'marked';
 
 const layout = readFileSync('src/layout.html', 'utf8');
+const DATA = JSON.parse(readFileSync('src/data.json', 'utf8'));
+
+function applyData(str) {
+  let out = str;
+  for (const [k, v] of Object.entries(DATA)) out = out.replaceAll(`{{${k}}}`, v);
+  return out;
+}
 
 const NAV = [
   { key: 'church',  href: 'church.html',  label: 'The Church' },
@@ -35,7 +42,7 @@ function buildNav(current, base = '') {
 }
 
 function applyLayout({ title, description, extraHead = '', headerClass = '', base = '', current = '', body }) {
-  return layout
+  const html = layout
     .replaceAll('{{base}}', base)
     .replace('{{title}}', title)
     .replace('{{description}}', description)
@@ -43,6 +50,7 @@ function applyLayout({ title, description, extraHead = '', headerClass = '', bas
     .replace('{{header-class}}', headerClass ? ` ${headerClass}` : '')
     .replace('{{nav}}', buildNav(current, base))
     .replace('{{body}}', body);
+  return applyData(html);
 }
 
 function parseDate(str) {
