@@ -3,6 +3,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
+    "fetch-sermons": "node scripts/fetch-sermons.mjs",
     "dev": "node build.mjs && node --watch build.mjs & node serve.mjs"
   },
   "devDependencies": {
