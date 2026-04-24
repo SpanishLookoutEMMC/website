@@ -5,6 +5,9 @@ import { marked } from 'marked';
 const layout = readFileSync('src/layout.html', 'utf8');
 const DATA = JSON.parse(readFileSync('src/data.json', 'utf8'));
 
+let SERMONS = [];
+try { SERMONS = JSON.parse(readFileSync('src/sermons.json', 'utf8')); } catch { /* no file yet */ }
+
 function applyData(str) {
   let out = str;
   for (const [k, v] of Object.entries(DATA)) out = out.replaceAll(`{{${k}}}`, v);
@@ -246,14 +249,105 @@ ${imageHtml}
 }
 
 // ---------------------------------------------------------------------------
+// Sermons (from src/sermons.json, populated by scripts/fetch-sermons.mjs)
+
+function sermonVideoUrl(s) { return `https://www.youtube.com/watch?v=${esc(s.videoId)}`; }
+function sermonEmbedUrl(s) { return `https://www.youtube.com/embed/${esc(s.videoId)}`; }
+function sermonMeta(s)     { return [s.speaker, s.dateStr].filter(Boolean).join(' · '); }
+
+function buildLatestSermonHero() {
+  const s = SERMONS[0];
+  if (!s) return '';
+  return `
+<!-- Latest sermon -->
+<section class="sec-pad-s">
+  <div class="wrap">
+    <div class="label">Latest sermon</div>
+    <h2 class="display h-1" style="margin-top:8px; max-width:820px;">${esc(s.title)}</h2>
+    <div style="font-size:14px; color:var(--muted); margin-top:10px;">${esc(sermonMeta(s))}</div>
+    <div class="grid grid-bias-right" style="margin-top:36px;">
+      <div class="video-frame">
+        <iframe src="${sermonEmbedUrl(s)}" title="${esc(s.title)}" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div>
+        <div class="label">Watch</div>
+        <hr class="hr" style="margin-top:8px;">
+        <div style="margin-top:18px;">
+          <a href="${sermonVideoUrl(s)}" class="tlink">Watch on YouTube →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`.trimStart();
+}
+
+function buildSermonsList() {
+  const rest = SERMONS.slice(1);
+  if (!rest.length) return `    <p style="color:var(--muted); padding:24px 0;">No previous sermons available.</p>`;
+  return rest.map(s => `
+    <a class="sermon-row" href="${sermonVideoUrl(s)}">
+      <div class="date">${esc(s.dateStr)}</div>
+      <div>
+        <h3>${esc(s.title)}</h3>
+        ${s.speaker ? `<div class="who">${esc(s.speaker)}</div>` : ''}
+      </div>
+      <div class="arrow">→</div>
+    </a>`).join('\n');
+}
+
+function buildLatestSermonCard() {
+  const s = SERMONS[0];
+  if (!s) return '';
+  return `
+        <div class="label">Latest sermon</div>
+        <h3 class="display h-2" style="margin-top:6px">${esc(s.title)}</h3>
+        <div style="font-size:13px; color:var(--muted); margin-top:4px;">${esc(sermonMeta(s))}</div>
+        <div class="video-frame" style="margin-top:18px">
+          <iframe src="${sermonEmbedUrl(s)}" title="${esc(s.title)}" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div style="margin-top:14px; display:flex; gap:22px; flex-wrap:wrap;">
+          <a href="${sermonVideoUrl(s)}" class="tlink">Watch on YouTube →</a>
+          <a href="sermons.html" class="tlink">Sermon archive →</a>
+        </div>`.trimStart();
+}
+
+function buildRecentSermons() {
+  const recent = SERMONS.slice(1, 4);
+  if (!recent.length) return '';
+  const cards = recent.map(s => `
+      <div>
+        <h4 class="h-4" style="margin-top:8px">
+          <a href="${sermonVideoUrl(s)}" style="color:inherit; text-decoration:none;">${esc(s.title)}</a>
+        </h4>
+        <div style="font-size:12.5px; color:var(--muted); margin-top:6px;">${esc(sermonMeta(s))}</div>
+        <hr class="hr" style="margin-top:18px; opacity:.5">
+      </div>`).join('\n');
+  return `
+<!-- Recent messages -->
+<section style="padding-bottom: 96px;">
+  <div class="wrap">
+    <div class="label">Recent messages</div>
+    <hr class="hr" style="margin-top:8px">
+    <div class="grid grid-3" style="margin-top:24px">
+      ${cards.trimStart()}
+    </div>
+  </div>
+</section>`.trimStart();
+}
+
+// ---------------------------------------------------------------------------
 // Run
 
 mkdirSync('dist/news', { recursive: true });
 cpSync('src/assets', 'dist/assets', { recursive: true });
 cpSync('src/images', 'dist/images', { recursive: true });
 
-const eventsListHtml = buildEventsList();
-const newsListHtml = buildNewsList();
+const eventsListHtml    = buildEventsList();
+const newsListHtml      = buildNewsList();
+const latestSermonHero  = buildLatestSermonHero();
+const sermonsList       = buildSermonsList();
+const latestSermonCard  = buildLatestSermonCard();
+const recentSermons     = buildRecentSermons();
 buildNewsArticles();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
@@ -277,8 +371,12 @@ for (const file of pages) {
     headerClass: meta['header-class'] || '',
     current: meta.current || '',
     body: pageBody.trimEnd()
-      .replace('{{events-list}}', eventsListHtml)
-      .replace('{{news-list}}', newsListHtml),
+      .replace('{{events-list}}',       eventsListHtml)
+      .replace('{{news-list}}',         newsListHtml)
+      .replace('{{latest-sermon-hero}}', latestSermonHero)
+      .replace('{{sermons-list}}',      sermonsList)
+      .replace('{{latest-sermon-card}}', latestSermonCard)
+      .replace('{{recent-sermons}}',    recentSermons),
   });
 
   writeFileSync(join('dist', file), html);
