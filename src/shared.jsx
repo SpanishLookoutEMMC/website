@@ -9,7 +9,7 @@ const CHURCH = {
   serviceTime: "10:00 AM",
   welcome: "Everyone is welcome.",
   pastor: "Blaine Dueck",
-  email: "blaine@sl-emmc.bz",
+  email: "splemmchurch@gmail.com",
   phone: "+501 000‑0000",
   youtube: "https://www.youtube.com/@SpanishLookoutEMMC",
   gmaps: "https://maps.google.com/?q=Spanish+Lookout+EMMC",
