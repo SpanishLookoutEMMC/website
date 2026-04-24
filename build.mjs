@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, cpSync } from 'fs';
 import { join } from 'path';
 import { marked } from 'marked';
 
@@ -240,13 +240,17 @@ ${imageHtml}
       body: articleBody.trimEnd(),
     });
 
-    writeFileSync(join('news', `${a.slug}.html`), html);
-    console.log(`built news/${a.slug}.html`);
+    writeFileSync(join('dist', 'news', `${a.slug}.html`), html);
+    console.log(`built dist/news/${a.slug}.html`);
   }
 }
 
 // ---------------------------------------------------------------------------
 // Run
+
+mkdirSync('dist/news', { recursive: true });
+cpSync('src/assets', 'dist/assets', { recursive: true });
+cpSync('src/images', 'dist/images', { recursive: true });
 
 const eventsListHtml = buildEventsList();
 const newsListHtml = buildNewsList();
@@ -277,6 +281,6 @@ for (const file of pages) {
       .replace('{{news-list}}', newsListHtml),
   });
 
-  writeFileSync(file, html);
-  console.log(`built ${file}`);
+  writeFileSync(join('dist', file), html);
+  console.log(`built dist/${file}`);
 }
