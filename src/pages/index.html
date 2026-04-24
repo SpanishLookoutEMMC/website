@@ -51,57 +51,13 @@ header-class: over-hero
         </div>
       </div>
       <div>
-        <div class="label">Latest sermon</div>
-        <h3 class="display h-2" style="margin-top:6px">He Is Risen Indeed</h3>
-        <div style="font-size:13px; color: var(--muted); margin-top:4px;">
-          Blaine Dueck · April 19, 2026 · Easter 2026 · 38 min
-        </div>
-        <div class="video-frame" style="margin-top:18px">
-          <div class="placeholder">
-            <div class="circle"><div class="tri"></div></div>
-            <div class="label">YouTube · latest sermon</div>
-            <div class="t">He Is Risen Indeed — Easter 2026</div>
-          </div>
-          <!-- Replace placeholder with real embed once video ID is known:
-          <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="..." allowfullscreen loading="lazy"></iframe>
-          -->
-        </div>
-        <div style="margin-top:14px; display:flex; gap:22px; flex-wrap:wrap;">
-          <a href="{{youtube}}" class="tlink">Watch on YouTube →</a>
-          <a href="sermons.html" class="tlink">Sermon archive →</a>
-        </div>
+        {{latest-sermon-card}}
       </div>
     </div>
   </div>
 </section>
 
-<!-- Recent messages row -->
-<section style="padding-bottom: 96px;">
-  <div class="wrap">
-    <div class="label">Recent messages</div>
-    <hr class="hr" style="margin-top:8px">
-    <div class="grid grid-3" style="margin-top:24px">
-      <div>
-        <div class="label gold">Passion Week</div>
-        <h4 class="h-4" style="margin-top:8px">The Road to the Cross</h4>
-        <div style="font-size:12.5px; color:var(--muted); margin-top:6px;">Blaine Dueck · Apr 12, 2026 · 41:02</div>
-        <hr class="hr" style="margin-top:18px; opacity:.5">
-      </div>
-      <div>
-        <div class="label gold">Passion Week</div>
-        <h4 class="h-4" style="margin-top:8px">Palm Sunday · The King Arrives</h4>
-        <div style="font-size:12.5px; color:var(--muted); margin-top:6px;">Blaine Dueck · Apr 5, 2026 · 34:47</div>
-        <hr class="hr" style="margin-top:18px; opacity:.5">
-      </div>
-      <div>
-        <div class="label gold">Disciples</div>
-        <h4 class="h-4" style="margin-top:8px">Living as Disciples</h4>
-        <div style="font-size:12.5px; color:var(--muted); margin-top:6px;">Guest · J. Friesen · Mar 29, 2026 · 36:20</div>
-        <hr class="hr" style="margin-top:18px; opacity:.5">
-      </div>
-    </div>
-  </div>
-</section>
+{{recent-sermons}}
 
 <!-- Photo quilt -->
 <section style="padding-bottom: 96px;">
