@@ -21,13 +21,13 @@ current: contact
 
         <div style="margin-top: 32px; display: grid; grid-template-columns: auto 1fr; gap: 18px 28px; font-size: 16px;">
           <div class="label" style="padding-top:4px;">Phone</div>
-          <div><a href="tel:+5016152728" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">615-2728</a></div>
+          <div><a href="tel:{{phoneE164}}" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">{{phone}}</a></div>
 
           <div class="label" style="padding-top:4px;">WhatsApp</div>
-          <div><a href="https://wa.me/5016152728" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">Message on WhatsApp →</a></div>
+          <div><a href="{{whatsapp}}" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">Message on WhatsApp →</a></div>
 
           <div class="label" style="padding-top:4px;">Email</div>
-          <div><a href="mailto:blaine@sl-emmc.bz" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">blaine@sl-emmc.bz</a></div>
+          <div><a href="mailto:{{email}}" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">{{email}}</a></div>
         </div>
 
         <hr class="hr" style="margin: 40px 0 32px;">
@@ -62,8 +62,8 @@ current: contact
             Cayo District, Belize
           </div>
           <div style="margin-top:18px; display:flex; flex-direction:column; gap:10px;">
-            <a href="https://maps.google.com/?q=Spanish+Lookout+Belize" class="tlink">Open in Google Maps →</a>
-            <a href="https://www.youtube.com/@SpanishLookoutEMMC" class="tlink">Watch on YouTube →</a>
+            <a href="{{gmaps}}" class="tlink">Open in Google Maps →</a>
+            <a href="{{youtube}}" class="tlink">Watch on YouTube →</a>
           </div>
         </div>
 
