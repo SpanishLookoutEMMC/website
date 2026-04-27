@@ -75,10 +75,17 @@ Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{pho
 
 ## Deploying
 
-The output is a plain static site — serve the `dist/` directory.
+The build writes the final site into `dist/`. Serve that directory.
 
-**Cloudflare Pages or Netlify** — connect the repo, set build command to `npm run build`, output directory to `dist`.
+**GitHub Pages (recommended)** — the included `.github/workflows/deploy.yml` handles deployments automatically with no secrets required:
+- `main` branch → production site at the repo Pages URL
+- Any other branch → preview at `https://<org>.github.io/<repo>/previews/<branch>/`
+- Pull requests → automatic comment with the preview link
 
-**GitHub Pages** — push to `main`, then Settings → Pages → deploy from `main` branch. Note: GitHub Pages serves from the root or `/docs`, so you may need a custom workflow to publish the `dist/` folder.
+One-time setup: **Settings → Pages → Source → Deploy from a branch → `gh-pages` / `(root)`**.
+
+**Netlify** — connect the repo, set build command to `npm run build`, publish directory to `dist`.
+
+**Cloudflare Pages** — connect the repo, set build command to `npm run build`, output directory to `dist`.
 
 Sundays · 10 AM · Spanish Lookout, Belize
