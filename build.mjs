@@ -253,6 +253,9 @@ ${imageHtml}
 
 function sermonVideoUrl(s) { return `https://www.youtube.com/watch?v=${esc(s.videoId)}`; }
 function sermonEmbedUrl(s) { return `https://www.youtube.com/embed/${esc(s.videoId)}`; }
+function sermonIframe(s, extra = '') {
+  return `<iframe width="560" height="315" src="${sermonEmbedUrl(s)}" title="${esc(s.title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"${extra}></iframe>`;
+}
 function sermonMeta(s)     { return [s.speaker, s.dateStr].filter(Boolean).join(' · '); }
 
 function buildLatestSermonHero() {
@@ -267,7 +270,7 @@ function buildLatestSermonHero() {
     <div style="font-size:14px; color:var(--muted); margin-top:10px;">${esc(sermonMeta(s))}</div>
     <div class="grid grid-bias-right" style="margin-top:36px;">
       <div class="video-frame">
-        <iframe src="${sermonEmbedUrl(s)}" title="${esc(s.title)}" allowfullscreen loading="lazy"></iframe>
+        ${sermonIframe(s)}
       </div>
       <div>
         <div class="label">Watch</div>
@@ -303,7 +306,7 @@ function buildLatestSermonCard() {
         <h3 class="display h-2" style="margin-top:6px">${esc(s.title)}</h3>
         <div style="font-size:13px; color:var(--muted); margin-top:4px;">${esc(sermonMeta(s))}</div>
         <div class="video-frame" style="margin-top:18px">
-          <iframe src="${sermonEmbedUrl(s)}" title="${esc(s.title)}" allowfullscreen loading="lazy"></iframe>
+          ${sermonIframe(s)}
         </div>
         <div style="margin-top:14px; display:flex; gap:22px; flex-wrap:wrap;">
           <a href="${sermonVideoUrl(s)}" class="tlink">Watch on YouTube →</a>
