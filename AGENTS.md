@@ -30,7 +30,7 @@
      git fetch origin
      ```
    - Confirm the branch can be cleanly merged into `main`. If there are conflicts or your branch is behind, integrate the changes from `main` into your branch first (rebase or merge), then re-run the build and tests.
-9. Open a pull request.
+9. Open a pull request. Before opening, check whether a PR for this branch already exists and has been merged. If so, create a new branch and open a fresh PR rather than pushing to a merged branch.
 
 
 ## Completing GitHub Issues
