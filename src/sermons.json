@@ -1,5 +1,14 @@
 [
   {
+    "videoId": "1hvulz8qbhI",
+    "title": "Sunday Morning Worship Service",
+    "dateStr": "Apr 26, 2026",
+    "date": "2026-04-27",
+    "speaker": "Armando Reyes",
+    "thumbnail": "https://i2.ytimg.com/vi/1hvulz8qbhI/hqdefault.jpg",
+    "description": ""
+  },
+  {
     "videoId": "_oogFhtNe5k",
     "title": "Sunday Morning Worship Service",
     "dateStr": "Apr 19, 2026",
@@ -23,7 +32,7 @@
     "dateStr": "April 5, 2026",
     "date": "2026-04-05",
     "speaker": "",
-    "thumbnail": "https://i.ytimg.com/vi/mzlNni5UgCY/hqdefault.jpg",
+    "thumbnail": "https://i2.ytimg.com/vi/mzlNni5UgCY/hqdefault.jpg",
     "description": ""
   },
   {
@@ -32,7 +41,7 @@
     "dateStr": "April 3, 2026",
     "date": "2026-04-04",
     "speaker": "Sherwin Thiessen",
-    "thumbnail": "https://i.ytimg.com/vi/7l4tcLzCz4o/hqdefault.jpg",
+    "thumbnail": "https://i4.ytimg.com/vi/7l4tcLzCz4o/hqdefault.jpg",
     "description": ""
   },
   {
@@ -41,7 +50,7 @@
     "dateStr": "Mar 29, 2026",
     "date": "2026-03-30",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/2MVmGqqo0eM/hqdefault.jpg",
+    "thumbnail": "https://i3.ytimg.com/vi/2MVmGqqo0eM/hqdefault.jpg",
     "description": ""
   },
   {
@@ -50,7 +59,7 @@
     "dateStr": "Mar 22, 2026",
     "date": "2026-03-23",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/6AYnLJvV5iw/hqdefault.jpg",
+    "thumbnail": "https://i3.ytimg.com/vi/6AYnLJvV5iw/hqdefault.jpg",
     "description": ""
   },
   {
@@ -59,8 +68,8 @@
     "dateStr": "Mar 15, 2026",
     "date": "2026-03-16",
     "speaker": "",
-    "thumbnail": "https://i.ytimg.com/vi/UIxuq8ykQG8/hqdefault.jpg",
-    "description": ""
+    "thumbnail": "https://i2.ytimg.com/vi/UIxuq8ykQG8/hqdefault.jpg",
+    "description": "B.I.T. Slideshow - https://youtu.be/Q8l6HR0dEu0"
   },
   {
     "videoId": "ZJnXxVVWCdg",
@@ -68,7 +77,7 @@
     "dateStr": "Mar 8, 2026",
     "date": "2026-03-09",
     "speaker": "",
-    "thumbnail": "https://i.ytimg.com/vi/ZJnXxVVWCdg/hqdefault.jpg",
+    "thumbnail": "https://i3.ytimg.com/vi/ZJnXxVVWCdg/hqdefault.jpg",
     "description": ""
   },
   {
@@ -77,7 +86,7 @@
     "dateStr": "Mar 1, 2026",
     "date": "2026-03-02",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/_NdiERhPjv0/hqdefault.jpg",
+    "thumbnail": "https://i4.ytimg.com/vi/_NdiERhPjv0/hqdefault.jpg",
     "description": ""
   },
   {
@@ -86,7 +95,7 @@
     "dateStr": "Feb 22, 2026",
     "date": "2026-02-23",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/wSdIOqMPmac/hqdefault.jpg",
+    "thumbnail": "https://i4.ytimg.com/vi/wSdIOqMPmac/hqdefault.jpg",
     "description": ""
   },
   {
@@ -95,7 +104,7 @@
     "dateStr": "Feb 15, 2026",
     "date": "2026-02-16",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/AltfFwAp8a8/hqdefault.jpg",
+    "thumbnail": "https://i2.ytimg.com/vi/AltfFwAp8a8/hqdefault.jpg",
     "description": ""
   },
   {
@@ -104,7 +113,7 @@
     "dateStr": "Feb 8, 2026",
     "date": "2026-02-09",
     "speaker": "",
-    "thumbnail": "https://i.ytimg.com/vi/1cpNEFJ-03Q/hqdefault.jpg",
+    "thumbnail": "https://i2.ytimg.com/vi/1cpNEFJ-03Q/hqdefault.jpg",
     "description": ""
   },
   {
@@ -113,7 +122,7 @@
     "dateStr": "Feb 1, 2026",
     "date": "2026-02-02",
     "speaker": "Stephen Hochstetler",
-    "thumbnail": "https://i.ytimg.com/vi/H0UR1FZ8xEw/hqdefault.jpg",
+    "thumbnail": "https://i1.ytimg.com/vi/H0UR1FZ8xEw/hqdefault.jpg",
     "description": ""
   },
   {
@@ -122,16 +131,7 @@
     "dateStr": "Jan 25, 2026",
     "date": "2026-01-26",
     "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/-bn4EsAWPn4/hqdefault.jpg",
-    "description": ""
-  },
-  {
-    "videoId": "WnRFd0MGaZU",
-    "title": "What's New Part 2",
-    "dateStr": "Jan 18, 2026",
-    "date": "2026-01-19",
-    "speaker": "Blaine Dueck",
-    "thumbnail": "https://i.ytimg.com/vi/WnRFd0MGaZU/hqdefault.jpg",
+    "thumbnail": "https://i2.ytimg.com/vi/-bn4EsAWPn4/hqdefault.jpg",
     "description": ""
   }
 ]
