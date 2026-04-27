@@ -1,6 +1,6 @@
 # Spanish Lookout EMMC · Website
 
-The website for Spanish Lookout EMMC, a Mennonite congregation in the Cayo District of Belize.
+The [website](https://spanishlookoutemmc.github.io/website/) for Spanish Lookout EMMC, a Mennonite congregation in the Cayo District of Belize.
 
 ## What this is
 
@@ -78,15 +78,10 @@ Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{pho
 
 The build writes the final site into `dist/`. Serve that directory.
 
-**GitHub Pages (recommended)** — the included `.github/workflows/deploy.yml` handles deployments automatically with no secrets required:
-- `main` branch → production site at the repo Pages URL
+**GitHub Pages ** — the included `.github/workflows/deploy.yml` handles deployments automatically with no secrets required:
+- `main` branch → production site at [the repo Pages URL](https://spanishlookoutemmc.github.io/website/)
 - Any other branch → preview at `https://<org>.github.io/<repo>/previews/<branch>/`
 - Pull requests → automatic comment with the preview link
 
 One-time setup: **Settings → Pages → Source → Deploy from a branch → `gh-pages` / `(root)`**.
 
-**Netlify** — connect the repo, set build command to `npm run build`, publish directory to `dist`.
-
-**Cloudflare Pages** — connect the repo, set build command to `npm run build`, output directory to `dist`.
-
-Sundays · 10 AM · Spanish Lookout, Belize
