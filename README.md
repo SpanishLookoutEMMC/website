@@ -53,15 +53,15 @@ The build script (`build.mjs`):
 
 The build writes the final site into `dist/`. Serve that directory.
 
-**Cloudflare Pages** — the included `.github/workflows/deploy.yml` handles deployments automatically. Add three repository settings:
-- **Secret** `CLOUDFLARE_API_TOKEN` – API token with *Cloudflare Pages: Edit* permission
-- **Secret** `CLOUDFLARE_ACCOUNT_ID` – your Cloudflare account ID
-- **Variable** `CLOUDFLARE_PROJECT_NAME` – name of your Cloudflare Pages project
+**GitHub Pages (recommended)** — the included `.github/workflows/deploy.yml` handles deployments automatically with no secrets required:
+- `main` branch → production site at the repo Pages URL
+- Any other branch → preview at `https://<org>.github.io/<repo>/previews/<branch>/`
+- Pull requests → automatic comment with the preview link
 
-Every push to `main` becomes the production deployment. Every other branch gets a preview URL, and pull requests receive an automatic comment with the preview link.
+One-time setup: **Settings → Pages → Source → Deploy from a branch → `gh-pages` / `(root)`**.
 
 **Netlify** — connect the repo, set build command to `npm run build`, publish directory to `dist`.
 
-**GitHub Pages** — run `npm run build`, then configure Pages to serve from the `dist` folder (requires GitHub Actions deployment or a `gh-pages` branch).
+**Cloudflare Pages** — connect the repo, set build command to `npm run build`, output directory to `dist`.
 
 Sundays · 10 AM · Spanish Lookout, Belize
