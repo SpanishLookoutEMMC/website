@@ -18,7 +18,8 @@ const NAV = [
   { key: 'church',  href: 'church.html',  label: 'The Church' },
   { key: 'team',    href: 'team.html',    label: 'The Team'   },
   { key: 'sermons', href: 'sermons.html', label: 'Sermons'    },
-  { key: 'faith',   href: 'faith.html',   label: 'Our Faith'  },
+  { key: 'faith',       href: 'faith.html',       label: 'Our Mission'       },
+  { key: 'confession',  href: 'confession.html',  label: 'Confession of Faith' },
   { key: 'events',  href: 'events.html',  label: 'Events'     },
   { key: 'contact', href: 'contact.html', label: 'Contact'    },
 ];
