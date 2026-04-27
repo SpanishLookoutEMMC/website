@@ -69,6 +69,7 @@ In `src/pages/*.html`, you can use these placeholders:
 | `{{latest-sermon-hero}}` | Latest sermon with embedded video |
 | `{{latest-sermon-card}}` | Compact latest sermon card |
 | `{{sermons-list}}` | Previous sermons archive list |
+| `{{upcoming-events}}` | Next 3 upcoming events with link to all events |
 | `{{recent-sermons}}` | Three most recent sermons grid |
 
 Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{phone}}`, `{{youtube}}`).
