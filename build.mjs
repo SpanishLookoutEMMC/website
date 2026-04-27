@@ -94,7 +94,7 @@ function buildEventsList() {
   const files = readdirSync('src/events').filter(f => f.endsWith('.md'));
   const events = files.map(f => {
     const { meta } = parseFrontmatter(readFileSync(join('src/events', f), 'utf8'));
-    return meta;
+    return { ...meta, slug: f.replace('.md', '') };
   });
 
   events.sort((a, b) => a.date.localeCompare(b.date));
@@ -133,7 +133,7 @@ function buildEventsList() {
     }
 
     return `
-    <a class="event-row" href="#">
+    <a class="event-row" href="events/${esc(e.slug)}.html">
       <div class="event-date">
         <div class="mon">${esc(mon)}</div>
         <div class="day">${dayHtml}</div>
@@ -162,6 +162,108 @@ function buildEventsList() {
     html += comingUp.map(renderRow).join('\n');
   }
   return html;
+}
+
+// ---------------------------------------------------------------------------
+// Event detail pages
+
+function buildEventPages() {
+  const files = readdirSync('src/events').filter(f => f.endsWith('.md'));
+  const events = files.map(f => {
+    const src = readFileSync(join('src/events', f), 'utf8');
+    const { meta, body } = parseFrontmatter(src);
+    return { ...meta, slug: f.replace('.md', ''), body };
+  });
+  events.sort((a, b) => a.date.localeCompare(b.date));
+
+  for (const e of events) {
+    const start = parseDate(e.date);
+    let dateTimeHtml = formatDate(e.date);
+    if (e.endDate) {
+      dateTimeHtml += ` – ${formatDate(e.endDate)}`;
+    }
+    if (e.time) dateTimeHtml += ` <span class="dot">·</span> ${formatTime(e.time)}`;
+
+    const eventBody = `<section class="page-hero">
+  <div class="wrap">
+    <div class="trail"><a href="../events.html" style="color:inherit; text-decoration:none;">Events</a> · ${start.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</div>
+    <h1>${esc(e.title)}</h1>
+    <p class="sub">${dateTimeHtml}</p>
+  </div>
+</section>
+<section style="padding-bottom: 96px;">
+  <div class="wrap">
+    <div class="prose">
+      ${marked.parse(e.body || '').trim()}
+    </div>
+    <div style="max-width: 700px; margin: 56px auto 0;">
+      <hr class="hr">
+      <div style="padding-top: 20px; font-size: 13px;">
+        <a href="../events.html" class="tlink">← All events</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+
+    const html = applyLayout({
+      title: `${e.title} — Spanish Lookout EMMC`,
+      description: e.body ? e.body.split('\n')[0].trim() : '',
+      base: '../',
+      current: 'events',
+      body: eventBody.trimEnd(),
+    });
+
+    writeFileSync(join('dist', 'events', `${e.slug}.html`), html);
+    console.log(`built dist/events/${e.slug}.html`);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Upcoming events strip (home page)
+
+function buildUpcomingEventsStrip() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const files = readdirSync('src/events').filter(f => f.endsWith('.md'));
+  const events = files.map(f => {
+    const { meta } = parseFrontmatter(readFileSync(join('src/events', f), 'utf8'));
+    return { ...meta, slug: f.replace('.md', '') };
+  });
+  events.sort((a, b) => a.date.localeCompare(b.date));
+  const upcoming = events.filter(e => parseDate(e.endDate || e.date) >= today).slice(0, 3);
+
+  if (!upcoming.length) return '';
+
+  const cards = upcoming.map(e => {
+    const start = parseDate(e.date);
+    const dateLabel = start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    let meta = dateLabel;
+    if (e.time) meta += ` · ${formatTime(e.time)}`;
+    return `
+      <div>
+        <h4 class="h-4" style="margin-top:8px">
+          <a href="events/${esc(e.slug)}.html" style="color:inherit; text-decoration:none;">${esc(e.title)}</a>
+        </h4>
+        <div style="font-size:12.5px; color:var(--muted); margin-top:6px;">${esc(meta)}</div>
+        <hr class="hr" style="margin-top:18px; opacity:.5">
+      </div>`;
+  }).join('\n');
+
+  return `
+<!-- Upcoming events -->
+<section style="padding-bottom: 96px;">
+  <div class="wrap">
+    <div class="label">Upcoming events</div>
+    <hr class="hr" style="margin-top:8px">
+    <div class="grid grid-3" style="margin-top:24px">
+      ${cards.trimStart()}
+    </div>
+    <div style="margin-top:32px;">
+      <a href="events.html" class="tlink">All events →</a>
+    </div>
+  </div>
+</section>`.trimStart();
 }
 
 // ---------------------------------------------------------------------------
@@ -441,18 +543,20 @@ function buildRecentSermons() {
 // Run
 
 mkdirSync('dist/news', { recursive: true });
+mkdirSync('dist/events', { recursive: true });
 cpSync('src/assets', 'dist/assets', { recursive: true });
 cpSync('src/images', 'dist/images', { recursive: true });
 
-const eventsListHtml       = buildEventsList();
-const upcomingEventsSection = buildUpcomingEventsSection();
-const newsListHtml         = buildNewsList();
-const newsStripHtml        = buildNewsStrip();
-const latestSermonHero     = buildLatestSermonHero();
-const sermonsList          = buildSermonsList();
-const latestSermonCard     = buildLatestSermonCard();
-const recentSermons        = buildRecentSermons();
+const eventsListHtml      = buildEventsList();
+const newsListHtml        = buildNewsList();
+const newsStripHtml       = buildNewsStrip();
+const latestSermonHero    = buildLatestSermonHero();
+const sermonsList         = buildSermonsList();
+const latestSermonCard    = buildLatestSermonCard();
+const recentSermons       = buildRecentSermons();
+const upcomingEventsHtml  = buildUpcomingEventsStrip();
 buildNewsArticles();
+buildEventPages();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
 
@@ -475,14 +579,14 @@ for (const file of pages) {
     headerClass: meta['header-class'] || '',
     current: meta.current || '',
     body: pageBody.trimEnd()
-      .replace('{{events-list}}',          eventsListHtml)
-      .replace('{{upcoming-events}}',     upcomingEventsSection)
-      .replace('{{news-list}}',           newsListHtml)
-      .replace('{{news-strip}}',          newsStripHtml)
-      .replace('{{latest-sermon-hero}}',  latestSermonHero)
-      .replace('{{sermons-list}}',        sermonsList)
-      .replace('{{latest-sermon-card}}',  latestSermonCard)
-      .replace('{{recent-sermons}}',      recentSermons),
+      .replace('{{events-list}}',        eventsListHtml)
+      .replace('{{news-list}}',          newsListHtml)
+      .replace('{{news-strip}}',         newsStripHtml)
+      .replace('{{latest-sermon-hero}}', latestSermonHero)
+      .replace('{{sermons-list}}',       sermonsList)
+      .replace('{{latest-sermon-card}}', latestSermonCard)
+      .replace('{{recent-sermons}}',     recentSermons)
+      .replace('{{upcoming-events}}',    upcomingEventsHtml),
   });
 
   writeFileSync(join('dist', file), html);
