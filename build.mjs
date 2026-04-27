@@ -186,6 +186,28 @@ function buildNewsList() {
 }
 
 // ---------------------------------------------------------------------------
+// News strip (latest article with a link)
+
+function buildNewsStrip() {
+  const files = readdirSync('src/news').filter(f => f.endsWith('.md'));
+  const articles = files.map(f => {
+    const { meta } = parseFrontmatter(readFileSync(join('src/news', f), 'utf8'));
+    return { ...meta, slug: f.replace('.md', '') };
+  });
+  articles.sort((a, b) => b.date.localeCompare(a.date));
+  const latest = articles[0];
+  if (!latest) return '';
+  return `<!-- News strip -->
+<aside class="news-strip">
+  <div class="inner">
+    <div class="label cream">Latest news</div>
+    <a href="news/${esc(latest.slug)}.html" class="title" style="text-decoration:none; color:inherit;">${esc(latest.title)} <span class="date">${formatDate(latest.date)}</span></a>
+    <a href="news.html" class="tlink light">All news →</a>
+  </div>
+</aside>`;
+}
+
+// ---------------------------------------------------------------------------
 // News article pages
 
 function buildNewsArticles() {
@@ -347,6 +369,7 @@ cpSync('src/images', 'dist/images', { recursive: true });
 
 const eventsListHtml    = buildEventsList();
 const newsListHtml      = buildNewsList();
+const newsStripHtml     = buildNewsStrip();
 const latestSermonHero  = buildLatestSermonHero();
 const sermonsList       = buildSermonsList();
 const latestSermonCard  = buildLatestSermonCard();
@@ -376,6 +399,7 @@ for (const file of pages) {
     body: pageBody.trimEnd()
       .replace('{{events-list}}',       eventsListHtml)
       .replace('{{news-list}}',         newsListHtml)
+      .replace('{{news-strip}}',        newsStripHtml)
       .replace('{{latest-sermon-hero}}', latestSermonHero)
       .replace('{{sermons-list}}',      sermonsList)
       .replace('{{latest-sermon-card}}', latestSermonCard)
