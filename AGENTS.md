@@ -31,3 +31,14 @@
      ```
    - Confirm the branch can be cleanly merged into `main`. If there are conflicts or your branch is behind, integrate the changes from `main` into your branch first (rebase or merge), then re-run the build and tests.
 9. Open a pull request.
+
+
+## Completing GitHub Issues
+
+After finishing work on a GitHub issue:
+
+1. Commit all changes with a message referencing the issue (e.g. `Resolves #4`)
+2. Push the branch to origin
+3. Create a pull request using the GitHub MCP tools targeting `main` with:
+   - A clear title summarizing the change
+   - A body that includes `Closes #<issue-number>` so GitHub auto-closes the issue on merge
