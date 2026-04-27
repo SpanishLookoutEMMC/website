@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+# Runs on every branch push and pull request.
+# main branch   → production deployment on Cloudflare Pages
+# other branches → preview deployment with a unique URL (posted as a PR comment)
+#
+# Required repository secrets:
+#   CLOUDFLARE_API_TOKEN  – API token with "Cloudflare Pages: Edit" permission
+#   CLOUDFLARE_ACCOUNT_ID – Your Cloudflare account ID
+#
+# Required repository variable (Settings → Secrets and variables → Variables):
+#   CLOUDFLARE_PROJECT_NAME – Name of your Cloudflare Pages project
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+
+permissions:
+  contents: read
+  deployments: write
+  pull-requests: write  # allows posting a preview URL comment on PRs
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install
+
+      - run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ vars.CLOUDFLARE_PROJECT_NAME }}
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
