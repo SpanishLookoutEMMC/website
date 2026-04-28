@@ -192,10 +192,13 @@ a { color: var(--ink); }
   text-decoration: none;
   color: inherit;
 }
-.brand img { height: 28px; width: auto; }
+.brand img { 
+  height: 54px;
+  width: auto;
+  margin: -20px -0px;
+ }
 .site-header.over-hero .brand img { filter: brightness(0) invert(1); opacity: 0.95; }
-.site-header.over-hero { background: rgba(255,255,255,0.3); }
-.site-header.over-hero { color: #f3ead2; }
+.site-header.over-hero { color: rgba(243,234,210,0.75); }
 .nav {
   display: flex;
   gap: 28px;
