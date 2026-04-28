@@ -760,7 +760,7 @@ section { position: relative; }
   grid-template-columns: 1.6fr 1fr 1fr 1fr;
   gap: 48px;
 }
-.site-footer .brand img { height: 30px; }
+.site-footer .brand img { margin: 0px; }
 .site-footer h4 {
   font-size: 11px;
   letter-spacing: 0.22em;
