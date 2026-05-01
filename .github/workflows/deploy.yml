@@ -31,6 +31,17 @@ jobs:
 
       - run: npm run build
 
+      - name: Run visual regression tests
+        run: node scripts/vrt.mjs test
+
+      - name: Upload VRT report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vrt-report
+          path: backstop_data/html_report/
+          retention-days: 14
+
       - name: Deploy main to GitHub Pages root
         if: github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
