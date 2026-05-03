@@ -63,6 +63,22 @@ In `src/pages/*.html`, you can use these placeholders:
 
 Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{phone}}`, `{{youtube}}`).
 
+## Visual regression testing
+
+BackstopJS captures screenshots of every page and compares them against approved baselines so that unintended layout changes are caught before they ship.
+
+```bash
+npm run vrt:ref     # first-time setup: capture the baseline screenshots
+npm run vrt:test    # after any change: build and compare against baseline
+npm run vrt:approve # if the diff looks correct, promote test shots to the new baseline
+```
+
+`vrt:ref` and `vrt:test` automatically build the site and start the local server. When the test run finishes an HTML report opens in the browser showing a before/after scrubber for every failing scenario.
+
+The approved baseline screenshots (`backstop_data/bitmaps_reference/`) are committed to the repo so the baseline travels with the code. Generated test artifacts (test shots, HTML report) are gitignored.
+
+YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelectors: ["iframe"]`) so that network-loaded video thumbnails don't cause false positives.
+
 ## Deploying
 
 The build writes the final site into `dist/`. Serve that directory.

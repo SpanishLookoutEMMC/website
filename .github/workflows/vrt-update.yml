@@ -1,0 +1,39 @@
+name: Update VRT References
+
+# Run this manually after a VRT failure to approve intentional visual changes.
+# It regenerates the reference screenshots in CI (so they match the test environment),
+# then commits them to the current branch. The next push will pass VRT.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  vrt-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - run: npm install
+
+      - run: npm run build
+
+      - name: Regenerate reference screenshots
+        run: node scripts/vrt.mjs reference
+
+      - name: Commit updated references
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add backstop_data/bitmaps_reference/
+          git diff --staged --quiet && echo "No reference changes to commit." || \
+            git commit -m "Update VRT reference screenshots"
+          git push
