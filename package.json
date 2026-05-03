@@ -4,9 +4,13 @@
   "scripts": {
     "build": "node build.mjs",
     "fetch-sermons": "node scripts/fetch-sermons.mjs",
-    "dev": "node build.mjs && node --watch --watch-path=src build.mjs & node serve.mjs"
+    "dev": "node build.mjs && node --watch --watch-path=src build.mjs & node serve.mjs",
+    "vrt:ref": "npm run build && node scripts/vrt.mjs reference",
+    "vrt:test": "npm run build && node scripts/vrt.mjs test",
+    "vrt:approve": "node scripts/vrt.mjs approve"
   },
   "devDependencies": {
+    "backstopjs": "^6.3.25",
     "marked": "^18.0.2"
   }
 }
