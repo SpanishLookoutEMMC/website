@@ -21,4 +21,3 @@ dist/
 # Visual regression testing — keep reference bitmaps, ignore generated artifacts
 backstop_data/bitmaps_test/
 backstop_data/html_report/
-backstop_data/engine_scripts/
