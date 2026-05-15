@@ -15,7 +15,7 @@ function applyData(str) {
 
 const NAV = [
   { key: 'church',  href: 'church.html',  label: 'The Church' },
-  { key: 'team',    href: 'team.html',    label: 'The Team'   },
+  { key: 'team',    href: 'team.html',    label: 'Staff &amp; Board'   },
   { key: 'sermons', href: 'sermons.html', label: 'Sermons'    },
   { key: 'faith',       href: 'faith.html',       label: 'Our Mission'       },
   { key: 'confession',  href: 'confession.html',  label: 'Confession of Faith' },
