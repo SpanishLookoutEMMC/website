@@ -11,7 +11,6 @@
     { "label": "Sermons",           "url": "http://localhost:3000/sermons.html",    "delay": 300, "hideSelectors": ["iframe"] },
     { "label": "Mission",           "url": "http://localhost:3000/faith.html",      "delay": 300 },
     { "label": "Confession",        "url": "http://localhost:3000/confession.html", "delay": 300 },
-    { "label": "Membership",        "url": "http://localhost:3000/membership.html", "delay": 300 },
     { "label": "Contact",           "url": "http://localhost:3000/contact.html",    "delay": 300 }
   ],
   "paths": {
