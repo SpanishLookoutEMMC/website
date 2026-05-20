@@ -1,5 +1,14 @@
 [
   {
+    "videoId": "KFIzdoEf3YQ",
+    "title": "Lists, Lists and More Lists",
+    "dateStr": "May 17, 2026",
+    "date": "2026-05-18",
+    "speaker": "Blaine Dueck",
+    "thumbnail": "https://i4.ytimg.com/vi/KFIzdoEf3YQ/hqdefault.jpg",
+    "description": ""
+  },
+  {
     "videoId": "Rta1AOLYtXs",
     "title": "Conquest in Canaan",
     "dateStr": "May 10, 2026",
@@ -19,7 +28,7 @@
   },
   {
     "videoId": "1hvulz8qbhI",
-    "title": "Sunday Morning Worship Service",
+    "title": "Psalm 107",
     "dateStr": "Apr 26, 2026",
     "date": "2026-04-27",
     "speaker": "Armando Reyes",
@@ -28,10 +37,10 @@
   },
   {
     "videoId": "_oogFhtNe5k",
-    "title": "Sunday Morning Worship Service",
+    "title": "Ephesians 2",
     "dateStr": "Apr 19, 2026",
     "date": "2026-04-20",
-    "speaker": "Henry Redekop",
+    "speaker": "Henry Redekopp",
     "thumbnail": "https://i4.ytimg.com/vi/_oogFhtNe5k/hqdefault.jpg",
     "description": ""
   },
@@ -91,10 +100,10 @@
   },
   {
     "videoId": "ZJnXxVVWCdg",
-    "title": "Sunday Morning Worship Service",
+    "title": "Are You Listening?",
     "dateStr": "Mar 8, 2026",
     "date": "2026-03-09",
-    "speaker": "",
+    "speaker": "Ben Dueck",
     "thumbnail": "https://i3.ytimg.com/vi/ZJnXxVVWCdg/hqdefault.jpg",
     "description": ""
   },
@@ -123,15 +132,6 @@
     "date": "2026-02-16",
     "speaker": "Blaine Dueck",
     "thumbnail": "https://i2.ytimg.com/vi/AltfFwAp8a8/hqdefault.jpg",
-    "description": ""
-  },
-  {
-    "videoId": "1cpNEFJ-03Q",
-    "title": "Sunday Morning Worship Service",
-    "dateStr": "Feb 8, 2026",
-    "date": "2026-02-09",
-    "speaker": "",
-    "thumbnail": "https://i2.ytimg.com/vi/1cpNEFJ-03Q/hqdefault.jpg",
     "description": ""
   }
 ]
