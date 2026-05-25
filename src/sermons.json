@@ -1,5 +1,32 @@
 [
   {
+    "videoId": "JnoK_bXly-0",
+    "title": "Sunday Morning Worship Service",
+    "dateStr": "May 24, 2026",
+    "date": "2026-05-25",
+    "speaker": "Stephen Hochstetler",
+    "thumbnail": "https://i3.ytimg.com/vi/JnoK_bXly-0/hqdefault.jpg",
+    "description": ""
+  },
+  {
+    "videoId": "D5WDYtxk0zU",
+    "title": "",
+    "dateStr": "ECS 2026 Year End Program",
+    "date": "2026-05-22",
+    "speaker": "",
+    "thumbnail": "https://i1.ytimg.com/vi/D5WDYtxk0zU/hqdefault.jpg",
+    "description": ""
+  },
+  {
+    "videoId": "oaOYA7tZvBU",
+    "title": "",
+    "dateStr": "ECS 2026 Graduation Ceremony",
+    "date": "2026-05-21",
+    "speaker": "",
+    "thumbnail": "https://i4.ytimg.com/vi/oaOYA7tZvBU/hqdefault.jpg",
+    "description": ""
+  },
+  {
     "videoId": "KFIzdoEf3YQ",
     "title": "Lists, Lists and More Lists",
     "dateStr": "May 17, 2026",
@@ -105,33 +132,6 @@
     "date": "2026-03-09",
     "speaker": "Ben Dueck",
     "thumbnail": "https://i3.ytimg.com/vi/ZJnXxVVWCdg/hqdefault.jpg",
-    "description": ""
-  },
-  {
-    "videoId": "_NdiERhPjv0",
-    "title": "Melting Hearts",
-    "dateStr": "Mar 1, 2026",
-    "date": "2026-03-02",
-    "speaker": "Blaine Dueck",
-    "thumbnail": "https://i4.ytimg.com/vi/_NdiERhPjv0/hqdefault.jpg",
-    "description": ""
-  },
-  {
-    "videoId": "wSdIOqMPmac",
-    "title": "Strength & Courage",
-    "dateStr": "Feb 22, 2026",
-    "date": "2026-02-23",
-    "speaker": "Blaine Dueck",
-    "thumbnail": "https://i4.ytimg.com/vi/wSdIOqMPmac/hqdefault.jpg",
-    "description": ""
-  },
-  {
-    "videoId": "AltfFwAp8a8",
-    "title": "Joshua Introduction",
-    "dateStr": "Feb 15, 2026",
-    "date": "2026-02-16",
-    "speaker": "Blaine Dueck",
-    "thumbnail": "https://i2.ytimg.com/vi/AltfFwAp8a8/hqdefault.jpg",
     "description": ""
   }
 ]
