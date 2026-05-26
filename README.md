@@ -79,6 +79,14 @@ The approved baseline screenshots (`backstop_data/bitmaps_reference/`) are commi
 
 YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelectors: ["iframe"]`) so that network-loaded video thumbnails don't cause false positives.
 
+### Branch and merge workflow for VRT
+
+**On a feature branch:** CI runs VRT on every push. If pages changed visually, VRT will fail and a diff report is uploaded as a CI artifact — use that to review what changed. Run `vrt-update` on the branch (via the "Update VRT References" GitHub Actions workflow) to commit updated baselines and make CI green.
+
+**Merge conflicts in baseline PNGs:** `.gitattributes` instructs git to always keep the current branch's version of the reference PNGs when a conflict arises. This means parallel branches never produce binary merge conflicts in the PNG files — regardless of whether you merge main into your branch or your branch into main.
+
+**After merging to `main`:** If the PR changed any page visually, `main`'s baselines are now stale — but this is handled automatically. The deploy workflow on `main` fails (expected), which triggers the "Update VRT References" workflow automatically. It regenerates all 16 reference screenshots, commits them to `main`, and pushes. The next CI run passes. No manual action needed.
+
 ## Deploying
 
 The build writes the final site into `dist/`. Serve that directory.
