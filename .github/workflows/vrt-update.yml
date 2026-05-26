@@ -1,22 +1,36 @@
 name: Update VRT References
 
-# Run this manually after a VRT failure to approve intentional visual changes.
-# It regenerates the reference screenshots in CI (so they match the test environment),
-# then commits them to the current branch. The next push will pass VRT.
+# Runs automatically when the "Build and Deploy" workflow fails on main —
+# which is exactly what happens after a PR with visual changes is merged
+# (baselines are stale until regenerated).
+#
+# Can also be triggered manually from the Actions UI on any branch to approve
+# intentional visual changes before or after a merge.
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Build and Deploy"]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: write
 
 jobs:
   vrt-update:
+    # For automatic runs: only act when the deploy workflow actually failed.
+    # (If VRT already passed there is nothing to regenerate.)
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          # For workflow_run events use the exact commit that was deployed;
+          # for manual dispatch use the selected branch ref.
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
 
       - uses: actions/setup-node@v4
         with:

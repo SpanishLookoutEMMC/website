@@ -34,12 +34,15 @@
 
 ## After merging a PR that changes page visuals
 
-If the merged PR changed how any page looks, the VRT baselines on `main` are now stale. After the merge:
+If the merged PR changed how any page looks, the VRT baselines on `main` are now stale. This is handled automatically:
 
-1. Go to **Actions → Update VRT References** in the GitHub UI and trigger the workflow on `main`.
-2. The workflow regenerates all reference screenshots in the CI environment, commits them to `main`, and pushes. The next CI run will pass VRT.
+1. The deploy workflow runs on `main` and VRT fails (expected — baselines predate the merged changes).
+2. This failure automatically triggers the "Update VRT References" workflow, which regenerates all reference screenshots, commits them to `main`, and pushes.
+3. The next CI run on `main` passes VRT.
 
-You do not need to resolve merge conflicts in baseline PNG files — `.gitattributes` ensures git always keeps the current branch's version automatically. The VRT diff report artifact on the feature branch (available in the CI run for the PR) shows what changed visually and serves as the review record before you trigger the update on `main`.
+No manual action is needed. You do not need to resolve merge conflicts in baseline PNG files either — `.gitattributes` ensures git always keeps the current branch's version automatically.
+
+The VRT diff report artifact on the feature branch (available in the CI run for the PR) shows what changed visually and serves as the review record for the merge.
 
 
 ## Completing GitHub Issues

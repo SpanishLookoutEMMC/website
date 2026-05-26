@@ -85,7 +85,7 @@ YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelecto
 
 **Merge conflicts in baseline PNGs:** `.gitattributes` instructs git to always keep the current branch's version of the reference PNGs when a conflict arises. This means parallel branches never produce binary merge conflicts in the PNG files — regardless of whether you merge main into your branch or your branch into main.
 
-**After merging to `main`:** If the PR changed any page visually, `main`'s baselines are now stale. Trigger the **"Update VRT References"** workflow on `main` via the GitHub Actions UI. It regenerates all 16 reference screenshots, commits them, and pushes. The next CI run on `main` will pass VRT.
+**After merging to `main`:** If the PR changed any page visually, `main`'s baselines are now stale — but this is handled automatically. The deploy workflow on `main` fails (expected), which triggers the "Update VRT References" workflow automatically. It regenerates all 16 reference screenshots, commits them to `main`, and pushes. The next CI run passes. No manual action needed.
 
 ## Deploying
 
