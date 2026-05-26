@@ -27,7 +27,8 @@ function xmlAttr(block, name, attr) {
 
 function parseTitle(raw) {
   const parts = raw.split(' - ');
-  if (parts.length < 2) return { dateStr: raw, title: '', speaker: '' };
+  // No separator → treat the whole string as the title, not a date
+  if (parts.length < 2) return { dateStr: '', title: raw, speaker: '' };
   const dateStr = parts[0].trim();
   if (parts.length >= 3) {
     return { dateStr, title: parts.slice(1, -1).join(' - ').trim(), speaker: parts[parts.length - 1].trim() };
