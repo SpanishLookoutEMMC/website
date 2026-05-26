@@ -43,6 +43,13 @@ function parseDateStr(dateStr) {
   return d.toISOString().slice(0, 10);
 }
 
+/** Format an ISO date string "2026-05-22" → "May 22, 2026" */
+function formatIsoDate(isoDate) {
+  const d = new Date(isoDate + 'T12:00:00Z'); // noon UTC avoids timezone day-shifts
+  if (isNaN(d.getTime())) return '';
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
 /**
  * Fetch via YouTube's InnerTube browse API (the Live/Streams tab).
  * The church posts services as live streams, so recent content lives there.
@@ -114,7 +121,10 @@ try {
     const date      = xmlTag(block, 'published').slice(0, 10);
     const thumbnail = xmlAttr(block, 'media:thumbnail', 'url');
     const description = xmlTag(block, 'media:description');
-    const { dateStr, title, speaker } = parseTitle(rawTitle);
+    const parsed = parseTitle(rawTitle);
+    // If the title didn't contain a date, fall back to the RSS published date
+    const dateStr = parsed.dateStr || formatIsoDate(date);
+    const { title, speaker } = parsed;
     sermons.push({ videoId, title, dateStr, date, speaker, thumbnail, description });
   }
   console.log(`Fetched ${sermons.length} sermons via RSS.`);
