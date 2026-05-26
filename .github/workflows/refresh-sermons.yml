@@ -2,7 +2,7 @@ name: Refresh sermons
 
 on:
   schedule:
-    - cron: '0 10 * * 1'  # Every Monday at 10 AM UTC (day after Sunday service)
+    - cron: '0 16 * * 1'  # Every Monday at 4 PM UTC / 10 AM Belize (day after Sunday service)
   workflow_dispatch:       # Allow manual trigger from GitHub UI
 
 permissions:
