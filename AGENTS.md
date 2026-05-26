@@ -32,6 +32,15 @@
    - Confirm the branch can be cleanly merged into `main`. If there are conflicts or your branch is behind, integrate the changes from `main` into your branch first (rebase or merge), then re-run the build and tests.
 9. Open a pull request. Before opening, check whether a PR for this branch already exists and has been merged. If so, create a new branch and open a fresh PR rather than pushing to a merged branch.
 
+## After merging a PR that changes page visuals
+
+If the merged PR changed how any page looks, the VRT baselines on `main` are now stale. After the merge:
+
+1. Go to **Actions → Update VRT References** in the GitHub UI and trigger the workflow on `main`.
+2. The workflow regenerates all reference screenshots in the CI environment, commits them to `main`, and pushes. The next CI run will pass VRT.
+
+You do not need to resolve merge conflicts in baseline PNG files — `.gitattributes` ensures git always keeps the current branch's version automatically. The VRT diff report artifact on the feature branch (available in the CI run for the PR) shows what changed visually and serves as the review record before you trigger the update on `main`.
+
 
 ## Completing GitHub Issues
 
