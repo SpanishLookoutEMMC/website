@@ -22,9 +22,9 @@ jobs:
 
       - run: node scripts/fetch-sermons.mjs
 
-      - name: Commit if changed
+      - name: Commit and push if changed
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git add src/sermons.json
-          git diff --cached --quiet && echo "No changes" || (git commit -m "Update sermons from YouTube" && git push)
+          git diff --cached --quiet && echo "No new sermons." || (git commit -m "Update sermons from YouTube" && git push)

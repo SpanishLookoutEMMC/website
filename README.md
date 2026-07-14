@@ -46,7 +46,7 @@ The build script (`build.mjs`):
 ## Editing content
 
 - **Pages:** edit the corresponding `.html` file in `src/pages/`. Use placeholders where generated content should appear (see below).
-- **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build.
+- **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build. New videos are added to the existing list (older sermons are kept). This runs weekly on its own — see [Automated sermon refresh](#automated-sermon-refresh).
 - **Site config:** edit `src/data.json` to update contact details, YouTube channel, maps link, etc.
 - **Layout/nav:** edit `src/layout.html` or the `NAV` array in `build.mjs`.
 
@@ -63,29 +63,9 @@ In `src/pages/*.html`, you can use these placeholders:
 
 Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{whatsapp}}`, `{{youtube}}`).
 
-## Visual regression testing
+## Automated sermon refresh
 
-BackstopJS captures screenshots of every page and compares them against approved baselines so that unintended layout changes are caught before they ship.
-
-```bash
-npm run vrt:ref     # first-time setup: capture the baseline screenshots
-npm run vrt:test    # after any change: build and compare against baseline
-npm run vrt:approve # if the diff looks correct, promote test shots to the new baseline
-```
-
-`vrt:ref` and `vrt:test` automatically build the site and start the local server. When the test run finishes an HTML report opens in the browser showing a before/after scrubber for every failing scenario.
-
-The approved baseline screenshots (`backstop_data/bitmaps_reference/`) are committed to the repo so the baseline travels with the code. Generated test artifacts (test shots, HTML report) are gitignored.
-
-YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelectors: ["iframe"]`) so that network-loaded video thumbnails don't cause false positives.
-
-### Branch and merge workflow for VRT
-
-**On a feature branch:** CI runs VRT on every push. If pages changed visually, VRT will fail and a diff report is uploaded as a CI artifact — use that to review what changed. Run `vrt-update` on the branch (via the "Update VRT References" GitHub Actions workflow) to commit updated baselines and make CI green.
-
-**Merge conflicts in baseline PNGs:** `.gitattributes` instructs git to always keep the current branch's version of the reference PNGs when a conflict arises. This means parallel branches never produce binary merge conflicts in the PNG files — regardless of whether you merge main into your branch or your branch into main.
-
-**After merging to `main`:** If the PR changed any page visually, `main`'s baselines are now stale — but this is handled automatically. The deploy workflow on `main` fails (expected), which triggers the "Update VRT References" workflow automatically. It regenerates all 14 reference screenshots, commits them to `main`, and pushes. The next CI run passes. No manual action needed.
+`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It runs `scripts/fetch-sermons.mjs`, which looks at the **10 latest** videos on the church YouTube channel and prepends any it doesn't already have to `src/sermons.json` (older entries are kept, never overwritten). If anything changed, it commits and pushes straight to `main`, which triggers a deploy.
 
 ## Deploying
 
