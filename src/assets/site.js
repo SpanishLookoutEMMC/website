@@ -33,4 +33,22 @@
     scriptureEl.textContent = verse.text;
     referenceEl.textContent = verse.ref;
   }
+
+  // Contact form — compose a mailto: so the message leaves via the visitor's email app
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var to = contactForm.getAttribute('data-to') || '';
+      var name = (contactForm.elements.name && contactForm.elements.name.value || '').trim();
+      var email = (contactForm.elements.email && contactForm.elements.email.value || '').trim();
+      var msg = (contactForm.elements.msg && contactForm.elements.msg.value || '').trim();
+      if (!to || !name || !email || !msg) return;
+      var subject = encodeURIComponent('Website message from ' + name);
+      var body = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + msg);
+      var done = contactForm.querySelector('.done');
+      if (done) done.style.display = 'inline';
+      window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+    });
+  }
 })();
