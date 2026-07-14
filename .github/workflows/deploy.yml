@@ -12,6 +12,7 @@ on:
   push:
     branches:
       - '**'
+  workflow_dispatch:  # lets the refresh-sermons job publish after pushing to main
 
 permissions:
   contents: write      # push built output to gh-pages branch

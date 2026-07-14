@@ -89,15 +89,15 @@ YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelecto
 
 ## Automated sermon refresh
 
-`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It fetches the latest videos from the church YouTube channel and, if there are new sermons, lands them on `main` **through a pull request** on the `auto/refresh-sermons` branch:
+`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It fetches the latest videos from the church YouTube channel and, if there are new sermons, commits them straight to `main`:
 
 1. `scripts/fetch-sermons.mjs` merges any new videos into `src/sermons.json` (the archive is never overwritten).
-2. Because new sermons change the Sermons and Home screenshots, the job regenerates the VRT baselines in the same commit.
-3. It opens (or updates) a PR and enables auto-merge, so the change merges as soon as the required `deploy` check passes.
+2. Because new sermons change the Sermons and Home screenshots, the job **regenerates the VRT baselines in the same commit** — so the visual-regression check stays green and still guards every other page; only the intended new-sermon-card change is accepted.
+3. It pushes `src/sermons.json` and the baselines to `main`, then dispatches the deploy workflow to publish the site.
 
-**Why a PR instead of a direct push?** `main` is protected by a ruleset that requires the `deploy` status check. A direct `git push` to `main` — which is what this workflow used to do — is rejected with `GH013: Required status check "deploy" is expected`, so the sermon updates silently stopped landing. Routing through an auto-merging PR (with regenerated baselines so the `deploy` check passes) works within the ruleset.
+**Required repo setup — bypass on the `main` ruleset:** `main` is protected by a ruleset requiring the `deploy` status check, so a plain push is rejected with `GH013: Required status check "deploy" is expected`. That is what silently stopped sermon updates from landing. Grant **`github-actions[bot]` a bypass** on the ruleset (**Settings → Rules → Rulesets →** the `main` ruleset **→ Bypass list → add `github-actions[bot]`**) so the automation can push. The same bypass also restores the "Update VRT References" workflow, which pushes to `main` the same way.
 
-> Auto-merge must be enabled for the repository (**Settings → General → Allow auto-merge**). If it isn't, the workflow still opens the PR — it just waits for a manual merge instead of merging itself.
+> Why direct push and not a pull request? A push made with the workflow's `GITHUB_TOKEN` never triggers other workflows, so the required `deploy` check would never run on a bot-opened PR — it could never be satisfied. `workflow_dispatch` is the one exception GitHub allows, which is why the job publishes by dispatching the deploy workflow explicitly.
 
 ## Deploying
 
