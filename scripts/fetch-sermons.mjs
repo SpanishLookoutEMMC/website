@@ -139,10 +139,10 @@ try {
   }
 }
 
-// --- Add only the latest 10 videos, keeping the existing list ---
-// The feed is newest-first. We look at just the 10 most recent videos and
-// prepend any we don't already have, so new sermons land at the top and older
-// ones are preserved (never overwritten).
+// --- Refresh the latest 10 videos, keeping older entries ---
+// The feed is newest-first. We always take the 10 most recent videos straight
+// from the feed (so edited titles/speakers are picked up), then append the
+// existing entries that aren't among those 10 so older sermons are preserved.
 const LATEST = 10;
 
 let existing = [];
@@ -152,12 +152,13 @@ try {
   existing = [];
 }
 
-const existingIds = new Set(existing.map(s => s.videoId));
-const brandNew = sermons.slice(0, LATEST).filter(s => !existingIds.has(s.videoId));
-const merged = [...brandNew, ...existing];
+const latest = sermons.slice(0, LATEST);
+const latestIds = new Set(latest.map(s => s.videoId));
+const older = existing.filter(s => !latestIds.has(s.videoId));
+const merged = [...latest, ...older];
 
 writeFileSync('src/sermons.json', JSON.stringify(merged, null, 2) + '\n');
 console.log(
   `Wrote ${merged.length} sermons to src/sermons.json ` +
-  `(${brandNew.length} new from the latest ${LATEST}, ${existing.length} kept).`
+  `(${latest.length} refreshed from the latest ${LATEST}, ${older.length} older kept).`
 );
