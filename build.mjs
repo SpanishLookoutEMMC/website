@@ -82,10 +82,8 @@ function buildLatestSermonHero() {
     <div class="label">Latest sermon</div>
     <h2 class="display h-1" style="margin-top:8px; max-width:820px;">${esc(s.title)}</h2>
     <div style="font-size:14px; color:var(--muted); margin-top:10px;">${esc(sermonMeta(s))}</div>
-    <div class="grid grid-bias-right" style="margin-top:36px;">
-      <div class="video-frame">
-        ${sermonIframe(s)}
-      </div>
+    <div class="video-frame" style="margin-top:36px; max-width:920px;">
+      ${sermonIframe(s)}
     </div>
   </div>
 </section>`.trimStart();
