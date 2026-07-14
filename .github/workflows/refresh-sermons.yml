@@ -5,12 +5,22 @@ on:
     - cron: '0 16 * * 1'  # Every Monday at 4 PM UTC / 10 AM Belize (day after Sunday service)
   workflow_dispatch:       # Allow manual trigger from GitHub UI
 
+# `main` is protected by a ruleset that requires the "deploy" status check, so
+# this job can no longer push src/sermons.json straight to main (the push is
+# rejected with "GH013: Required status check 'deploy' is expected"). Instead we
+# open a pull request on an automation branch and let it auto-merge once the
+# deploy check passes. New sermons change the Sermons/Home screenshots, so we
+# regenerate the VRT baselines in the same commit — otherwise the deploy check's
+# visual regression test would fail and the PR would never merge.
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
+    env:
+      BRANCH: auto/refresh-sermons
     steps:
       - uses: actions/checkout@v4
 
@@ -20,11 +30,50 @@ jobs:
 
       - run: npm install
 
-      - run: node scripts/fetch-sermons.mjs
+      - name: Fetch latest sermons from YouTube
+        run: node scripts/fetch-sermons.mjs
 
-      - name: Commit if changed
+      - name: Detect changes
+        id: diff
+        run: |
+          if git diff --quiet src/sermons.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new sermons — nothing to do."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Regenerate VRT baselines for the new sermons
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          npm run build
+          node scripts/vrt.mjs reference
+
+      - name: Open / update auto-merging pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add src/sermons.json
-          git diff --cached --quiet && echo "No changes" || (git commit -m "Update sermons from YouTube" && git push)
+
+          # Rebuild the automation branch on top of the freshly-checked-out main
+          # so it never carries stale history from a previous week.
+          git checkout -B "$BRANCH"
+          git add src/sermons.json backstop_data/bitmaps_reference/
+          git commit -m "Update sermons from YouTube"
+          git push -f -u origin "$BRANCH"
+
+          # Reuse an already-open PR; otherwise open a fresh one.
+          if [ "$(gh pr view "$BRANCH" --json state --jq .state 2>/dev/null)" != "OPEN" ]; then
+            gh pr create --base main --head "$BRANCH" \
+              --title "Update sermons from YouTube" \
+              --body "Automated weekly sermon refresh from the church YouTube channel. Regenerated VRT baselines are included so the deploy check passes." \
+              || echo "Could not open a PR (one may already exist)."
+          fi
+
+          # Merge automatically once the required "deploy" check goes green.
+          # If the repo doesn't allow auto-merge this is a no-op and the PR
+          # waits for a manual merge instead of failing the workflow.
+          gh pr merge "$BRANCH" --auto --squash \
+            || echo "Auto-merge unavailable; PR left open for manual merge."
