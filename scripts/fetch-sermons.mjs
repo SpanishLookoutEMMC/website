@@ -139,12 +139,12 @@ try {
   }
 }
 
-// --- Merge with the existing archive instead of overwriting it ---
-// The feed only returns the most recent ~15 videos. Writing that list out
-// verbatim silently shrinks the archive on every run, and an empty/partial
-// feed response would wipe it entirely. Instead, keep every sermon we already
-// know about and just prepend videos we haven't seen before (feed order is
-// newest-first, so new sermons land at the top in the right order).
+// --- Add only the latest 10 videos, keeping the existing list ---
+// The feed is newest-first. We look at just the 10 most recent videos and
+// prepend any we don't already have, so new sermons land at the top and older
+// ones are preserved (never overwritten).
+const LATEST = 10;
+
 let existing = [];
 try {
   existing = JSON.parse(readFileSync('src/sermons.json', 'utf8'));
@@ -153,11 +153,11 @@ try {
 }
 
 const existingIds = new Set(existing.map(s => s.videoId));
-const brandNew = sermons.filter(s => !existingIds.has(s.videoId));
+const brandNew = sermons.slice(0, LATEST).filter(s => !existingIds.has(s.videoId));
 const merged = [...brandNew, ...existing];
 
 writeFileSync('src/sermons.json', JSON.stringify(merged, null, 2) + '\n');
 console.log(
   `Wrote ${merged.length} sermons to src/sermons.json ` +
-  `(${brandNew.length} new, ${existing.length} kept from archive).`
+  `(${brandNew.length} new from the latest ${LATEST}, ${existing.length} kept).`
 );

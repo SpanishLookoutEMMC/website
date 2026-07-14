@@ -1,7 +1,0 @@
-# On merge conflicts in VRT baseline screenshots, always keep the current branch's
-# version (i.e. main's when a feature branch is merged in). This prevents binary
-# merge conflicts on PNG files when two parallel branches both update the same page.
-#
-# After merging a PR that changes page visuals, trigger the "Update VRT References"
-# workflow on main to regenerate the baselines from the merged result.
-backstop_data/bitmaps_reference/*.png merge=ours
