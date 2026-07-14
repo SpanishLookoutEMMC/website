@@ -65,7 +65,7 @@ Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{pho
 
 ## Automated sermon refresh
 
-`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It runs `scripts/fetch-sermons.mjs`, which looks at the **10 latest** videos on the church YouTube channel and prepends any it doesn't already have to `src/sermons.json` (older entries are kept, never overwritten). If anything changed, it commits and pushes straight to `main`, which triggers a deploy.
+`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It runs `scripts/fetch-sermons.mjs`, which takes the **10 latest** videos on the church YouTube channel fresh from the feed (so edited titles/speakers are picked up) and keeps any older entries already in `src/sermons.json`. If anything changed, it commits and pushes straight to `main`, then triggers the deploy workflow to publish — a push made with the workflow's `GITHUB_TOKEN` doesn't start other workflows on its own, so the deploy is dispatched explicitly.
 
 ## Deploying
 
