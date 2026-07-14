@@ -46,7 +46,7 @@ The build script (`build.mjs`):
 ## Editing content
 
 - **Pages:** edit the corresponding `.html` file in `src/pages/`. Use placeholders where generated content should appear (see below).
-- **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build.
+- **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build. New videos are merged into the existing archive (never overwritten), so older sermons are preserved. This runs weekly on its own — see [Automated sermon refresh](#automated-sermon-refresh).
 - **Site config:** edit `src/data.json` to update contact details, YouTube channel, maps link, etc.
 - **Layout/nav:** edit `src/layout.html` or the `NAV` array in `build.mjs`.
 
@@ -86,6 +86,18 @@ YouTube iframes on the Sermons page are hidden before snapshotting (`hideSelecto
 **Merge conflicts in baseline PNGs:** `.gitattributes` instructs git to always keep the current branch's version of the reference PNGs when a conflict arises. This means parallel branches never produce binary merge conflicts in the PNG files — regardless of whether you merge main into your branch or your branch into main.
 
 **After merging to `main`:** If the PR changed any page visually, `main`'s baselines are now stale — but this is handled automatically. The deploy workflow on `main` fails (expected), which triggers the "Update VRT References" workflow automatically. It regenerates all 16 reference screenshots, commits them to `main`, and pushes. The next CI run passes. No manual action needed.
+
+## Automated sermon refresh
+
+`.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It fetches the latest videos from the church YouTube channel and, if there are new sermons, lands them on `main` **through a pull request** on the `auto/refresh-sermons` branch:
+
+1. `scripts/fetch-sermons.mjs` merges any new videos into `src/sermons.json` (the archive is never overwritten).
+2. Because new sermons change the Sermons and Home screenshots, the job regenerates the VRT baselines in the same commit.
+3. It opens (or updates) a PR and enables auto-merge, so the change merges as soon as the required `deploy` check passes.
+
+**Why a PR instead of a direct push?** `main` is protected by a ruleset that requires the `deploy` status check. A direct `git push` to `main` — which is what this workflow used to do — is rejected with `GH013: Required status check "deploy" is expected`, so the sermon updates silently stopped landing. Routing through an auto-merging PR (with regenerated baselines so the `deploy` check passes) works within the ruleset.
+
+> Auto-merge must be enabled for the repository (**Settings → General → Allow auto-merge**). If it isn't, the workflow still opens the PR — it just waits for a manual merge instead of merging itself.
 
 ## Deploying
 
