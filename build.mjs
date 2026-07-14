@@ -7,6 +7,9 @@ const DATA = JSON.parse(readFileSync('src/data.json', 'utf8'));
 let SERMONS = [];
 try { SERMONS = JSON.parse(readFileSync('src/sermons.json', 'utf8')); } catch { /* no file yet */ }
 
+let TIMELINE = [];
+try { TIMELINE = JSON.parse(readFileSync('src/timeline.json', 'utf8')); } catch { /* no file yet */ }
+
 function applyData(str) {
   let out = str;
   for (const [k, v] of Object.entries(DATA)) out = out.replaceAll(`{{${k}}}`, v);
@@ -144,6 +147,47 @@ function buildRecentSermons() {
 }
 
 // ---------------------------------------------------------------------------
+// Church history timeline (from src/timeline.json)
+
+function buildTimeline() {
+  if (!TIMELINE.length) return '';
+  const items = TIMELINE.map((e, i) => {
+    const side = i % 2 === 0 ? 'left' : 'right';
+    const img = e.image
+      ? `<div class="timeline-photo"><img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="600" height="400" loading="lazy" decoding="async"></div>`
+      : '';
+    const detail = e.detail
+      ? `<p class="timeline-detail">${esc(e.detail)}</p>`
+      : '';
+    return `
+      <article class="timeline-item timeline-${side}" data-timeline-item>
+        <div class="timeline-marker" aria-hidden="true"></div>
+        <div class="timeline-card">
+          ${img}
+          <div class="timeline-date">${esc(e.date)}</div>
+          <h3 class="timeline-title">${esc(e.title)}</h3>
+          ${detail}
+        </div>
+      </article>`;
+  }).join('\n');
+
+  return `
+<!-- History timeline -->
+<section class="sec-pad timeline-section" id="history">
+  <div class="wrap">
+    <div class="label">Our history</div>
+    <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
+    <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
+    <div class="timeline" data-timeline>
+      <div class="timeline-line" aria-hidden="true"></div>
+      ${items.trimStart()}
+    </div>
+    <p class="timeline-note">Not all pictures or dates are guaranteed to be correct.</p>
+  </div>
+</section>`.trimStart();
+}
+
+// ---------------------------------------------------------------------------
 // Run
 
 mkdirSync('dist', { recursive: true });
@@ -154,6 +198,7 @@ const latestSermonHero    = buildLatestSermonHero();
 const sermonsList         = buildSermonsList();
 const latestSermonCard    = buildLatestSermonCard();
 const recentSermons       = buildRecentSermons();
+const churchTimeline      = buildTimeline();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
 
@@ -179,7 +224,8 @@ for (const file of pages) {
       .replace('{{latest-sermon-hero}}', latestSermonHero)
       .replace('{{sermons-list}}',       sermonsList)
       .replace('{{latest-sermon-card}}', latestSermonCard)
-      .replace('{{recent-sermons}}',     recentSermons),
+      .replace('{{recent-sermons}}',     recentSermons)
+      .replace('{{church-timeline}}',    churchTimeline),
   });
 
   writeFileSync(join('dist', file), html);

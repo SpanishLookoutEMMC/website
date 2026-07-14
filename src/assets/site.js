@@ -51,4 +51,27 @@
       window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
     });
   }
+
+  // Church history timeline — reveal items as they enter the viewport
+  var timelineItems = document.querySelectorAll('[data-timeline-item]');
+  if (timelineItems.length) {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      for (var i = 0; i < timelineItems.length; i++) {
+        timelineItems[i].classList.add('is-visible');
+      }
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+      for (var j = 0; j < timelineItems.length; j++) {
+        io.observe(timelineItems[j]);
+      }
+    }
+  }
 })();
