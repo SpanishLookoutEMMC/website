@@ -6,31 +6,16 @@ current: contact
 <section class="sec-pad">
   <div class="wrap">
     <div class="grid grid-bias-left" style="gap: 72px; align-items:start;">
-      <div>
-        <div class="label">Get in touch</div>
-        <h2 class="display h-1" style="margin-top:8px;">We'd love to hear from you.</h2>
-        <p class="lead" style="margin-top:20px;">A message or a Sunday-morning visit — whichever is easiest.</p>
-
-        <div style="margin-top: 32px; display: grid; grid-template-columns: auto 1fr; gap: 18px 28px; font-size: 16px; align-items: baseline;">
-          <div class="label">Email</div>
-          <div><a href="mailto:{{email}}" style="color:var(--ink); font-family:var(--display); font-size:22px; text-decoration:none;">{{email}}</a></div>
-          <div class="label">WhatsApp</div>
-          <div><a href="{{whatsapp}}" style="color:var(--ink); font-family:var(--display); font-size:22px; text-decoration:none;">Message us →</a></div>
+      <form class="form" id="contact-form" data-to="{{email}}" style="margin-top: 0;">
+        <div class="label" style="margin-bottom: 6px;">Send a message</div>
+        <label><span class="lbl">Your name</span><input type="text" name="name" required autocomplete="name"></label>
+        <label><span class="lbl">Email</span><input type="email" name="email" required autocomplete="email"></label>
+        <label><span class="lbl">Message</span><textarea name="msg" rows="5" required></textarea></label>
+        <div style="display:flex; gap:16px; align-items:center; margin-top:6px;">
+          <button type="submit" class="btn" style="border:0; cursor:pointer;">Send →</button>
+          <span class="done" style="display:none; font-size:13px; color:var(--gold);">Opening your email app…</span>
         </div>
-
-        <hr class="hr" style="margin: 40px 0 32px;">
-
-        <form class="form" id="contact-form" data-to="{{email}}">
-          <div class="label" style="margin-bottom: 6px;">Send a message</div>
-          <label><span class="lbl">Your name</span><input type="text" name="name" required autocomplete="name"></label>
-          <label><span class="lbl">Email</span><input type="email" name="email" required autocomplete="email"></label>
-          <label><span class="lbl">Message</span><textarea name="msg" rows="5" required></textarea></label>
-          <div style="display:flex; gap:16px; align-items:center; margin-top:6px;">
-            <button type="submit" class="btn" style="border:0; cursor:pointer;">Send →</button>
-            <span class="done" style="display:none; font-size:13px; color:var(--gold);">Opening your email app…</span>
-          </div>
-        </form>
-      </div>
+      </form>
 
       <div>
         <div class="card-outline" style="padding: 28px 30px 32px;">
@@ -39,7 +24,7 @@ current: contact
           <hr class="hr" style="margin:20px 0;">
           <div style="font-size:15px; color:var(--text); line-height:1.8;">
             <b>Prayer</b>: 9:00 am<br>
-            <b>Coffee &amp; Fellowship</b>: 9:15 am<br>
+            <b>Coffee &amp; Fellowship</b>: 9:30 am<br>
             <b>Worship Service</b>: 10:00 am
           </div>
           <hr class="hr" style="margin:20px 0;">
@@ -50,6 +35,7 @@ current: contact
           <div style="margin-top:18px; display:flex; flex-direction:column; gap:10px;">
             <a href="{{gmaps}}" class="tlink">Open in Google Maps →</a>
             <a href="{{youtube}}" class="tlink">Watch on YouTube →</a>
+            <a href="{{whatsapp}}" class="tlink">WhatsApp →</a>
           </div>
         </div>
       </div>
