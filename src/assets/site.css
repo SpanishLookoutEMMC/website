@@ -99,7 +99,7 @@ a { color: var(--ink); }
 }
 .display em { font-style: italic; font-weight: 400; }
 
-.h-hero    { font-size: clamp(48px, 7vw, 82px); }
+.h-hero    { font-size: 3em; }
 .h-1       { font-size: clamp(40px, 5.2vw, 60px); line-height: 1.04; }
 .h-2       { font-size: clamp(30px, 3.6vw, 42px); line-height: 1.1; }
 .h-3       { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; }
