@@ -3,45 +3,20 @@ title: Contact — Spanish Lookout EMMC
 description: Reach Spanish Lookout EMMC — pastor, elders, and location.
 current: contact
 ---
-<section class="page-hero">
-  <div class="wrap">
-    <div class="trail">Home · Contact</div>
-    <h1><em>We'd love</em><br>to hear from you.</h1>
-    <p class="sub">A message or a Sunday-morning visit — whichever is easiest.</p>
-  </div>
-</section>
-
 <section class="sec-pad">
   <div class="wrap">
     <div class="grid grid-bias-left" style="gap: 72px; align-items:start;">
-      <div>
-        <div class="label">Reach the pastor</div>
-        <h2 class="display h-1" style="margin-top:8px;">Blaine Dueck</h2>
-        <div class="rule-with-label single" style="margin-top:14px;"><span class="label gold">Pastor · Spanish Lookout EMMC</span></div>
-
-        <div style="margin-top: 32px; display: grid; grid-template-columns: auto 1fr; gap: 18px 28px; font-size: 16px;">
-          <div class="label" style="padding-top:4px;">Email</div>
-          <div><a href="mailto:{{email}}" style="color:var(--ink); font-family:var(--display); font-size:26px; text-decoration:none;">{{email}}</a></div>
-        </div>
-
-        <hr class="hr" style="margin: 40px 0 32px;">
-
-        <div class="label">Other leaders</div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:18px 28px; margin-top:14px; font-size:14.5px;">
-          <div>
-            <div class="label gold">Elder</div>
-            <div style="font-family:var(--display); font-size:20px; color:var(--ink); margin-top:4px;">Albert &amp; Eileen Reimer</div>
+       <form class="form" style="margin-top: 36px;" onsubmit="event.preventDefault(); this.querySelector('.done').style.display='block';">
+          <div class="label" style="margin-bottom: 6px;">Send a message</div>
+          <label><span class="lbl">Your name</span><input type="text" name="name" required></label>
+          <label><span class="lbl">Email</span><input type="email" name="email" required></label>
+          <label><span class="lbl">Message</span><textarea name="msg" rows="5" required></textarea></label>
+          <div style="display:flex; gap:16px; align-items:center; margin-top:6px;">
+            <button type="submit" class="btn" style="border:0; cursor:pointer;">Send →</button>
+            <span class="done" style="display:none; font-size:13px; color:var(--gold);">Thank you — we'll be in touch.</span>
           </div>
-          <div>
-            <div class="label gold">Layminister</div>
-            <div style="font-family:var(--display); font-size:20px; color:var(--ink); margin-top:4px;">Norman &amp; Elsie Dueck</div>
-          </div>
-          <div>
-            <div class="label gold">Deacon</div>
-            <div style="font-family:var(--display); font-size:20px; color:var(--ink); margin-top:4px;">Henry &amp; Susan Wiebe</div>
-          </div>
-        </div>
-      </div>
+          <div style="font-size:12px; color:var(--muted); font-style:italic;">This form is a placeholder; wire to an email service or swap for a direct <code style="font-family:monospace;">mailto:</code> link.</div>
+        </form>
 
       <div>
         <div class="card-outline" style="padding: 28px 30px 32px;">
@@ -58,17 +33,7 @@ current: contact
           </div>
         </div>
 
-        <form class="form" style="margin-top: 36px;" onsubmit="event.preventDefault(); this.querySelector('.done').style.display='block';">
-          <div class="label" style="margin-bottom: 6px;">Send a message</div>
-          <label><span class="lbl">Your name</span><input type="text" name="name" required></label>
-          <label><span class="lbl">Email</span><input type="email" name="email" required></label>
-          <label><span class="lbl">Message</span><textarea name="msg" rows="5" required></textarea></label>
-          <div style="display:flex; gap:16px; align-items:center; margin-top:6px;">
-            <button type="submit" class="btn" style="border:0; cursor:pointer;">Send →</button>
-            <span class="done" style="display:none; font-size:13px; color:var(--gold);">Thank you — we'll be in touch.</span>
-          </div>
-          <div style="font-size:12px; color:var(--muted); font-style:italic;">This form is a placeholder; wire to an email service or swap for a direct <code style="font-family:monospace;">mailto:</code> link.</div>
-        </form>
+       
       </div>
     </div>
   </div>

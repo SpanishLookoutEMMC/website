@@ -86,13 +86,6 @@ function buildLatestSermonHero() {
       <div class="video-frame">
         ${sermonIframe(s)}
       </div>
-      <div>
-        <div class="label">Watch</div>
-        <hr class="hr" style="margin-top:8px;">
-        <div style="margin-top:18px;">
-          <a href="${sermonVideoUrl(s)}" class="tlink">Watch on YouTube →</a>
-        </div>
-      </div>
     </div>
   </div>
 </section>`.trimStart();
