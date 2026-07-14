@@ -289,8 +289,8 @@ a { color: var(--ink); }
 
 /* ── Sections ──────────────────────────────────────────────── */
 section { position: relative; }
-.sec-pad   { padding: 96px 0; }
-.sec-pad-s { padding: 64px 0; }
+.sec-pad   { padding: 60px 0; }
+.sec-pad-s { padding: 45px 0; }
 
 .section-head {
   display: flex;
