@@ -52,79 +52,90 @@
     });
   }
 
-  // Church history timeline — reveal items + scale photos by viewport center
-  var timelineItems = document.querySelectorAll('[data-timeline-item]');
-  if (timelineItems.length) {
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      for (var i = 0; i < timelineItems.length; i++) {
-        timelineItems[i].classList.add('is-visible');
+  // Church history: highlight bottom-most fully visible event + show its image
+  var tlRoot = document.querySelector('[data-tl]');
+  if (tlRoot) {
+    var events = tlRoot.querySelectorAll('[data-tl-event]');
+    var figure = tlRoot.querySelector('[data-tl-figure]');
+    var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
+    var figureCap = tlRoot.querySelector('[data-tl-figure-caption]');
+    var activeEl = null;
+    var ticking = false;
+
+    function isFullyInViewport(el) {
+      var r = el.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      // Fully visible: top and bottom inside the viewport
+      return r.top >= 0 && r.bottom <= vh && r.height > 0;
+    }
+
+    function setFigure(eventEl) {
+      if (!figure || !figureImg) return;
+      var src = eventEl && eventEl.getAttribute('data-image');
+      var title = eventEl && eventEl.getAttribute('data-title');
+      if (!src) {
+        figure.classList.remove('is-visible');
+        figureImg.removeAttribute('src');
+        figureImg.alt = '';
+        if (figureCap) figureCap.textContent = '';
+        return;
       }
-    } else {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
+      if (figureImg.getAttribute('src') !== src) {
+        figureImg.src = src;
+        figureImg.alt = title || '';
+      }
+      if (figureCap) figureCap.textContent = title || '';
+      figure.classList.add('is-visible');
+    }
+
+    function updateActive() {
+      ticking = false;
+      var fully = [];
+      for (var i = 0; i < events.length; i++) {
+        if (isFullyInViewport(events[i])) fully.push(events[i]);
+      }
+
+      var next = null;
+      if (fully.length) {
+        // Bottom-most fully visible = last in document order among fully visible
+        next = fully[fully.length - 1];
+      } else {
+        // Fallback: nearest event whose top is above the viewport bottom
+        var vh = window.innerHeight || 0;
+        var best = null;
+        var bestBottom = -Infinity;
+        for (var j = 0; j < events.length; j++) {
+          var r = events[j].getBoundingClientRect();
+          if (r.top < vh && r.bottom > bestBottom) {
+            bestBottom = r.bottom;
+            best = events[j];
           }
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-      for (var j = 0; j < timelineItems.length; j++) {
-        io.observe(timelineItems[j]);
+        }
+        next = best;
+      }
+
+      if (next === activeEl) return;
+      if (activeEl) activeEl.classList.remove('is-active');
+      activeEl = next;
+      if (activeEl) {
+        activeEl.classList.add('is-active');
+        setFigure(activeEl);
+      } else {
+        setFigure(null);
       }
     }
 
-    // Photos grow toward the viewport center and shrink at the edges so more
-    // events fit on screen. Text stays full size; only image width changes.
-    var timelinePhotos = document.querySelectorAll('.timeline-photo');
-    if (timelinePhotos.length && !reduceMotion) {
-      var photoMin = 0.38;
-      var photoMax = 1;
-      var ticking = false;
-
-      function updateTimelinePhotoScales() {
-        ticking = false;
-        var vh = window.innerHeight || 1;
-        var centerY = vh * 0.5;
-        // Distance from center (as fraction of half-viewport) where scale hits min
-        var falloff = vh * 0.55;
-
-        for (var k = 0; k < timelinePhotos.length; k++) {
-          var photo = timelinePhotos[k];
-          var rect = photo.getBoundingClientRect();
-          // Skip far off-screen (still set a compact scale)
-          if (rect.bottom < -80 || rect.top > vh + 80) {
-            photo.style.setProperty('--photo-scale', String(photoMin));
-            continue;
-          }
-          var mid = (rect.top + rect.bottom) * 0.5;
-          var t = Math.abs(mid - centerY) / falloff;
-          if (t > 1) t = 1;
-          // Smooth falloff: full size at center, min at edges
-          var ease = 1 - t * t;
-          var scale = photoMin + (photoMax - photoMin) * ease;
-          photo.style.setProperty('--photo-scale', scale.toFixed(3));
-        }
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateActive);
       }
-
-      function requestPhotoScaleUpdate() {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(updateTimelinePhotoScales);
-        }
-      }
-
-      window.addEventListener('scroll', requestPhotoScaleUpdate, { passive: true });
-      window.addEventListener('resize', requestPhotoScaleUpdate);
-      // Images loading change heights — remeasure
-      for (var p = 0; p < timelinePhotos.length; p++) {
-        var img = timelinePhotos[p].querySelector('img');
-        if (img && !img.complete) {
-          img.addEventListener('load', requestPhotoScaleUpdate);
-        }
-      }
-      updateTimelinePhotoScales();
     }
+
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    updateActive();
   }
 })();
+
 

@@ -149,23 +149,36 @@ function buildRecentSermons() {
 // ---------------------------------------------------------------------------
 // Church history timeline (from src/timeline.json)
 
+function timelineYear(dateStr) {
+  const m = String(dateStr || '').match(/\d{4}/);
+  return m ? m[0] : '';
+}
+
 function buildTimeline() {
   if (!TIMELINE.length) return '';
+
+  let prevYear = '';
   const items = TIMELINE.map((e, i) => {
-    const side = i % 2 === 0 ? 'left' : 'right';
-    const img = e.image
-      ? `<div class="timeline-photo"><img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="600" height="400" loading="lazy" decoding="async"></div>`
-      : '';
+    const year = timelineYear(e.date);
+    const showYear = year && year !== prevYear;
+    if (year) prevYear = year;
     const detail = e.detail
-      ? `<p class="timeline-detail">${esc(e.detail)}</p>`
+      ? `<p class="tl-detail">${esc(e.detail)}</p>`
       : '';
+    const imgAttr = e.image ? ` data-image="images/timeline/${esc(e.image)}"` : '';
+    const yearHtml = showYear
+      ? `<span class="tl-year">${esc(year)}</span>`
+      : `<span class="tl-year tl-year--spacer" aria-hidden="true"></span>`;
     return `
-      <article class="timeline-item timeline-${side}" data-timeline-item>
-        <div class="timeline-marker" aria-hidden="true"></div>
-        <div class="timeline-card">
-          ${img}
-          <div class="timeline-date">${esc(e.date)}</div>
-          <h3 class="timeline-title">${esc(e.title)}</h3>
+      <article class="tl-event" data-tl-event${imgAttr} data-title="${esc(e.title)}">
+        <div class="tl-rail" aria-hidden="true">
+          ${yearHtml}
+          <span class="tl-dot"></span>
+        </div>
+        <div class="tl-branch" aria-hidden="true"></div>
+        <div class="tl-block">
+          <div class="tl-date">${esc(e.date)}</div>
+          <h3 class="tl-title">${esc(e.title)}</h3>
           ${detail}
         </div>
       </article>`;
@@ -173,17 +186,25 @@ function buildTimeline() {
 
   return `
 <!-- History timeline -->
-<section class="sec-pad timeline-section" id="history">
+<section class="sec-pad tl-section" id="history">
   <div class="wrap">
     <div class="label">Our history</div>
     <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
     <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
-    <div class="timeline" data-timeline>
-      <div class="timeline-line" aria-hidden="true"></div>
+  </div>
+  <div class="tl-layout wrap" data-tl>
+    <div class="tl-stream">
+      <div class="tl-axis-line" aria-hidden="true"></div>
       ${items.trimStart()}
     </div>
-    <p class="timeline-note">Not all pictures or dates are guaranteed to be correct.</p>
+    <aside class="tl-figure" data-tl-figure aria-live="polite">
+      <div class="tl-figure-frame">
+        <img data-tl-figure-img alt="" width="800" height="600">
+      </div>
+      <p class="tl-figure-caption" data-tl-figure-caption></p>
+    </aside>
   </div>
+  <p class="tl-note wrap">Not all pictures or dates are guaranteed to be correct.</p>
 </section>`.trimStart();
 }
 
