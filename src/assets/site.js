@@ -106,15 +106,25 @@
       }
       var br = block.getBoundingClientRect();
       var fr = frame.getBoundingClientRect();
-      // Start: mid-right of event block. End: mid-left of image frame.
+      // Stroke is centered on the path; CSS border sits in [fr.left, fr.left+bw].
+      // Align path to the center of the left border so it coincides with that edge.
+      var bw = parseFloat(window.getComputedStyle(frame).borderLeftWidth) || 2;
+      var half = bw / 2;
       var x1 = br.right;
       var y1 = br.top + br.height / 2;
-      var x2 = fr.left;
-      var y2 = fr.top + fr.height / 2;
-      // Horizontal first, then vertical if needed
-      var d = 'M ' + x1 + ' ' + y1 + ' L ' + x2 + ' ' + y1;
-      if (Math.abs(y2 - y1) > 1) {
-        d += ' L ' + x2 + ' ' + y2;
+      var xBorder = fr.left + half;
+      // Attach to the left border at the same y when possible; otherwise
+      // run vertical along the border center until we hit the frame edge.
+      var yTop = fr.top + half;
+      var yBot = fr.bottom - half;
+      var yAttach = y1;
+      if (y1 < yTop) yAttach = yTop;
+      else if (y1 > yBot) yAttach = yBot;
+
+      // Horizontal first → to the border centerline, then vertical along it if needed
+      var d = 'M ' + x1 + ' ' + y1 + ' L ' + xBorder + ' ' + y1;
+      if (Math.abs(yAttach - y1) > 0.5) {
+        d += ' L ' + xBorder + ' ' + yAttach;
       }
       connectorPath.setAttribute('d', d);
       connector.classList.add('is-visible');

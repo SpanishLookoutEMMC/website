@@ -520,6 +520,8 @@ section { position: relative; }
 
 /* ── History timeline (left rail + event blocks + sticky image) ─ */
 .tl-section {
+  --tl-link-color: var(--gold);
+  --tl-link-width: 2px;
   background: var(--paper);
   border-top: 1px solid var(--ink-line);
   border-bottom: 1px solid var(--ink-line);
@@ -713,8 +715,8 @@ section { position: relative; }
 }
 .tl-figure-frame {
   background: var(--cream);
-  /* Match connector stroke: gold, 2px */
-  border: 2px solid var(--gold);
+  /* Same color + width as the connector path (centered on this left edge) */
+  border: var(--tl-link-width) solid var(--tl-link-color);
   padding: 8px;
   box-sizing: border-box;
   min-height: 8rem;
@@ -742,11 +744,12 @@ section { position: relative; }
   overflow: visible;
 }
 .tl-connector path {
-  stroke: var(--gold);
-  stroke-width: 2;
-  stroke-linecap: square;
+  stroke: var(--tl-link-color);
+  stroke-width: var(--tl-link-width);
+  stroke-linecap: butt;
   stroke-linejoin: miter;
-  opacity: 0.9;
+  /* Path is drawn along the center of the image’s left border — no double stroke */
+  opacity: 1;
 }
 .tl-connector:not(.is-visible) path {
   stroke: transparent;
