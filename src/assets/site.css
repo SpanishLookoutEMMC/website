@@ -801,24 +801,25 @@ section { position: relative; }
 }
 
 .history-intro {
-  padding: 48px var(--gutter) 24px;
+  padding: 20px var(--gutter) 12px;
   max-width: var(--maxw);
   margin: 0 auto;
 }
 .history-intro .lead {
-  margin-top: 16px;
+  margin-top: 10px;
   max-width: 40rem;
 }
 .history-intro .tlink {
-  margin-top: 18px;
+  margin-top: 10px;
   display: inline-block;
 }
 
 .history-section {
-  min-height: 100vh;
+  /* Tall sections keep each event (and sticky image) on screen longer */
+  min-height: 140vh;
   display: flex;
-  align-items: center;
-  padding: 48px var(--gutter) 64px;
+  align-items: flex-start;
+  padding: 16px var(--gutter) 24px;
   border-top: 1px solid var(--ink-line);
   background: var(--cream);
 }
@@ -832,12 +833,15 @@ section { position: relative; }
   width: 100%;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 48px;
-  align-items: center;
+  gap: 24px;
+  align-items: start;
+  /* Stretch with the tall section so sticky image has room to travel */
+  min-height: calc(140vh - 40px);
 }
 .history-section--text-only .history-section__inner {
   grid-template-columns: 1fr;
   max-width: 40rem;
+  min-height: 0;
 }
 
 .history-section__date {
@@ -846,11 +850,11 @@ section { position: relative; }
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
 }
 .history-section__heading {
   font-family: var(--display);
-  font-size: clamp(28px, 4vw, 44px);
+  font-size: clamp(26px, 3.6vw, 40px);
   font-weight: 400;
   color: var(--ink);
   line-height: 1.15;
@@ -858,19 +862,32 @@ section { position: relative; }
   text-wrap: balance;
 }
 .history-section__detail {
-  margin: 18px 0 0;
-  font-size: 16px;
-  line-height: 1.65;
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.6;
   color: var(--muted);
   max-width: 36rem;
   text-wrap: pretty;
 }
+.history-section__content {
+  /* Sit near the top; image sticks beside it */
+  padding-top: 8px;
+  position: sticky;
+  top: 5.5rem; /* below history nav */
+  align-self: start;
+}
 .history-section__image {
   margin: 0;
+  position: sticky;
+  top: 5.5rem; /* below history nav — stays in view while the section scrolls */
+  align-self: start;
 }
 .history-section__image img {
   width: 100%;
   height: auto;
+  max-height: calc(100vh - 7rem);
+  object-fit: contain;
+  object-position: top center;
   display: block;
   border: 1px solid var(--ink-line);
   background: var(--cream-2);
@@ -878,7 +895,7 @@ section { position: relative; }
 
 .history-footer-note {
   text-align: center;
-  padding: 32px var(--gutter) 48px;
+  padding: 16px var(--gutter) 28px;
   font-size: 12px;
   color: var(--muted);
   font-style: italic;
@@ -898,11 +915,22 @@ section { position: relative; }
   }
   .history-section__inner {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 12px;
+    min-height: 0;
   }
   .history-section {
-    min-height: 90vh;
-    padding-top: 36px;
-    padding-bottom: 48px;
+    min-height: 110vh;
+    padding: 12px var(--gutter) 20px;
+  }
+  .history-section__content {
+    position: static;
+  }
+  .history-section__image {
+    /* On mobile, pin image under the nav for most of the section */
+    top: 4.75rem;
+    order: -1;
+  }
+  .history-section__image img {
+    max-height: 42vh;
   }
 }

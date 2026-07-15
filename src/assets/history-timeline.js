@@ -99,27 +99,28 @@
       var image = section.querySelector('.history-section__image');
       var detail = section.querySelector('.history-section__detail');
 
-      if (heading) gsap.set(heading, { opacity: 0, y: 40 });
-      if (image) gsap.set(image, { opacity: 0, y: 28 });
-      if (detail) gsap.set(detail, { opacity: 0, y: 20 });
+      if (heading) gsap.set(heading, { opacity: 0, y: 24 });
+      if (image) gsap.set(image, { opacity: 0, y: 16 });
+      if (detail) gsap.set(detail, { opacity: 0, y: 12 });
 
+      // Fade in early; stay visible for the whole section (no mid-section reverse)
       var sectionTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: 'top 70%',
-          end: '+=40%',
-          toggleActions: 'play reverse play reverse'
+          start: 'top 90%',
+          end: 'bottom top',
+          toggleActions: 'play none none reverse'
         }
       });
 
       if (image) {
-        sectionTl.to(image, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, 0);
+        sectionTl.to(image, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0);
       }
       if (heading) {
-        sectionTl.to(heading, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, 0.15);
+        sectionTl.to(heading, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' }, 0.08);
       }
       if (detail) {
-        sectionTl.to(detail, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.3);
+        sectionTl.to(detail, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.16);
       }
     });
   }
