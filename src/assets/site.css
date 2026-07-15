@@ -144,6 +144,27 @@ a { color: var(--ink); }
   transition: color .15s, border-color .15s;
 }
 .tlink:hover { color: var(--gold); border-color: var(--gold); }
+.tlink.tlink-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
+
+/* Brand icons (Facebook, YouTube, WhatsApp) via CSS mask */
+.icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+  vertical-align: -0.15em;
+}
+.icon-facebook { --icon: url("../images/icons/facebook.svg"); }
+.icon-youtube  { --icon: url("../images/icons/youtube.svg"); }
+.icon-whatsapp { --icon: url("../images/icons/whatsapp.svg"); }
+.icon-email    { --icon: url("../images/icons/email.svg"); }
 
 .btn {
   display: inline-block;
@@ -158,6 +179,11 @@ a { color: var(--ink); }
   transition: background .15s, color .15s;
 }
 .btn:hover { background: var(--gold); color: #fff; }
+.btn.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
 
 /* ── Header ────────────────────────────────────────────────── */
 .site-header {
@@ -589,6 +615,26 @@ section { position: relative; }
 .sermon-row .arrow { font-size: 14px; color: var(--gold); }
 
 /* ── Form ──────────────────────────────────────────────────── */
+/* Contact page — connect block above the message form */
+.contact-connect-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+.contact-connect-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+@media (min-width: 720px) {
+  .contact-connect-links {
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 48px;
+  }
+}
+
 .form { display: grid; gap: 18px; }
 .form label { display: block; }
 .form .lbl {
@@ -642,6 +688,28 @@ section { position: relative; }
 .site-footer ul { list-style: none; margin: 0; padding: 0; font-size: 14px; line-height: 1.9; }
 .site-footer ul a { color: var(--text); text-decoration: none; opacity: 0.78; }
 .site-footer ul a:hover { opacity: 1; color: var(--ink); }
+.site-footer .footer-social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+}
+.site-footer .footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  opacity: 0.72;
+  transition: opacity .15s, color .15s;
+}
+.site-footer .footer-social a:hover {
+  opacity: 1;
+  color: var(--ink);
+}
+.site-footer .footer-social .icon {
+  width: 20px;
+  height: 20px;
+}
 .site-footer .legal {
   max-width: var(--maxw);
   margin: 48px auto 0;

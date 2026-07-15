@@ -150,7 +150,7 @@ function buildLatestSermonCard() {
           ${sermonIframe(s)}
         </div>
         <div style="margin-top:14px; display:flex; gap:22px; flex-wrap:wrap;">
-          <a href="${sermonVideoUrl(s)}" class="tlink">Watch on YouTube →</a>
+          <a href="${sermonVideoUrl(s)}" class="tlink tlink-icon"><span class="icon icon-youtube" aria-hidden="true"></span>Watch on YouTube →</a>
           <a href="sermons.html" class="tlink">Sermon archive →</a>
         </div>`.trimStart();
 }
