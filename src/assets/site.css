@@ -413,6 +413,70 @@ section { position: relative; }
 .prose strong { color: var(--ink); font-weight: 600; }
 .prose hr { margin: 48px 0; border: 0; height: 1px; background: var(--ink-line); }
 
+/* ── History timeline ──────────────────────────────────────── */
+.timeline { margin-top: 56px; }
+.tl-year {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 36px;
+}
+.tl-year .yr {
+  font-family: var(--display);
+  font-size: 34px;
+  color: var(--ink);
+  line-height: 1;
+  text-align: right;
+  padding-top: 2px;
+}
+.tl-events {
+  position: relative;
+  border-left: 1px solid var(--ink-line);
+  padding: 0 0 48px 34px;
+  display: grid;
+  gap: 22px;
+}
+.tl-year:last-child .tl-events { padding-bottom: 8px; border-left-color: transparent; }
+.tl-events::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 8px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+.tl-event .tl-date {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+}
+.tl-event .tl-text {
+  font-size: 15.5px;
+  color: var(--text);
+  line-height: 1.6;
+  margin-top: 2px;
+  max-width: 640px;
+  text-wrap: pretty;
+}
+.tl-event .tl-note {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+.tl-footnote {
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 28px;
+}
+@media (max-width: 680px) {
+  .tl-year { grid-template-columns: 1fr; gap: 12px; }
+  .tl-year .yr { text-align: left; padding-left: 34px; font-size: 30px; }
+}
+
 /* ── Team card ─────────────────────────────────────────────── */
 .team-card { text-align: left; }
 .team-card .role {
