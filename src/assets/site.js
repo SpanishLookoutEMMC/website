@@ -78,15 +78,16 @@
       if (!figure || !eventEl) return;
       var block = eventEl.querySelector('.tl-block');
       if (!block) return;
-      // Image panel ≈ twice the event block width (capped to column / viewport)
+      // Measure the image grid track by stretching to 100% first
+      figure.style.justifySelf = 'stretch';
+      figure.style.width = '100%';
+      figure.style.maxWidth = '100%';
+      var trackW = figure.getBoundingClientRect().width;
+      // Target ≈ 2× event card, but stay inside the right column only
       var target = Math.round(block.getBoundingClientRect().width * 2);
-      var col = figure.parentElement;
-      var colW = col ? col.getBoundingClientRect().width : target;
-      // Leave a little gutter; don't exceed column or 90vw
-      var maxW = Math.min(colW, window.innerWidth * 0.9);
-      var w = Math.max(160, Math.min(target, maxW));
+      var w = Math.max(160, Math.min(target, trackW));
       figure.style.width = w + 'px';
-      figure.style.maxWidth = w + 'px';
+      figure.style.maxWidth = '100%';
       figure.style.justifySelf = 'end';
     }
 

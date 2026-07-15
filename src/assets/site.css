@@ -526,15 +526,16 @@ section { position: relative; }
 }
 .tl-layout {
   display: grid;
-  /* Image column can grow large (≈2× event block, set in JS) */
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 48%);
-  gap: 24px 48px;
+  /* Events left, image column further right (never share space) */
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 1.05fr);
+  gap: 24px 56px;
   align-items: start;
   margin-top: 40px;
   position: relative;
 }
 .tl-stream {
   position: relative;
+  min-width: 0; /* keep stream inside its grid track */
   --tl-rail-w: 4.5rem;
   --tl-dot: 11px;
   --tl-branch: 28px;
@@ -674,9 +675,10 @@ section { position: relative; }
   /* Sit lower in the viewport so the path has room to run */
   top: 32vh;
   align-self: start;
-  justify-self: stretch;
+  justify-self: end; /* hug the right edge of the image column */
   width: 100%;
-  max-width: none;
+  max-width: 100%; /* never spill into the events column */
+  box-sizing: border-box;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease;
@@ -754,12 +756,12 @@ section { position: relative; }
   .sermon-row { grid-template-columns: 1fr; gap: 4px; }
   .sermon-row .arrow { display: none; }
   .tl-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(240px, 46%);
-    gap: 20px 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 1fr);
+    gap: 20px 40px;
   }
   .tl-stream { --tl-rail-w: 3.75rem; --tl-branch: 22px; }
   .tl-title { font-size: 18px; }
-  .tl-figure { top: 28vh; }
+  .tl-figure { top: 28vh; max-width: 100%; }
   :root { --gutter: 24px; }
 }
 @media (max-width: 680px) {
