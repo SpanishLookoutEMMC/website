@@ -164,6 +164,7 @@ a { color: var(--ink); }
 .icon-facebook { --icon: url("../images/icons/facebook.svg"); }
 .icon-youtube  { --icon: url("../images/icons/youtube.svg"); }
 .icon-whatsapp { --icon: url("../images/icons/whatsapp.svg"); }
+.icon-email    { --icon: url("../images/icons/email.svg"); }
 
 .btn {
   display: inline-block;
