@@ -518,6 +518,31 @@ section { position: relative; }
   color: var(--muted);
 }
 
+/* ── Google Calendar embed ─────────────────────────────────── */
+.gcal-embed {
+  width: 100%;
+  max-width: 960px;
+  background: var(--cream);
+  padding: 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.gcal-embed iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 0;
+  background: var(--cream);
+}
+@media (max-width: 680px) {
+  .gcal-embed {
+    padding: 8px;
+  }
+  .gcal-embed iframe {
+    height: 480px;
+  }
+}
+
 /* ── History timeline (left rail + event blocks + sticky image) ─ */
 .tl-section {
   --tl-link-color: var(--gold);
@@ -839,5 +864,5 @@ section { position: relative; }
   .nav-toggle { display: inline-block; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hero-photo .content { min-height: 560px; padding-top: 100px; }
-  .sec-pad { padding: 64px 0; }
+  .sec-pad { padding: 34px 0; }
 }
