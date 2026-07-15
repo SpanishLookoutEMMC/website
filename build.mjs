@@ -151,8 +151,9 @@ function buildRecentSermons() {
 
 function buildTimeline() {
   if (!TIMELINE.length) return '';
-  const items = TIMELINE.map((e, i) => {
-    const side = i % 2 === 0 ? 'left' : 'right';
+  const iconPicture = `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21 4H3c-.55 0-1 .45-1 1v14c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM8.4 7.8a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM20 18H4l4.2-5.6 2.8 3.4 3.7-4.8L20 18z"/></svg>`;
+  const iconCross = `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M13.6 2.5h-3.2v5.9H4.5v3.2h5.9v9.9h3.2v-9.9h5.9V8.4h-5.9z"/></svg>`;
+  const items = TIMELINE.map((e) => {
     const img = e.image
       ? `<div class="timeline-photo"><img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="600" height="400" loading="lazy" decoding="async"></div>`
       : '';
@@ -160,13 +161,13 @@ function buildTimeline() {
       ? `<p class="timeline-detail">${esc(e.detail)}</p>`
       : '';
     return `
-      <article class="timeline-item timeline-${side}" data-timeline-item>
-        <div class="timeline-marker" aria-hidden="true"></div>
+      <article class="timeline-item" data-timeline-item>
+        <div class="timeline-badge" aria-hidden="true">${e.image ? iconPicture : iconCross}</div>
         <div class="timeline-card">
           ${img}
-          <div class="timeline-date">${esc(e.date)}</div>
           <h3 class="timeline-title">${esc(e.title)}</h3>
           ${detail}
+          <span class="timeline-date">${esc(e.date)}</span>
         </div>
       </article>`;
   }).join('\n');
@@ -179,7 +180,6 @@ function buildTimeline() {
     <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
     <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
     <div class="timeline" data-timeline>
-      <div class="timeline-line" aria-hidden="true"></div>
       ${items.trimStart()}
     </div>
     <p class="timeline-note">Not all pictures or dates are guaranteed to be correct.</p>

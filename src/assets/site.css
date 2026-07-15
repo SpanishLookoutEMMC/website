@@ -519,80 +519,117 @@ section { position: relative; }
 }
 
 /* ── History timeline ──────────────────────────────────────── */
+/* Vertical timeline in the CodyHouse style: a center line, round
+   icon badges on the line, alternating cards with arrows, dates
+   floating on the opposite side, and bounce-in scroll animations. */
 .timeline-section {
   background: var(--paper);
   border-top: 1px solid var(--ink-line);
   border-bottom: 1px solid var(--ink-line);
+  /* Cards animate in from ±100px — keep them from widening the page */
+  overflow: hidden;
 }
 .timeline {
   position: relative;
   margin-top: 56px;
   padding: 8px 0 24px;
 }
-.timeline-line {
+.timeline::before {
+  /* the vertical line */
+  content: '';
   position: absolute;
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 1px;
+  width: 4px;
+  margin-left: -2px;
   background: var(--ink-line);
-  transform: translateX(-50%);
 }
 .timeline-item {
   position: relative;
-  width: calc(50% - 36px);
-  margin-bottom: 48px;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
+  margin: 56px 0;
 }
-.timeline-item.is-visible {
-  opacity: 1;
-  transform: none;
-}
-.timeline-left  { margin-right: auto; padding-right: 0; }
-.timeline-right { margin-left: auto; }
-.timeline-marker {
+.timeline-item::after { content: ''; display: table; clear: both; }
+.timeline-item:first-child { margin-top: 0; }
+.timeline-item:last-child  { margin-bottom: 0; }
+.timeline-badge {
   position: absolute;
-  top: 28px;
-  width: 11px;
-  height: 11px;
+  top: 0;
+  left: 50%;
+  width: 54px;
+  height: 54px;
+  margin-left: -27px;
   border-radius: 50%;
-  background: var(--cream);
-  border: 2px solid var(--gold);
+  background: var(--gold);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 1;
-  box-sizing: border-box;
+  box-shadow: 0 0 0 4px var(--paper), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(38, 58, 43, 0.05);
+  transform: translateZ(0);
 }
-.timeline-left  .timeline-marker { right: -42px; transform: translateX(50%); }
-.timeline-right .timeline-marker { left: -42px;  transform: translateX(-50%); }
+.timeline-badge svg { display: block; }
 .timeline-card {
-  border: 1px solid var(--ink-line);
+  position: relative;
+  width: 45%;
   background: var(--cream);
-  overflow: hidden;
+  border: 1px solid var(--ink-line);
+  box-shadow: 0 3px 0 var(--ink-wash);
+  transform: translateZ(0);
 }
-.timeline-photo {
-  --photo-scale: 0.42;
-  background: var(--cream-2);
-  text-align: center;
-  /* Keep a little air so scaled photos don't collide with the date */
-  min-height: 0;
+.timeline-item:nth-child(even) .timeline-card { float: right; }
+.timeline-card::before,
+.timeline-card::after {
+  /* triangle pointing at the line (border layer + fill layer) */
+  content: '';
+  position: absolute;
+  top: 20px;
+  height: 0;
+  width: 0;
+  border: 8px solid transparent;
 }
+.timeline-card::before { left: 100%; border-left-color: var(--ink-line); }
+.timeline-card::after  { left: 100%; margin-left: -1.5px; border-left-color: var(--cream); }
+.timeline-item:nth-child(even) .timeline-card::before {
+  left: auto;
+  right: 100%;
+  border-left-color: transparent;
+  border-right-color: var(--ink-line);
+}
+.timeline-item:nth-child(even) .timeline-card::after {
+  left: auto;
+  right: 100%;
+  margin-left: 0;
+  margin-right: -1.5px;
+  border-left-color: transparent;
+  border-right-color: var(--cream);
+}
+.timeline-photo { background: var(--cream-2); }
 .timeline-photo img {
-  /* Width drives layout height so off-center photos free vertical space */
-  width: calc(100% * var(--photo-scale));
-  max-width: 100%;
+  width: 100%;
   height: auto;
+  /* Tall scans letterbox on cream instead of towering over the line */
+  max-height: 360px;
+  object-fit: contain;
   display: block;
-  margin: 0 auto;
-  /* No CSS transition on width — scroll handler updates every frame */
 }
 .timeline-date {
+  /* floats on the opposite side of the line from the card */
+  position: absolute;
+  width: 100%;
+  left: 122%;
+  top: 20px;
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
-  padding: 18px 22px 0;
+}
+.timeline-item:nth-child(even) .timeline-date {
+  left: auto;
+  right: 122%;
+  text-align: right;
 }
 .timeline-title {
   font-family: var(--display);
@@ -600,14 +637,14 @@ section { position: relative; }
   font-weight: 400;
   color: var(--ink);
   line-height: 1.2;
-  margin: 8px 22px 18px;
+  margin: 18px 22px;
   text-wrap: balance;
 }
 .timeline-detail {
   font-size: 14.5px;
   line-height: 1.6;
   color: var(--muted);
-  margin: -6px 22px 18px;
+  margin: -8px 22px 18px;
   text-wrap: pretty;
 }
 .timeline-note {
@@ -616,6 +653,30 @@ section { position: relative; }
   color: var(--muted);
   font-style: italic;
   text-align: center;
+}
+
+/* Scroll animations — desktop only, like the reference timeline */
+@media (min-width: 681px) {
+  .timeline-item.is-hidden .timeline-badge,
+  .timeline-item.is-hidden .timeline-card { visibility: hidden; }
+  .timeline-item.bounce-in .timeline-badge { animation: tl-bounce-1 0.6s; }
+  .timeline-item.bounce-in .timeline-card  { animation: tl-bounce-2 0.6s; }
+  .timeline-item:nth-child(even).bounce-in .timeline-card { animation: tl-bounce-2-inverse 0.6s; }
+}
+@keyframes tl-bounce-1 {
+  0%   { opacity: 0; transform: scale(0.5); }
+  60%  { opacity: 1; transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+@keyframes tl-bounce-2 {
+  0%   { opacity: 0; transform: translateX(-100px); }
+  60%  { opacity: 1; transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+@keyframes tl-bounce-2-inverse {
+  0%   { opacity: 0; transform: translateX(100px); }
+  60%  { opacity: 1; transform: translateX(-20px); }
+  100% { transform: translateX(0); }
 }
 
 /* ── Responsive ────────────────────────────────────────────── */
@@ -630,9 +691,6 @@ section { position: relative; }
   .quilt .col > div { height: 200px; }
   .sermon-row { grid-template-columns: 1fr; gap: 4px; }
   .sermon-row .arrow { display: none; }
-  .timeline-item { width: calc(50% - 28px); }
-  .timeline-left  .timeline-marker { right: -34px; }
-  .timeline-right .timeline-marker { left: -34px; }
   .timeline-title { font-size: 22px; }
   :root { --gutter: 24px; }
 }
@@ -661,29 +719,50 @@ section { position: relative; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hero-photo .content { min-height: 560px; padding-top: 100px; }
   .sec-pad { padding: 64px 0; }
-  .timeline-line { left: 16px; }
-  .timeline-item {
-    width: 100%;
+  /* Timeline collapses to a single line on the left, cards to the right */
+  .timeline::before { left: 18px; margin-left: 0; }
+  .timeline-badge {
+    left: 0;
     margin-left: 0;
-    margin-right: 0;
-    padding-left: 40px;
+    width: 40px;
+    height: 40px;
   }
-  .timeline-left .timeline-marker,
-  .timeline-right .timeline-marker {
-    left: 16px;
-    right: auto;
-    transform: translateX(-50%);
+  .timeline-badge svg { width: 18px; height: 18px; }
+  .timeline-item { margin: 40px 0; }
+  .timeline-card { width: auto; margin-left: 58px; }
+  .timeline-item:nth-child(even) .timeline-card { float: none; }
+  .timeline-card::before,
+  .timeline-item:nth-child(even) .timeline-card::before {
+    top: 12px;
+    left: auto;
+    right: 100%;
+    border-left-color: transparent;
+    border-right-color: var(--ink-line);
+  }
+  .timeline-card::after,
+  .timeline-item:nth-child(even) .timeline-card::after {
+    top: 12px;
+    left: auto;
+    right: 100%;
+    margin-left: 0;
+    margin-right: -1.5px;
+    border-left-color: transparent;
+    border-right-color: var(--cream);
+  }
+  .timeline-date,
+  .timeline-item:nth-child(even) .timeline-date {
+    position: static;
+    display: block;
+    width: auto;
+    text-align: left;
+    margin: -8px 22px 18px;
   }
   .timeline-title { font-size: 20px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .timeline-item {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .timeline-photo {
-    --photo-scale: 1;
-  }
+  .timeline-item.is-hidden .timeline-badge,
+  .timeline-item.is-hidden .timeline-card { visibility: visible; }
+  .timeline-badge,
+  .timeline-card { animation: none !important; }
 }
