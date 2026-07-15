@@ -60,7 +60,6 @@
     var events = tlRoot.querySelectorAll('[data-tl-event]');
     var figure = tlRoot.querySelector('[data-tl-figure]');
     var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
-    var figureCap = tlRoot.querySelector('[data-tl-figure-caption]');
     var connector = document.querySelector('[data-tl-connector]');
     var connectorPath = document.querySelector('[data-tl-connector-path]');
     var activeEl = null;
@@ -129,7 +128,6 @@
         figure.classList.remove('is-visible');
         figureImg.removeAttribute('src');
         figureImg.alt = '';
-        if (figureCap) figureCap.textContent = '';
         figure.style.width = '';
         figure.style.maxWidth = '';
         updateConnector();
@@ -139,7 +137,6 @@
         figureImg.src = src;
         figureImg.alt = title || '';
       }
-      if (figureCap) figureCap.textContent = title || '';
       figure.classList.add('is-visible');
       sizeFigureToEvent(eventEl);
       // After layout / image load, redraw path

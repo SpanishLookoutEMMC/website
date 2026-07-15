@@ -201,7 +201,6 @@ function buildTimeline() {
       <div class="tl-figure-frame">
         <img data-tl-figure-img alt="" width="800" height="600">
       </div>
-      <p class="tl-figure-caption" data-tl-figure-caption></p>
     </aside>
     <!-- Viewport-fixed L-path from active event to image (drawn in JS) -->
     <svg class="tl-connector" data-tl-connector aria-hidden="true">

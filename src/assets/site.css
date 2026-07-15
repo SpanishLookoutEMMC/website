@@ -691,9 +691,10 @@ section { position: relative; }
   pointer-events: auto;
 }
 .tl-figure-frame {
-  background: var(--cream-2);
+  background: var(--cream);
   border: 1px solid var(--ink-line);
-  overflow: hidden;
+  padding: 8px;
+  box-sizing: border-box;
   min-height: 8rem;
   display: flex;
   align-items: center;
@@ -706,13 +707,6 @@ section { position: relative; }
   object-fit: contain;
   object-position: center;
   display: block;
-}
-.tl-figure-caption {
-  margin: 10px 0 0;
-  font-size: 13px;
-  line-height: 1.4;
-  color: var(--muted);
-  text-wrap: pretty;
 }
 
 /* L-shaped connector: event → horizontal → vertical → image */
