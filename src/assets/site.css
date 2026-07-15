@@ -219,15 +219,23 @@ a { color: var(--ink); }
 /* Desktop submenu (About) */
 .nav-item.has-submenu {
   position: relative;
-  /* Extend hit area slightly below the label so the pointer never “falls through” */
-  padding-bottom: 12px;
-  margin-bottom: -12px;
+  display: flex;
+  align-items: center;
+}
+/* Invisible bridge so the pointer never “falls through” between label and menu */
+.nav-item.has-submenu::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 12px;
 }
 .nav-submenu {
   display: none;
   position: absolute;
-  /* Flush under the hit area — no gap the mouse has to cross */
-  top: 100%;
+  /* Sit just below the bridge */
+  top: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%);
   min-width: 12.5rem;
@@ -263,19 +271,22 @@ a { color: var(--ink); }
     display: block;
   }
 }
-/* Small caret on About */
+/* Small caret on About — flex so it doesn’t shift the label baseline */
+.nav-parent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
 .nav-parent::after {
   content: "";
-  display: inline-block;
+  display: block;
   width: 0;
   height: 0;
-  margin-left: 6px;
-  margin-bottom: 1px;
   border-left: 3.5px solid transparent;
   border-right: 3.5px solid transparent;
   border-top: 4px solid currentColor;
   opacity: 0.7;
-  vertical-align: middle;
+  flex-shrink: 0;
 }
 .site-header.over-hero .nav-submenu {
   background: rgba(15, 25, 18, 0.96);
@@ -1025,14 +1036,17 @@ section { position: relative; }
     display: flex;
     flex-direction: column;
     gap: 0;
-    padding-bottom: 0;
-    margin-bottom: 0;
+  }
+  .nav.open .nav-item.has-submenu::after {
+    display: none; /* desktop hover bridge only */
   }
   .nav.open .nav-submenu {
     display: flex;
     flex-direction: column;
     position: static;
     transform: none;
+    top: auto;
+    left: auto;
     min-width: 0;
     padding: 0 0 4px 16px;
     margin: 0;
@@ -1069,7 +1083,6 @@ section { position: relative; }
   .nav.open .nav-item.has-submenu {
     border-bottom: 1px solid var(--ink-line);
     padding-bottom: 4px;
-    margin-bottom: 0;
   }
   .nav.open .nav-submenu a:last-child {
     border-bottom: 0;
