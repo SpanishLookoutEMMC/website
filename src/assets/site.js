@@ -52,79 +52,218 @@
     });
   }
 
-  // Church history timeline — reveal items + scale photos by viewport center
-  var timelineItems = document.querySelectorAll('[data-timeline-item]');
-  if (timelineItems.length) {
-    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion || !('IntersectionObserver' in window)) {
-      for (var i = 0; i < timelineItems.length; i++) {
-        timelineItems[i].classList.add('is-visible');
+  // Church history: highlight bottom-most fully visible event + show its image.
+  // Click pins an entry until the user scrolls again.
+  // L-shaped connector: event → horizontal → vertical → image.
+  var tlRoot = document.querySelector('[data-tl]');
+  if (tlRoot) {
+    var events = tlRoot.querySelectorAll('[data-tl-event]');
+    var figure = tlRoot.querySelector('[data-tl-figure]');
+    var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
+    var connector = document.querySelector('[data-tl-connector]');
+    var connectorPath = document.querySelector('[data-tl-connector-path]');
+    var activeEl = null;
+    var pinnedEl = null;
+    var ticking = false;
+
+    function isFullyInViewport(el) {
+      var r = el.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      // Fully visible: top and bottom inside the viewport
+      return r.top >= 0 && r.bottom <= vh && r.height > 0;
+    }
+
+    function isFloatingFigure() {
+      return window.matchMedia('(max-width: 900px)').matches;
+    }
+
+    function sizeFigureToEvent(eventEl) {
+      if (!figure || !eventEl) return;
+      var block = eventEl.querySelector('.tl-block');
+      if (!block) return;
+
+      // Narrow viewports: fixed float in the top half (CSS), size ~2× card, cap to viewport
+      if (isFloatingFigure()) {
+        var targetFloat = Math.round(block.getBoundingClientRect().width * 2);
+        var maxFloat = Math.min(window.innerWidth * 0.92, 28 * 16); // ~28rem
+        var wFloat = Math.max(160, Math.min(targetFloat, maxFloat));
+        figure.style.justifySelf = '';
+        figure.style.width = wFloat + 'px';
+        figure.style.maxWidth = wFloat + 'px';
+        return;
       }
-    } else {
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
-          }
-        });
-      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
-      for (var j = 0; j < timelineItems.length; j++) {
-        io.observe(timelineItems[j]);
+
+      // Desktop: measure the image grid track by stretching to 100% first
+      figure.style.justifySelf = 'stretch';
+      figure.style.width = '100%';
+      figure.style.maxWidth = '100%';
+      var trackW = figure.getBoundingClientRect().width;
+      // Target ≈ 2× event card, but stay inside the right column only
+      var target = Math.round(block.getBoundingClientRect().width * 2);
+      var w = Math.max(160, Math.min(target, trackW));
+      figure.style.width = w + 'px';
+      figure.style.maxWidth = '100%';
+      figure.style.justifySelf = 'end';
+    }
+
+    function updateConnector() {
+      if (!connector || !connectorPath) return;
+      // No connector on narrow layouts where the image floats at the top
+      if (isFloatingFigure() || !activeEl || !figure || !figure.classList.contains('is-visible')) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var block = activeEl.querySelector('.tl-block');
+      var frame = figure.querySelector('.tl-figure-frame') || figure;
+      if (!block) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var br = block.getBoundingClientRect();
+      var fr = frame.getBoundingClientRect();
+      // Stroke is centered on the path; CSS border sits in [fr.left, fr.left+bw].
+      // Align path to the center of the left border so it coincides with that edge.
+      var bw = parseFloat(window.getComputedStyle(frame).borderLeftWidth) || 2;
+      var half = bw / 2;
+      var x1 = br.right;
+      var y1 = br.top + br.height / 2;
+      var xBorder = fr.left + half;
+      // Attach to the left border at the same y when possible; otherwise
+      // run vertical along the border center until we hit the frame edge.
+      var yTop = fr.top + half;
+      var yBot = fr.bottom - half;
+      var yAttach = y1;
+      if (y1 < yTop) yAttach = yTop;
+      else if (y1 > yBot) yAttach = yBot;
+
+      // Horizontal first → to the border centerline, then vertical along it if needed
+      var d = 'M ' + x1 + ' ' + y1 + ' L ' + xBorder + ' ' + y1;
+      if (Math.abs(yAttach - y1) > 0.5) {
+        d += ' L ' + xBorder + ' ' + yAttach;
+      }
+      connectorPath.setAttribute('d', d);
+      connector.classList.add('is-visible');
+    }
+
+    function setFigure(eventEl) {
+      if (!figure || !figureImg) return;
+      var src = eventEl && eventEl.getAttribute('data-image');
+      var title = eventEl && eventEl.getAttribute('data-title');
+      if (!src) {
+        figure.classList.remove('is-visible');
+        figureImg.removeAttribute('src');
+        figureImg.alt = '';
+        figure.style.width = '';
+        figure.style.maxWidth = '';
+        updateConnector();
+        return;
+      }
+      if (figureImg.getAttribute('src') !== src) {
+        figureImg.src = src;
+        figureImg.alt = title || '';
+      }
+      figure.classList.add('is-visible');
+      sizeFigureToEvent(eventEl);
+      // After layout / image load, redraw path
+      if (figureImg.complete) {
+        updateConnector();
+      } else {
+        figureImg.addEventListener('load', updateConnector, { once: true });
+        // still draw toward the frame box immediately
+        updateConnector();
       }
     }
 
-    // Photos grow toward the viewport center and shrink at the edges so more
-    // events fit on screen. Text stays full size; only image width changes.
-    var timelinePhotos = document.querySelectorAll('.timeline-photo');
-    if (timelinePhotos.length && !reduceMotion) {
-      var photoMin = 0.38;
-      var photoMax = 1;
-      var ticking = false;
-
-      function updateTimelinePhotoScales() {
-        ticking = false;
-        var vh = window.innerHeight || 1;
-        var centerY = vh * 0.5;
-        // Distance from center (as fraction of half-viewport) where scale hits min
-        var falloff = vh * 0.55;
-
-        for (var k = 0; k < timelinePhotos.length; k++) {
-          var photo = timelinePhotos[k];
-          var rect = photo.getBoundingClientRect();
-          // Skip far off-screen (still set a compact scale)
-          if (rect.bottom < -80 || rect.top > vh + 80) {
-            photo.style.setProperty('--photo-scale', String(photoMin));
-            continue;
-          }
-          var mid = (rect.top + rect.bottom) * 0.5;
-          var t = Math.abs(mid - centerY) / falloff;
-          if (t > 1) t = 1;
-          // Smooth falloff: full size at center, min at edges
-          var ease = 1 - t * t;
-          var scale = photoMin + (photoMax - photoMin) * ease;
-          photo.style.setProperty('--photo-scale', scale.toFixed(3));
+    function applyActive(next) {
+      if (next !== activeEl) {
+        if (activeEl) activeEl.classList.remove('is-active');
+        activeEl = next;
+        if (activeEl) {
+          activeEl.classList.add('is-active');
+          setFigure(activeEl);
+        } else {
+          setFigure(null);
         }
+      } else if (activeEl) {
+        // Same event — still refresh size/connector (scroll moves sticky image)
+        sizeFigureToEvent(activeEl);
+        updateConnector();
+      } else {
+        updateConnector();
       }
-
-      function requestPhotoScaleUpdate() {
-        if (!ticking) {
-          ticking = true;
-          window.requestAnimationFrame(updateTimelinePhotoScales);
-        }
-      }
-
-      window.addEventListener('scroll', requestPhotoScaleUpdate, { passive: true });
-      window.addEventListener('resize', requestPhotoScaleUpdate);
-      // Images loading change heights — remeasure
-      for (var p = 0; p < timelinePhotos.length; p++) {
-        var img = timelinePhotos[p].querySelector('img');
-        if (img && !img.complete) {
-          img.addEventListener('load', requestPhotoScaleUpdate);
-        }
-      }
-      updateTimelinePhotoScales();
     }
+
+    function pickScrollActive() {
+      var fully = [];
+      for (var i = 0; i < events.length; i++) {
+        if (isFullyInViewport(events[i])) fully.push(events[i]);
+      }
+
+      if (fully.length) {
+        // Bottom-most fully visible = last in document order among fully visible
+        return fully[fully.length - 1];
+      }
+
+      // Fallback: nearest event whose top is above the viewport bottom
+      var vh = window.innerHeight || 0;
+      var best = null;
+      var bestBottom = -Infinity;
+      for (var j = 0; j < events.length; j++) {
+        var r = events[j].getBoundingClientRect();
+        if (r.top < vh && r.bottom > bestBottom) {
+          bestBottom = r.bottom;
+          best = events[j];
+        }
+      }
+      return best;
+    }
+
+    function updateActive() {
+      ticking = false;
+      if (pinnedEl) {
+        applyActive(pinnedEl);
+        return;
+      }
+      applyActive(pickScrollActive());
+    }
+
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateActive);
+      }
+    }
+
+    for (var c = 0; c < events.length; c++) {
+      events[c].addEventListener('click', function () {
+        pinnedEl = this;
+        applyActive(this);
+      });
+      events[c].addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        pinnedEl = this;
+        applyActive(this);
+      });
+      // Clickable without changing semantics for assistive tech
+      if (!events[c].hasAttribute('tabindex')) {
+        events[c].setAttribute('tabindex', '0');
+        events[c].setAttribute('role', 'button');
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      // Any real scroll returns control to the auto “bottom-most” rule
+      if (pinnedEl) pinnedEl = null;
+      requestUpdate();
+    }, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    updateActive();
   }
 })();
+
+
+
 
