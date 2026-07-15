@@ -178,6 +178,7 @@ function buildTimeline() {
     <div class="label">Our history</div>
     <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
     <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
+    <p style="margin-top:20px;"><a href="history.html" class="btn">Explore the interactive timeline →</a></p>
     <div class="timeline" data-timeline>
       <div class="timeline-line" aria-hidden="true"></div>
       ${items.trimStart()}
@@ -185,6 +186,71 @@ function buildTimeline() {
     <p class="timeline-note">Not all pictures or dates are guaranteed to be correct.</p>
   </div>
 </section>`.trimStart();
+}
+
+// ---------------------------------------------------------------------------
+// History page — GSAP scrollable + draggable horizontal timeline
+// Pattern: https://tympanus.net/codrops/2022/01/03/building-a-scrollable-and-draggable-timeline-with-gsap/
+
+function buildHistoryGsap() {
+  if (!TIMELINE.length) return '';
+
+  const navItems = TIMELINE.map((e, i) => {
+    const id = `event-${i}`;
+    return `
+          <li>
+            <a href="#${id}" class="history-nav__link" data-link><span>${esc(e.date)}</span></a>
+          </li>`;
+  }).join('');
+
+  const sections = TIMELINE.map((e, i) => {
+    const id = `event-${i}`;
+    const img = e.image
+      ? `<figure class="history-section__image">
+            <img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="900" height="600" loading="lazy" decoding="async">
+          </figure>`
+      : '';
+    const detail = e.detail
+      ? `<p class="history-section__detail">${esc(e.detail)}</p>`
+      : '';
+    const textOnly = e.image ? '' : ' history-section--text-only';
+    return `
+    <section class="history-section${textOnly}" id="${id}" data-history-section style="--i: ${i}">
+      <div class="history-section__inner">
+        <div class="history-section__content">
+          <p class="history-section__date">${esc(e.date)}</p>
+          <h2 class="history-section__heading">${esc(e.title)}</h2>
+          ${detail}
+        </div>
+        ${img}
+      </div>
+    </section>`;
+  }).join('\n');
+
+  return `
+<div class="history-page">
+  <nav class="history-nav" aria-label="Timeline navigation">
+    <div class="history-nav__marker" aria-hidden="true"></div>
+    <div class="history-nav__track" data-draggable>
+      <ul class="history-nav__list">
+${navItems}
+      </ul>
+    </div>
+  </nav>
+
+  <header class="history-intro">
+    <div class="label">Our history</div>
+    <h1 class="display h-1" style="margin-top:12px;">Thirty years of God’s faithfulness.</h1>
+    <p class="lead">Scroll the page, drag the timeline, or click a date to move through the story of Spanish Lookout EMMC.</p>
+    <a href="church.html" class="tlink">← Back to The Church</a>
+  </header>
+
+  <main class="history-main">
+${sections}
+  </main>
+
+  <p class="history-footer-note">Not all pictures or dates are guaranteed to be correct.</p>
+</div>`.trimStart();
 }
 
 // ---------------------------------------------------------------------------
@@ -199,6 +265,7 @@ const sermonsList         = buildSermonsList();
 const latestSermonCard    = buildLatestSermonCard();
 const recentSermons       = buildRecentSermons();
 const churchTimeline      = buildTimeline();
+const historyGsap         = buildHistoryGsap();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
 
@@ -225,7 +292,8 @@ for (const file of pages) {
       .replace('{{sermons-list}}',       sermonsList)
       .replace('{{latest-sermon-card}}', latestSermonCard)
       .replace('{{recent-sermons}}',     recentSermons)
-      .replace('{{church-timeline}}',    churchTimeline),
+      .replace('{{church-timeline}}',    churchTimeline)
+      .replace('{{history-gsap}}',       historyGsap),
   });
 
   writeFileSync(join('dist', file), html);

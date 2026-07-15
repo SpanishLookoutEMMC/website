@@ -687,3 +687,222 @@ section { position: relative; }
     --photo-scale: 1;
   }
 }
+
+/* ── History page (GSAP scroll + drag timeline) ────────────── */
+/* Pattern: https://tympanus.net/codrops/2022/01/03/building-a-scrollable-and-draggable-timeline-with-gsap/ */
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.history-page) {
+    scroll-behavior: smooth;
+  }
+}
+
+.history-page {
+  /* Full-bleed content under fixed nav track */
+}
+
+.history-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(245, 239, 223, 0.96);
+  border-bottom: 1px solid var(--ink-line);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+}
+
+.history-nav__marker {
+  position: absolute;
+  top: 1.35rem;
+  left: 3.5rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 2px solid var(--ink);
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: 0 0 0 4px rgba(168, 138, 74, 0.2);
+}
+
+.history-nav__track {
+  position: relative;
+  /* Wide enough to drag past the last item under the marker */
+  min-width: max(280rem, 280%);
+  padding: 1.25rem max(140rem, 100%) 1.1rem 3.5rem;
+  height: auto;
+  cursor: grab;
+  touch-action: none;
+}
+.history-nav__track:active {
+  cursor: grabbing;
+}
+
+.history-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.history-nav__list li {
+  flex: 0 0 auto;
+}
+
+.history-nav__link {
+  position: relative;
+  display: block;
+  min-width: 5.5rem;
+  max-width: 7.5rem;
+  padding-top: 1.1rem;
+  text-align: center;
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+.history-nav__link::before {
+  content: "";
+  position: absolute;
+  top: 0.15rem;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ink-line);
+  transform: translateX(-50%);
+}
+.history-nav__link::after {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--ink-line);
+  z-index: -1;
+}
+.history-nav__link span {
+  display: block;
+}
+.history-nav__link:hover,
+.history-nav__link.is-active {
+  color: var(--ink);
+}
+.history-nav__link.is-active::before {
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(168, 138, 74, 0.25);
+}
+
+.history-intro {
+  padding: 48px var(--gutter) 24px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+.history-intro .lead {
+  margin-top: 16px;
+  max-width: 40rem;
+}
+.history-intro .tlink {
+  margin-top: 18px;
+  display: inline-block;
+}
+
+.history-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 48px var(--gutter) 64px;
+  border-top: 1px solid var(--ink-line);
+  background: var(--cream);
+}
+.history-section:nth-child(even) {
+  background: var(--paper);
+}
+
+.history-section__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.history-section--text-only .history-section__inner {
+  grid-template-columns: 1fr;
+  max-width: 40rem;
+}
+
+.history-section__date {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 500;
+  margin: 0 0 10px;
+}
+.history-section__heading {
+  font-family: var(--display);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.15;
+  margin: 0;
+  text-wrap: balance;
+}
+.history-section__detail {
+  margin: 18px 0 0;
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+.history-section__image {
+  margin: 0;
+}
+.history-section__image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--ink-line);
+  background: var(--cream-2);
+}
+
+.history-footer-note {
+  text-align: center;
+  padding: 32px var(--gutter) 48px;
+  font-size: 12px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+@media (max-width: 800px) {
+  .history-nav__marker {
+    left: 2rem;
+  }
+  .history-nav__track {
+    padding-left: 2rem;
+    min-width: max(220rem, 320%);
+  }
+  .history-nav__link {
+    min-width: 4.5rem;
+    font-size: 10px;
+  }
+  .history-section__inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .history-section {
+    min-height: 90vh;
+    padding-top: 36px;
+    padding-bottom: 48px;
+  }
+}

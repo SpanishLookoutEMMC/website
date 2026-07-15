@@ -63,6 +63,7 @@ In `src/pages/*.html`, you can use these placeholders:
 | `{{sermons-list}}` | Previous sermons archive list |
 | `{{recent-sermons}}` | Three most recent sermons grid |
 | `{{church-timeline}}` | Animated church history timeline (from `src/timeline.json`) |
+| `{{history-gsap}}` | Full-page GSAP scroll/drag history timeline (`history.html`) |
 
 Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{whatsapp}}`, `{{youtube}}`).
 
