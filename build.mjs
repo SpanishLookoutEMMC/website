@@ -17,12 +17,13 @@ function applyData(str) {
 }
 
 const NAV = [
-  { key: 'church',  href: 'church.html',  label: 'The Church' },
-  { key: 'team',    href: 'team.html',    label: 'Staff &amp; Board'   },
-  { key: 'sermons', href: 'sermons.html', label: 'Sermons'    },
-  { key: 'faith',       href: 'faith.html',       label: 'Our Mission'       },
+  { key: 'church',      href: 'church.html',      label: 'The Church' },
+  { key: 'history',     href: 'history.html',     label: 'Our History' },
+  { key: 'team',        href: 'team.html',        label: 'Staff &amp; Board' },
+  { key: 'sermons',     href: 'sermons.html',     label: 'Sermons' },
+  { key: 'faith',       href: 'faith.html',       label: 'Our Mission' },
   { key: 'confession',  href: 'confession.html',  label: 'Confession of Faith' },
-  { key: 'contact', href: 'contact.html', label: 'Contact'    },
+  { key: 'contact',     href: 'contact.html',     label: 'Contact' },
 ];
 
 function parseFrontmatter(src) {
@@ -232,7 +233,7 @@ const latestSermonHero    = buildLatestSermonHero();
 const sermonsList         = buildSermonsList();
 const latestSermonCard    = buildLatestSermonCard();
 const recentSermons       = buildRecentSermons();
-const churchTimeline      = buildTimeline();
+const historyTimeline     = buildTimeline();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
 
@@ -259,7 +260,7 @@ for (const file of pages) {
       .replace('{{sermons-list}}',       sermonsList)
       .replace('{{latest-sermon-card}}', latestSermonCard)
       .replace('{{recent-sermons}}',     recentSermons)
-      .replace('{{church-timeline}}',    churchTimeline),
+      .replace('{{history-timeline}}',   historyTimeline),
   });
 
   writeFileSync(join('dist', file), html);
