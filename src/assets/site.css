@@ -555,6 +555,14 @@ section { position: relative; }
   column-gap: 0;
   margin-bottom: 1.35rem;
   z-index: 1;
+  cursor: pointer;
+}
+.tl-event:focus {
+  outline: none;
+}
+.tl-event:focus-visible .tl-block {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
 }
 .tl-event:last-child {
   margin-bottom: 0;

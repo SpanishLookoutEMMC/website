@@ -52,7 +52,8 @@
     });
   }
 
-  // Church history: highlight bottom-most fully visible event + show its image
+  // Church history: highlight bottom-most fully visible event + show its image.
+  // Click pins an entry until the user scrolls again.
   var tlRoot = document.querySelector('[data-tl]');
   if (tlRoot) {
     var events = tlRoot.querySelectorAll('[data-tl-event]');
@@ -60,6 +61,7 @@
     var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
     var figureCap = tlRoot.querySelector('[data-tl-figure-caption]');
     var activeEl = null;
+    var pinnedEl = null;
     var ticking = false;
 
     function isFullyInViewport(el) {
@@ -88,32 +90,7 @@
       figure.classList.add('is-visible');
     }
 
-    function updateActive() {
-      ticking = false;
-      var fully = [];
-      for (var i = 0; i < events.length; i++) {
-        if (isFullyInViewport(events[i])) fully.push(events[i]);
-      }
-
-      var next = null;
-      if (fully.length) {
-        // Bottom-most fully visible = last in document order among fully visible
-        next = fully[fully.length - 1];
-      } else {
-        // Fallback: nearest event whose top is above the viewport bottom
-        var vh = window.innerHeight || 0;
-        var best = null;
-        var bestBottom = -Infinity;
-        for (var j = 0; j < events.length; j++) {
-          var r = events[j].getBoundingClientRect();
-          if (r.top < vh && r.bottom > bestBottom) {
-            bestBottom = r.bottom;
-            best = events[j];
-          }
-        }
-        next = best;
-      }
-
+    function applyActive(next) {
       if (next === activeEl) return;
       if (activeEl) activeEl.classList.remove('is-active');
       activeEl = next;
@@ -125,6 +102,40 @@
       }
     }
 
+    function pickScrollActive() {
+      var fully = [];
+      for (var i = 0; i < events.length; i++) {
+        if (isFullyInViewport(events[i])) fully.push(events[i]);
+      }
+
+      if (fully.length) {
+        // Bottom-most fully visible = last in document order among fully visible
+        return fully[fully.length - 1];
+      }
+
+      // Fallback: nearest event whose top is above the viewport bottom
+      var vh = window.innerHeight || 0;
+      var best = null;
+      var bestBottom = -Infinity;
+      for (var j = 0; j < events.length; j++) {
+        var r = events[j].getBoundingClientRect();
+        if (r.top < vh && r.bottom > bestBottom) {
+          bestBottom = r.bottom;
+          best = events[j];
+        }
+      }
+      return best;
+    }
+
+    function updateActive() {
+      ticking = false;
+      if (pinnedEl) {
+        applyActive(pinnedEl);
+        return;
+      }
+      applyActive(pickScrollActive());
+    }
+
     function requestUpdate() {
       if (!ticking) {
         ticking = true;
@@ -132,10 +143,33 @@
       }
     }
 
-    window.addEventListener('scroll', requestUpdate, { passive: true });
+    for (var c = 0; c < events.length; c++) {
+      events[c].addEventListener('click', function () {
+        pinnedEl = this;
+        applyActive(this);
+      });
+      events[c].addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        pinnedEl = this;
+        applyActive(this);
+      });
+      // Clickable without changing semantics for assistive tech
+      if (!events[c].hasAttribute('tabindex')) {
+        events[c].setAttribute('tabindex', '0');
+        events[c].setAttribute('role', 'button');
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      // Any real scroll returns control to the auto “bottom-most” rule
+      if (pinnedEl) pinnedEl = null;
+      requestUpdate();
+    }, { passive: true });
     window.addEventListener('resize', requestUpdate);
     updateActive();
   }
 })();
+
 
 
