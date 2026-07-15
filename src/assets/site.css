@@ -219,11 +219,15 @@ a { color: var(--ink); }
 /* Desktop submenu (About) */
 .nav-item.has-submenu {
   position: relative;
+  /* Extend hit area slightly below the label so the pointer never “falls through” */
+  padding-bottom: 12px;
+  margin-bottom: -12px;
 }
 .nav-submenu {
   display: none;
   position: absolute;
-  top: calc(100% + 10px);
+  /* Flush under the hit area — no gap the mouse has to cross */
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   min-width: 12.5rem;
