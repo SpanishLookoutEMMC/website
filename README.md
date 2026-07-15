@@ -64,7 +64,7 @@ In `src/pages/*.html`, you can use these placeholders:
 | `{{recent-sermons}}` | Three most recent sermons grid |
 | `{{history-timeline}}` | Church history timeline on `history.html` (from `src/timeline.json`) |
 
-Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{whatsapp}}`, `{{youtube}}`).
+Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{whatsapp}}`, `{{youtube}}`, `{{facebook}}`).
 
 ## Automated sermon refresh
 
