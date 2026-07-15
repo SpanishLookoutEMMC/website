@@ -1018,9 +1018,7 @@ section { position: relative; }
   body.nav-open .nav-backdrop {
     display: block;
   }
-  body.nav-open {
-    overflow: hidden;
-  }
+  /* Keep the page scrollbar so opening the menu does not shift layout */
 
   /* Mobile: About submenu always expanded (common pattern) */
   .nav.open .nav-item.has-submenu {
