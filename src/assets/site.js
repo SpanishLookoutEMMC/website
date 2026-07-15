@@ -73,11 +73,27 @@
       return r.top >= 0 && r.bottom <= vh && r.height > 0;
     }
 
+    function isFloatingFigure() {
+      return window.matchMedia('(max-width: 900px)').matches;
+    }
+
     function sizeFigureToEvent(eventEl) {
       if (!figure || !eventEl) return;
       var block = eventEl.querySelector('.tl-block');
       if (!block) return;
-      // Measure the image grid track by stretching to 100% first
+
+      // Narrow viewports: fixed float in the top half (CSS), size ~2× card, cap to viewport
+      if (isFloatingFigure()) {
+        var targetFloat = Math.round(block.getBoundingClientRect().width * 2);
+        var maxFloat = Math.min(window.innerWidth * 0.92, 28 * 16); // ~28rem
+        var wFloat = Math.max(160, Math.min(targetFloat, maxFloat));
+        figure.style.justifySelf = '';
+        figure.style.width = wFloat + 'px';
+        figure.style.maxWidth = wFloat + 'px';
+        return;
+      }
+
+      // Desktop: measure the image grid track by stretching to 100% first
       figure.style.justifySelf = 'stretch';
       figure.style.width = '100%';
       figure.style.maxWidth = '100%';

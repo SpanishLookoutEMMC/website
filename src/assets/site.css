@@ -774,14 +774,46 @@ section { position: relative; }
   .quilt .col > div { height: 200px; }
   .sermon-row { grid-template-columns: 1fr; gap: 4px; }
   .sermon-row .arrow { display: none; }
-  .tl-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(260px, 1fr);
-    gap: 20px 40px;
-  }
   .tl-stream { --tl-rail-w: 3.75rem; --tl-branch: 22px; }
   .tl-title { font-size: 18px; }
-  .tl-figure { top: 28vh; max-width: 100%; }
   :root { --gutter: 24px; }
+}
+/* Side image column is too tight — float the photo in the top half of the viewport */
+@media (max-width: 900px) {
+  .tl-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .tl-figure {
+    position: fixed;
+    top: 4vh;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    z-index: 40;
+    width: min(92vw, 28rem) !important;
+    max-width: min(92vw, 28rem) !important;
+    max-height: 46vh;
+    margin: 0;
+    justify-self: auto;
+    align-self: auto;
+    box-shadow: 0 10px 32px rgba(38, 58, 43, 0.14);
+  }
+  .tl-figure-frame {
+    max-height: 46vh;
+  }
+  .tl-figure-frame img {
+    max-height: calc(46vh - 20px);
+  }
+  .tl-stream {
+    --tl-rail-w: 3.25rem;
+    --tl-branch: 18px;
+    /* Keep event cards clear of the floating image */
+    padding-top: 0;
+  }
+  .tl-title { font-size: 17px; }
+  .tl-connector path { stroke-width: 1.5; }
 }
 @media (max-width: 680px) {
   .grid, .grid-2, .grid-3, .triptych { grid-template-columns: 1fr; gap: 28px; }
@@ -808,23 +840,4 @@ section { position: relative; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hero-photo .content { min-height: 560px; padding-top: 100px; }
   .sec-pad { padding: 64px 0; }
-  .tl-layout {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .tl-figure {
-    position: sticky;
-    top: 42vh;
-    order: 0;
-    z-index: 5;
-    width: 100% !important;
-    max-width: none !important;
-  }
-  .tl-figure-frame img {
-    max-height: 42vh;
-  }
-  .tl-stream { --tl-rail-w: 3.25rem; --tl-branch: 18px; }
-  .tl-title { font-size: 17px; }
-  /* Connector often crowded on narrow screens — keep it subtle */
-  .tl-connector path { stroke-width: 1.5; }
 }
