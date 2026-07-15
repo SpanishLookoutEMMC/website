@@ -526,10 +526,12 @@ section { position: relative; }
 }
 .tl-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 34%);
-  gap: 32px 40px;
+  /* Image column can grow large (≈2× event block, set in JS) */
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 48%);
+  gap: 24px 48px;
   align-items: start;
   margin-top: 40px;
+  position: relative;
 }
 .tl-stream {
   position: relative;
@@ -669,12 +671,17 @@ section { position: relative; }
 
 .tl-figure {
   position: sticky;
-  top: 1.5rem;
+  /* Sit lower in the viewport so the path has room to run */
+  top: 32vh;
   align-self: start;
+  justify-self: stretch;
+  width: 100%;
+  max-width: none;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.25s ease;
   pointer-events: none;
+  z-index: 2;
 }
 .tl-figure.is-visible {
   opacity: 1;
@@ -685,7 +692,7 @@ section { position: relative; }
   background: var(--cream-2);
   border: 1px solid var(--ink-line);
   overflow: hidden;
-  min-height: 12rem;
+  min-height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -693,7 +700,7 @@ section { position: relative; }
 .tl-figure-frame img {
   width: 100%;
   height: auto;
-  max-height: min(70vh, 520px);
+  max-height: min(78vh, 720px);
   object-fit: contain;
   object-position: center;
   display: block;
@@ -704,6 +711,27 @@ section { position: relative; }
   line-height: 1.4;
   color: var(--muted);
   text-wrap: pretty;
+}
+
+/* L-shaped connector: event → horizontal → vertical → image */
+.tl-connector {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+.tl-connector path {
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  opacity: 0.9;
+}
+.tl-connector:not(.is-visible) path {
+  stroke: transparent;
 }
 .tl-note {
   margin-top: 28px;
@@ -726,11 +754,12 @@ section { position: relative; }
   .sermon-row { grid-template-columns: 1fr; gap: 4px; }
   .sermon-row .arrow { display: none; }
   .tl-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(180px, 32%);
-    gap: 24px;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 46%);
+    gap: 20px 32px;
   }
   .tl-stream { --tl-rail-w: 3.75rem; --tl-branch: 22px; }
   .tl-title { font-size: 18px; }
+  .tl-figure { top: 28vh; }
   :root { --gutter: 24px; }
 }
 @media (max-width: 680px) {
@@ -760,17 +789,21 @@ section { position: relative; }
   .sec-pad { padding: 64px 0; }
   .tl-layout {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 16px;
   }
   .tl-figure {
     position: sticky;
-    top: 0.75rem;
-    order: -1;
+    top: 42vh;
+    order: 0;
     z-index: 5;
+    width: 100% !important;
+    max-width: none !important;
   }
   .tl-figure-frame img {
-    max-height: 36vh;
+    max-height: 42vh;
   }
   .tl-stream { --tl-rail-w: 3.25rem; --tl-branch: 18px; }
   .tl-title { font-size: 17px; }
+  /* Connector often crowded on narrow screens — keep it subtle */
+  .tl-connector path { stroke-width: 1.5; }
 }

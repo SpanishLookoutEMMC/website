@@ -54,12 +54,15 @@
 
   // Church history: highlight bottom-most fully visible event + show its image.
   // Click pins an entry until the user scrolls again.
+  // L-shaped connector: event → horizontal → vertical → image.
   var tlRoot = document.querySelector('[data-tl]');
   if (tlRoot) {
     var events = tlRoot.querySelectorAll('[data-tl-event]');
     var figure = tlRoot.querySelector('[data-tl-figure]');
     var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
     var figureCap = tlRoot.querySelector('[data-tl-figure-caption]');
+    var connector = document.querySelector('[data-tl-connector]');
+    var connectorPath = document.querySelector('[data-tl-connector-path]');
     var activeEl = null;
     var pinnedEl = null;
     var ticking = false;
@@ -71,6 +74,52 @@
       return r.top >= 0 && r.bottom <= vh && r.height > 0;
     }
 
+    function sizeFigureToEvent(eventEl) {
+      if (!figure || !eventEl) return;
+      var block = eventEl.querySelector('.tl-block');
+      if (!block) return;
+      // Image panel ≈ twice the event block width (capped to column / viewport)
+      var target = Math.round(block.getBoundingClientRect().width * 2);
+      var col = figure.parentElement;
+      var colW = col ? col.getBoundingClientRect().width : target;
+      // Leave a little gutter; don't exceed column or 90vw
+      var maxW = Math.min(colW, window.innerWidth * 0.9);
+      var w = Math.max(160, Math.min(target, maxW));
+      figure.style.width = w + 'px';
+      figure.style.maxWidth = w + 'px';
+      figure.style.justifySelf = 'end';
+    }
+
+    function updateConnector() {
+      if (!connector || !connectorPath) return;
+      if (!activeEl || !figure || !figure.classList.contains('is-visible')) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var block = activeEl.querySelector('.tl-block');
+      var frame = figure.querySelector('.tl-figure-frame') || figure;
+      if (!block) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var br = block.getBoundingClientRect();
+      var fr = frame.getBoundingClientRect();
+      // Start: mid-right of event block. End: mid-left of image frame.
+      var x1 = br.right;
+      var y1 = br.top + br.height / 2;
+      var x2 = fr.left;
+      var y2 = fr.top + fr.height / 2;
+      // Horizontal first, then vertical if needed
+      var d = 'M ' + x1 + ' ' + y1 + ' L ' + x2 + ' ' + y1;
+      if (Math.abs(y2 - y1) > 1) {
+        d += ' L ' + x2 + ' ' + y2;
+      }
+      connectorPath.setAttribute('d', d);
+      connector.classList.add('is-visible');
+    }
+
     function setFigure(eventEl) {
       if (!figure || !figureImg) return;
       var src = eventEl && eventEl.getAttribute('data-image');
@@ -80,6 +129,9 @@
         figureImg.removeAttribute('src');
         figureImg.alt = '';
         if (figureCap) figureCap.textContent = '';
+        figure.style.width = '';
+        figure.style.maxWidth = '';
+        updateConnector();
         return;
       }
       if (figureImg.getAttribute('src') !== src) {
@@ -88,17 +140,33 @@
       }
       if (figureCap) figureCap.textContent = title || '';
       figure.classList.add('is-visible');
+      sizeFigureToEvent(eventEl);
+      // After layout / image load, redraw path
+      if (figureImg.complete) {
+        updateConnector();
+      } else {
+        figureImg.addEventListener('load', updateConnector, { once: true });
+        // still draw toward the frame box immediately
+        updateConnector();
+      }
     }
 
     function applyActive(next) {
-      if (next === activeEl) return;
-      if (activeEl) activeEl.classList.remove('is-active');
-      activeEl = next;
-      if (activeEl) {
-        activeEl.classList.add('is-active');
-        setFigure(activeEl);
+      if (next !== activeEl) {
+        if (activeEl) activeEl.classList.remove('is-active');
+        activeEl = next;
+        if (activeEl) {
+          activeEl.classList.add('is-active');
+          setFigure(activeEl);
+        } else {
+          setFigure(null);
+        }
+      } else if (activeEl) {
+        // Same event — still refresh size/connector (scroll moves sticky image)
+        sizeFigureToEvent(activeEl);
+        updateConnector();
       } else {
-        setFigure(null);
+        updateConnector();
       }
     }
 
@@ -170,6 +238,7 @@
     updateActive();
   }
 })();
+
 
 
 

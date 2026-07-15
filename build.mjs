@@ -203,6 +203,10 @@ function buildTimeline() {
       </div>
       <p class="tl-figure-caption" data-tl-figure-caption></p>
     </aside>
+    <!-- Viewport-fixed L-path from active event to image (drawn in JS) -->
+    <svg class="tl-connector" data-tl-connector aria-hidden="true">
+      <path data-tl-connector-path fill="none"></path>
+    </svg>
   </div>
   <p class="tl-note wrap">Not all pictures or dates are guaranteed to be correct.</p>
 </section>`.trimStart();
