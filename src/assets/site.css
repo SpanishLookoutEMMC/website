@@ -518,6 +518,26 @@ section { position: relative; }
   color: var(--muted);
 }
 
+/* ── Google Calendar embed ─────────────────────────────────── */
+.gcal-embed {
+  width: 100%;
+  max-width: 960px;
+  border: 1px solid var(--ink-line);
+  background: var(--cream);
+  overflow: hidden;
+}
+.gcal-embed iframe {
+  display: block;
+  width: 100%;
+  height: 600px;
+  border: 0;
+}
+@media (max-width: 680px) {
+  .gcal-embed iframe {
+    height: 480px;
+  }
+}
+
 /* ── History timeline (left rail + event blocks + sticky image) ─ */
 .tl-section {
   --tl-link-color: var(--gold);
