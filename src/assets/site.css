@@ -813,7 +813,7 @@ section { position: relative; }
     padding-top: 0;
   }
   .tl-title { font-size: 17px; }
-  .tl-connector path { stroke-width: 1.5; }
+  .tl-connector { display: none; }
 }
 @media (max-width: 680px) {
   .grid, .grid-2, .grid-3, .triptych { grid-template-columns: 1fr; gap: 28px; }

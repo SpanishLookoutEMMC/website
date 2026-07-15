@@ -108,7 +108,8 @@
 
     function updateConnector() {
       if (!connector || !connectorPath) return;
-      if (!activeEl || !figure || !figure.classList.contains('is-visible')) {
+      // No connector on narrow layouts where the image floats at the top
+      if (isFloatingFigure() || !activeEl || !figure || !figure.classList.contains('is-visible')) {
         connector.classList.remove('is-visible');
         connectorPath.setAttribute('d', '');
         return;
