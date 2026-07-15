@@ -151,8 +151,6 @@ function buildRecentSermons() {
 
 function buildTimeline() {
   if (!TIMELINE.length) return '';
-  const iconPicture = `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M21 4H3c-.55 0-1 .45-1 1v14c0 .55.45 1 1 1h18c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM8.4 7.8a1.9 1.9 0 1 1 0 3.8 1.9 1.9 0 0 1 0-3.8zM20 18H4l4.2-5.6 2.8 3.4 3.7-4.8L20 18z"/></svg>`;
-  const iconCross = `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M13.6 2.5h-3.2v5.9H4.5v3.2h5.9v9.9h3.2v-9.9h5.9V8.4h-5.9z"/></svg>`;
   const items = TIMELINE.map((e) => {
     const img = e.image
       ? `<div class="timeline-photo"><img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="600" height="400" loading="lazy" decoding="async"></div>`
@@ -162,7 +160,7 @@ function buildTimeline() {
       : '';
     return `
       <article class="timeline-item" data-timeline-item>
-        <div class="timeline-badge" aria-hidden="true">${e.image ? iconPicture : iconCross}</div>
+        <div class="timeline-badge" aria-hidden="true"></div>
         <div class="timeline-card">
           ${img}
           <h3 class="timeline-title">${esc(e.title)}</h3>

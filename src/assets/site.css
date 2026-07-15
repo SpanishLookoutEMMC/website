@@ -561,15 +561,10 @@ section { position: relative; }
   margin-left: -27px;
   border-radius: 50%;
   background: var(--gold);
-  color: var(--paper);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1;
   box-shadow: 0 0 0 4px var(--paper), inset 0 2px 0 rgba(0, 0, 0, 0.08), 0 3px 0 4px rgba(38, 58, 43, 0.05);
   transform: translateZ(0);
 }
-.timeline-badge svg { display: block; }
 .timeline-card {
   position: relative;
   width: 45%;
@@ -727,7 +722,6 @@ section { position: relative; }
     width: 40px;
     height: 40px;
   }
-  .timeline-badge svg { width: 18px; height: 18px; }
   .timeline-item { margin: 40px 0; }
   .timeline-card { width: auto; margin-left: 58px; }
   .timeline-item:nth-child(even) .timeline-card { float: none; }
