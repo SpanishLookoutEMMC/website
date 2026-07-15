@@ -19,8 +19,7 @@ jobs:
         with:
           node-version: '20'
 
-      - run: npm install
-
+      # fetch-sermons.mjs is pure Node — no npm install needed
       - run: node scripts/fetch-sermons.mjs
 
       - name: Commit, push, and deploy if changed

@@ -18,19 +18,26 @@ permissions:
   contents: write      # push built output to gh-pages branch
   pull-requests: write # post the preview URL as a PR comment
 
+# Cancel superseded runs on the same branch so the latest push wins quickly
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
+      # build.mjs is pure Node (fs only) — no npm install needed
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - run: npm install
-
-      - run: npm run build
+      - name: Build site
+        run: node build.mjs
 
       - name: Deploy main to GitHub Pages root
         if: github.ref == 'refs/heads/main'
@@ -40,6 +47,8 @@ jobs:
           folder: dist
           clean: true
           clean-exclude: previews/  # keep branch preview directories intact
+          # One commit on gh-pages keeps that branch small and deploys faster
+          single-commit: true
 
       - name: Deploy branch preview
         if: github.ref != 'refs/heads/main'
@@ -49,6 +58,7 @@ jobs:
           folder: dist
           target-folder: previews/${{ github.ref_name }}
           clean: true
+          single-commit: true
 
       - name: Post preview URL on open PR
         if: github.ref != 'refs/heads/main'
