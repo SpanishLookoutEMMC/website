@@ -4,23 +4,46 @@
   const yr = document.querySelector('[data-year]');
   if (yr) yr.textContent = String(new Date().getFullYear());
 
-  // Mobile nav toggle
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.nav');
+  // Mobile nav: hamburger toggle, backdrop, escape, body scroll lock
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.querySelector('.nav');
+  var backdrop = document.querySelector('[data-nav-backdrop]');
   if (toggle && nav) {
-    toggle.addEventListener('click', () => {
-      const open = nav.classList.toggle('open');
+    function setNavOpen(open) {
+      nav.classList.toggle('open', open);
+      toggle.classList.toggle('is-open', open);
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+      if (backdrop) {
+        if (open) backdrop.removeAttribute('hidden');
+        else backdrop.setAttribute('hidden', '');
+      }
+    }
+
+    toggle.addEventListener('click', function () {
+      setNavOpen(!nav.classList.contains('open'));
     });
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-controls', 'site-nav');
-    if (!nav.id) nav.id = 'site-nav';
-    // Close mobile menu after choosing a link
-    nav.addEventListener('click', (e) => {
-      const a = e.target.closest('a');
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        setNavOpen(false);
+      });
+    }
+
+    // Close after choosing a link
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
       if (!a || !nav.classList.contains('open')) return;
-      nav.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
+      setNavOpen(false);
+    });
+
+    // Escape closes the drawer
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setNavOpen(false);
+        toggle.focus();
+      }
     });
   }
 

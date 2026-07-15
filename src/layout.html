@@ -19,11 +19,18 @@
     <a class="brand" href="{{base}}index.html">
       <img src="{{base}}images/emmc-logo.png" alt="EMMC">
     </a>
-    <button class="nav-toggle" aria-label="Menu">Menu</button>
-    <nav class="nav">
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-box" aria-hidden="true">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </span>
+    </button>
+    <nav class="nav" id="site-nav">
 {{nav}}
     </nav>
   </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
 </header>
 
 {{body}}
