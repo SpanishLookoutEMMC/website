@@ -571,12 +571,20 @@ section { position: relative; }
   overflow: hidden;
 }
 .timeline-photo {
+  --photo-scale: 0.42;
   background: var(--cream-2);
+  text-align: center;
+  /* Keep a little air so scaled photos don't collide with the date */
+  min-height: 0;
 }
 .timeline-photo img {
-  width: 100%;
+  /* Width drives layout height so off-center photos free vertical space */
+  width: calc(100% * var(--photo-scale));
+  max-width: 100%;
   height: auto;
   display: block;
+  margin: 0 auto;
+  /* No CSS transition on width — scroll handler updates every frame */
 }
 .timeline-date {
   font-size: 11px;
@@ -674,5 +682,8 @@ section { position: relative; }
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .timeline-photo {
+    --photo-scale: 1;
   }
 }

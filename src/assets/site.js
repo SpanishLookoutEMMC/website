@@ -52,7 +52,7 @@
     });
   }
 
-  // Church history timeline — reveal items as they enter the viewport
+  // Church history timeline — reveal items + scale photos by viewport center
   var timelineItems = document.querySelectorAll('[data-timeline-item]');
   if (timelineItems.length) {
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -73,5 +73,58 @@
         io.observe(timelineItems[j]);
       }
     }
+
+    // Photos grow toward the viewport center and shrink at the edges so more
+    // events fit on screen. Text stays full size; only image width changes.
+    var timelinePhotos = document.querySelectorAll('.timeline-photo');
+    if (timelinePhotos.length && !reduceMotion) {
+      var photoMin = 0.38;
+      var photoMax = 1;
+      var ticking = false;
+
+      function updateTimelinePhotoScales() {
+        ticking = false;
+        var vh = window.innerHeight || 1;
+        var centerY = vh * 0.5;
+        // Distance from center (as fraction of half-viewport) where scale hits min
+        var falloff = vh * 0.55;
+
+        for (var k = 0; k < timelinePhotos.length; k++) {
+          var photo = timelinePhotos[k];
+          var rect = photo.getBoundingClientRect();
+          // Skip far off-screen (still set a compact scale)
+          if (rect.bottom < -80 || rect.top > vh + 80) {
+            photo.style.setProperty('--photo-scale', String(photoMin));
+            continue;
+          }
+          var mid = (rect.top + rect.bottom) * 0.5;
+          var t = Math.abs(mid - centerY) / falloff;
+          if (t > 1) t = 1;
+          // Smooth falloff: full size at center, min at edges
+          var ease = 1 - t * t;
+          var scale = photoMin + (photoMax - photoMin) * ease;
+          photo.style.setProperty('--photo-scale', scale.toFixed(3));
+        }
+      }
+
+      function requestPhotoScaleUpdate() {
+        if (!ticking) {
+          ticking = true;
+          window.requestAnimationFrame(updateTimelinePhotoScales);
+        }
+      }
+
+      window.addEventListener('scroll', requestPhotoScaleUpdate, { passive: true });
+      window.addEventListener('resize', requestPhotoScaleUpdate);
+      // Images loading change heights — remeasure
+      for (var p = 0; p < timelinePhotos.length; p++) {
+        var img = timelinePhotos[p].querySelector('img');
+        if (img && !img.complete) {
+          img.addEventListener('load', requestPhotoScaleUpdate);
+        }
+      }
+      updateTimelinePhotoScales();
+    }
   }
 })();
+
