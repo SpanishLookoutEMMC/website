@@ -518,100 +518,244 @@ section { position: relative; }
   color: var(--muted);
 }
 
-/* ── History timeline ──────────────────────────────────────── */
-.timeline-section {
+/* ── History timeline (left rail + event blocks + sticky image) ─ */
+.tl-section {
+  --tl-link-color: var(--gold);
+  --tl-link-width: 2px;
   background: var(--paper);
   border-top: 1px solid var(--ink-line);
   border-bottom: 1px solid var(--ink-line);
 }
-.timeline {
+.tl-layout {
+  display: grid;
+  /* Events left, image column further right (never share space) */
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 1.05fr);
+  gap: 24px 56px;
+  align-items: start;
+  margin-top: 40px;
   position: relative;
-  margin-top: 56px;
-  padding: 8px 0 24px;
 }
-.timeline-line {
+.tl-stream {
+  position: relative;
+  min-width: 0; /* keep stream inside its grid track */
+  --tl-rail-w: 4.5rem;
+  --tl-dot: 11px;
+  --tl-branch: 28px;
+}
+.tl-axis-line {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  /* Center of each .tl-dot (right edge of the rail column) */
+  left: calc(var(--tl-rail-w) - 0.5px);
   width: 1px;
   background: var(--ink-line);
-  transform: translateX(-50%);
+  z-index: 0;
 }
-.timeline-item {
+.tl-event {
   position: relative;
-  width: calc(50% - 36px);
-  margin-bottom: 48px;
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.timeline-item.is-visible {
-  opacity: 1;
-  transform: none;
-}
-.timeline-left  { margin-right: auto; padding-right: 0; }
-.timeline-right { margin-left: auto; }
-.timeline-marker {
-  position: absolute;
-  top: 28px;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--cream);
-  border: 2px solid var(--gold);
+  display: grid;
+  grid-template-columns: var(--tl-rail-w) var(--tl-branch) minmax(0, 1fr);
+  align-items: start;
+  column-gap: 0;
+  margin-bottom: 1.35rem;
   z-index: 1;
-  box-sizing: border-box;
+  cursor: pointer;
 }
-.timeline-left  .timeline-marker { right: -42px; transform: translateX(50%); }
-.timeline-right .timeline-marker { left: -42px;  transform: translateX(-50%); }
-.timeline-card {
+.tl-event:focus {
+  outline: none;
+}
+.tl-event:focus-visible .tl-block {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.tl-event:last-child {
+  margin-bottom: 0;
+}
+.tl-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: calc(var(--tl-dot) / 2);
+  position: relative;
+  min-height: 1.5rem;
+}
+.tl-year {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 0;
+  position: absolute;
+  right: calc(var(--tl-dot) + 10px);
+  top: 0.15rem;
+  white-space: nowrap;
+}
+.tl-year--spacer {
+  visibility: hidden;
+  width: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+.tl-dot {
+  position: absolute;
+  top: 0.35rem;
+  right: 0;
+  width: var(--tl-dot);
+  height: var(--tl-dot);
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink-line);
+  box-sizing: border-box;
+  transform: translateX(50%);
+  z-index: 2;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+.tl-branch {
+  height: 1px;
+  background: var(--ink-line);
+  margin-top: calc(0.35rem + var(--tl-dot) / 2);
+  width: 100%;
+  transition: background 0.2s, height 0.2s;
+}
+.tl-block {
+  position: relative;
   border: 1px solid var(--ink-line);
   background: var(--cream);
-  overflow: hidden;
+  padding: 12px 16px 14px;
+  margin-left: 0;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
 }
-.timeline-photo {
-  --photo-scale: 0.42;
-  background: var(--cream-2);
-  text-align: center;
-  /* Keep a little air so scaled photos don't collide with the date */
-  min-height: 0;
+.tl-photo-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  color: var(--gold);
+  opacity: 0.85;
+  pointer-events: none;
 }
-.timeline-photo img {
-  /* Width drives layout height so off-center photos free vertical space */
-  width: calc(100% * var(--photo-scale));
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 0 auto;
-  /* No CSS transition on width — scroll handler updates every frame */
+.tl-event.is-active .tl-photo-icon {
+  opacity: 1;
 }
-.timeline-date {
+.tl-block:has(.tl-photo-icon) .tl-date,
+.tl-block:has(.tl-photo-icon) .tl-title {
+  padding-right: 26px; /* room for the camera icon */
+}
+.tl-date {
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
-  padding: 18px 22px 0;
+  margin: 0 0 4px;
 }
-.timeline-title {
+.tl-title {
   font-family: var(--display);
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 400;
   color: var(--ink);
-  line-height: 1.2;
-  margin: 8px 22px 18px;
+  line-height: 1.25;
+  margin: 0;
   text-wrap: balance;
 }
-.timeline-detail {
-  font-size: 14.5px;
-  line-height: 1.6;
+.tl-detail {
+  font-size: 14px;
+  line-height: 1.55;
   color: var(--muted);
-  margin: -6px 22px 18px;
+  margin: 8px 0 0;
   text-wrap: pretty;
 }
-.timeline-note {
-  margin-top: 8px;
+
+/* Active = bottom-most fully visible event */
+.tl-event.is-active .tl-dot {
+  border-color: var(--gold);
+  background: var(--gold);
+  box-shadow: 0 0 0 4px rgba(168, 138, 74, 0.22);
+}
+.tl-event.is-active .tl-branch {
+  background: var(--gold);
+  height: 2px;
+  margin-top: calc(0.35rem + var(--tl-dot) / 2 - 0.5px);
+}
+.tl-event.is-active .tl-block {
+  border-color: rgba(168, 138, 74, 0.55);
+  background: var(--cream);
+  box-shadow: 0 1px 0 rgba(38, 58, 43, 0.04);
+}
+.tl-event.is-active .tl-year {
+  color: var(--gold);
+}
+
+.tl-figure {
+  position: sticky;
+  /* Sit lower in the viewport so the path has room to run */
+  top: 32vh;
+  align-self: start;
+  justify-self: end; /* hug the right edge of the image column */
+  width: 100%;
+  max-width: 100%; /* never spill into the events column */
+  box-sizing: border-box;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.tl-figure.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.tl-figure-frame {
+  background: var(--cream);
+  /* Same color + width as the connector path (centered on this left edge) */
+  border: var(--tl-link-width) solid var(--tl-link-color);
+  padding: 8px;
+  box-sizing: border-box;
+  min-height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tl-figure-frame img {
+  width: 100%;
+  height: auto;
+  max-height: min(78vh, 720px);
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* L-shaped connector: event → horizontal → vertical → image */
+.tl-connector {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+.tl-connector path {
+  stroke: var(--tl-link-color);
+  stroke-width: var(--tl-link-width);
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  /* Path is drawn along the center of the image’s left border — no double stroke */
+  opacity: 1;
+}
+.tl-connector:not(.is-visible) path {
+  stroke: transparent;
+}
+.tl-note {
+  margin-top: 28px;
   font-size: 12px;
   color: var(--muted);
   font-style: italic;
@@ -630,11 +774,46 @@ section { position: relative; }
   .quilt .col > div { height: 200px; }
   .sermon-row { grid-template-columns: 1fr; gap: 4px; }
   .sermon-row .arrow { display: none; }
-  .timeline-item { width: calc(50% - 28px); }
-  .timeline-left  .timeline-marker { right: -34px; }
-  .timeline-right .timeline-marker { left: -34px; }
-  .timeline-title { font-size: 22px; }
+  .tl-stream { --tl-rail-w: 3.75rem; --tl-branch: 22px; }
+  .tl-title { font-size: 18px; }
   :root { --gutter: 24px; }
+}
+/* Side image column is too tight — float the photo in the top half of the viewport */
+@media (max-width: 900px) {
+  .tl-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .tl-figure {
+    position: fixed;
+    top: 4vh;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    z-index: 40;
+    width: min(92vw, 28rem) !important;
+    max-width: min(92vw, 28rem) !important;
+    max-height: 46vh;
+    margin: 0;
+    justify-self: auto;
+    align-self: auto;
+    box-shadow: 0 10px 32px rgba(38, 58, 43, 0.14);
+  }
+  .tl-figure-frame {
+    max-height: 46vh;
+  }
+  .tl-figure-frame img {
+    max-height: calc(46vh - 20px);
+  }
+  .tl-stream {
+    --tl-rail-w: 3.25rem;
+    --tl-branch: 18px;
+    /* Keep event cards clear of the floating image */
+    padding-top: 0;
+  }
+  .tl-title { font-size: 17px; }
+  .tl-connector { display: none; }
 }
 @media (max-width: 680px) {
   .grid, .grid-2, .grid-3, .triptych { grid-template-columns: 1fr; gap: 28px; }
@@ -661,29 +840,4 @@ section { position: relative; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hero-photo .content { min-height: 560px; padding-top: 100px; }
   .sec-pad { padding: 64px 0; }
-  .timeline-line { left: 16px; }
-  .timeline-item {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 40px;
-  }
-  .timeline-left .timeline-marker,
-  .timeline-right .timeline-marker {
-    left: 16px;
-    right: auto;
-    transform: translateX(-50%);
-  }
-  .timeline-title { font-size: 20px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .timeline-item {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .timeline-photo {
-    --photo-scale: 1;
-  }
 }

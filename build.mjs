@@ -17,12 +17,13 @@ function applyData(str) {
 }
 
 const NAV = [
-  { key: 'church',  href: 'church.html',  label: 'The Church' },
-  { key: 'team',    href: 'team.html',    label: 'Staff &amp; Board'   },
-  { key: 'sermons', href: 'sermons.html', label: 'Sermons'    },
-  { key: 'faith',       href: 'faith.html',       label: 'Our Mission'       },
+  { key: 'church',      href: 'church.html',      label: 'The Church' },
+  { key: 'history',     href: 'history.html',     label: 'Our History' },
+  { key: 'team',        href: 'team.html',        label: 'Staff &amp; Board' },
+  { key: 'sermons',     href: 'sermons.html',     label: 'Sermons' },
+  { key: 'faith',       href: 'faith.html',       label: 'Our Mission' },
   { key: 'confession',  href: 'confession.html',  label: 'Confession of Faith' },
-  { key: 'contact', href: 'contact.html', label: 'Contact'    },
+  { key: 'contact',     href: 'contact.html',     label: 'Contact' },
 ];
 
 function parseFrontmatter(src) {
@@ -149,23 +150,46 @@ function buildRecentSermons() {
 // ---------------------------------------------------------------------------
 // Church history timeline (from src/timeline.json)
 
+function timelineYear(dateStr) {
+  const m = String(dateStr || '').match(/\d{4}/);
+  return m ? m[0] : '';
+}
+
 function buildTimeline() {
   if (!TIMELINE.length) return '';
+
+  let prevYear = '';
   const items = TIMELINE.map((e, i) => {
-    const side = i % 2 === 0 ? 'left' : 'right';
-    const img = e.image
-      ? `<div class="timeline-photo"><img src="images/timeline/${esc(e.image)}" alt="${esc(e.title)}" width="600" height="400" loading="lazy" decoding="async"></div>`
-      : '';
+    const year = timelineYear(e.date);
+    const showYear = year && year !== prevYear;
+    if (year) prevYear = year;
     const detail = e.detail
-      ? `<p class="timeline-detail">${esc(e.detail)}</p>`
+      ? `<p class="tl-detail">${esc(e.detail)}</p>`
       : '';
+    const imgAttr = e.image ? ` data-image="images/timeline/${esc(e.image)}"` : '';
+    const photoIcon = e.image
+      ? `<span class="tl-photo-icon" title="Has photo" aria-label="Has photo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <circle cx="12" cy="12" r="3.25"/>
+            <circle cx="17.5" cy="8.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>`
+      : '';
+    const yearHtml = showYear
+      ? `<span class="tl-year">${esc(year)}</span>`
+      : `<span class="tl-year tl-year--spacer" aria-hidden="true"></span>`;
     return `
-      <article class="timeline-item timeline-${side}" data-timeline-item>
-        <div class="timeline-marker" aria-hidden="true"></div>
-        <div class="timeline-card">
-          ${img}
-          <div class="timeline-date">${esc(e.date)}</div>
-          <h3 class="timeline-title">${esc(e.title)}</h3>
+      <article class="tl-event" data-tl-event${imgAttr} data-title="${esc(e.title)}">
+        <div class="tl-rail" aria-hidden="true">
+          ${yearHtml}
+          <span class="tl-dot"></span>
+        </div>
+        <div class="tl-branch" aria-hidden="true"></div>
+        <div class="tl-block">
+          ${photoIcon}
+          <div class="tl-date">${esc(e.date)}</div>
+          <h3 class="tl-title">${esc(e.title)}</h3>
           ${detail}
         </div>
       </article>`;
@@ -173,17 +197,28 @@ function buildTimeline() {
 
   return `
 <!-- History timeline -->
-<section class="sec-pad timeline-section" id="history">
+<section class="sec-pad tl-section" id="history">
   <div class="wrap">
     <div class="label">Our history</div>
     <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
     <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
-    <div class="timeline" data-timeline>
-      <div class="timeline-line" aria-hidden="true"></div>
+  </div>
+  <div class="tl-layout wrap" data-tl>
+    <div class="tl-stream">
+      <div class="tl-axis-line" aria-hidden="true"></div>
       ${items.trimStart()}
     </div>
-    <p class="timeline-note">Not all pictures or dates are guaranteed to be correct.</p>
+    <aside class="tl-figure" data-tl-figure aria-live="polite">
+      <div class="tl-figure-frame">
+        <img data-tl-figure-img alt="" width="800" height="600">
+      </div>
+    </aside>
+    <!-- Viewport-fixed L-path from active event to image (drawn in JS) -->
+    <svg class="tl-connector" data-tl-connector aria-hidden="true">
+      <path data-tl-connector-path fill="none"></path>
+    </svg>
   </div>
+  <p class="tl-note wrap">Not all pictures or dates are guaranteed to be correct.</p>
 </section>`.trimStart();
 }
 
@@ -198,7 +233,7 @@ const latestSermonHero    = buildLatestSermonHero();
 const sermonsList         = buildSermonsList();
 const latestSermonCard    = buildLatestSermonCard();
 const recentSermons       = buildRecentSermons();
-const churchTimeline      = buildTimeline();
+const historyTimeline     = buildTimeline();
 
 const pages = readdirSync('src/pages').filter(f => f.endsWith('.html'));
 
@@ -225,7 +260,7 @@ for (const file of pages) {
       .replace('{{sermons-list}}',       sermonsList)
       .replace('{{latest-sermon-card}}', latestSermonCard)
       .replace('{{recent-sermons}}',     recentSermons)
-      .replace('{{church-timeline}}',    churchTimeline),
+      .replace('{{history-timeline}}',   historyTimeline),
   });
 
   writeFileSync(join('dist', file), html);
