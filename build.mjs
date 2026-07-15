@@ -16,15 +16,23 @@ function applyData(str) {
   return out;
 }
 
+// Top-level order: About (submenu), Staff & Board, Sermons, Events, Contact
 const NAV = [
-  { key: 'church',      href: 'church.html',      label: 'The Church' },
-  { key: 'history',     href: 'history.html',     label: 'Our History' },
-  { key: 'events',      href: 'events.html',      label: 'Events' },
-  { key: 'team',        href: 'team.html',        label: 'Staff &amp; Board' },
-  { key: 'sermons',     href: 'sermons.html',     label: 'Sermons' },
-  { key: 'faith',       href: 'faith.html',       label: 'Our Mission' },
-  { key: 'confession',  href: 'confession.html',  label: 'Confession of Faith' },
-  { key: 'contact',     href: 'contact.html',     label: 'Contact' },
+  {
+    key: 'about',
+    href: 'about.html',
+    label: 'About',
+    children: [
+      { key: 'church',     href: 'church.html',     label: 'The Church' },
+      { key: 'faith',      href: 'faith.html',      label: 'Our Mission' },
+      { key: 'confession', href: 'confession.html', label: 'Confession of Faith' },
+      { key: 'history',    href: 'history.html',    label: 'Our History' },
+    ],
+  },
+  { key: 'team',    href: 'team.html',    label: 'Staff &amp; Board' },
+  { key: 'sermons', href: 'sermons.html', label: 'Sermons' },
+  { key: 'events',  href: 'events.html',  label: 'Events' },
+  { key: 'contact', href: 'contact.html', label: 'Contact' },
 ];
 
 function parseFrontmatter(src) {
@@ -40,10 +48,33 @@ function parseFrontmatter(src) {
   return { meta, body: lines.slice(end + 1).join('\n').trimStart() };
 }
 
+function navItemIsCurrent(item, current) {
+  if (item.key === current) return true;
+  if (item.children) return item.children.some((c) => c.key === current);
+  return false;
+}
+
 function buildNav(current, base = '') {
-  return NAV.map(({ key, href, label }) => {
-    const cls = key === current ? ' class="current"' : '';
-    return `      <a href="${base}${href}"${cls}>${label}</a>`;
+  return NAV.map((item) => {
+    if (item.children && item.children.length) {
+      const groupActive = navItemIsCurrent(item, current);
+      const parentCls = [
+        'nav-parent',
+        groupActive ? 'current' : '',
+      ].filter(Boolean).join(' ');
+      const childLinks = item.children.map((c) => {
+        const cls = c.key === current ? ' class="current"' : '';
+        return `          <a href="${base}${c.href}"${cls}>${c.label}</a>`;
+      }).join('\n');
+      return `      <div class="nav-item has-submenu${groupActive ? ' is-current' : ''}">
+        <a href="${base}${item.href}" class="${parentCls}">${item.label}</a>
+        <div class="nav-submenu" role="group" aria-label="${item.label}">
+${childLinks}
+        </div>
+      </div>`;
+    }
+    const cls = item.key === current ? ' class="current"' : '';
+    return `      <a href="${base}${item.href}"${cls}>${item.label}</a>`;
   }).join('\n');
 }
 

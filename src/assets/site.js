@@ -9,7 +9,18 @@
   const nav = document.querySelector('.nav');
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
-      nav.classList.toggle('open');
+      const open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'site-nav');
+    if (!nav.id) nav.id = 'site-nav';
+    // Close mobile menu after choosing a link
+    nav.addEventListener('click', (e) => {
+      const a = e.target.closest('a');
+      if (!a || !nav.classList.contains('open')) return;
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
     });
   }
 

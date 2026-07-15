@@ -50,7 +50,7 @@ The build script (`build.mjs`):
 - **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build. New videos are added to the existing list (older sermons are kept). This runs weekly on its own — see [Automated sermon refresh](#automated-sermon-refresh).
 - **Church timeline:** edit `src/timeline.json` (date, title, detail, image). Photos live in `src/images/timeline/`. Rebuild to refresh the church page.
 - **Site config:** edit `src/data.json` to update contact details, YouTube channel, maps link, Google Calendar embed URL (`gcal`), etc.
-- **Layout/nav:** edit `src/layout.html` or the `NAV` array in `build.mjs`.
+- **Layout/nav:** edit `src/layout.html` or the `NAV` array in `build.mjs` (supports nested `children` for submenus such as About).
 
 ### Template placeholders
 

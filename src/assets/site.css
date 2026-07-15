@@ -198,10 +198,12 @@ a { color: var(--ink); }
 .site-header.over-hero { color: rgba(243,234,210,0.75); }
 .nav {
   display: flex;
+  align-items: center;
   gap: 28px;
   font-size: 13.5px;
 }
-.nav a {
+.nav > a,
+.nav .nav-parent {
   color: inherit;
   text-decoration: none;
   opacity: 0.82;
@@ -209,8 +211,89 @@ a { color: var(--ink); }
   border-bottom: 1px solid transparent;
   transition: opacity .15s, border-color .15s, color .15s;
 }
-.nav a:hover { opacity: 1; border-bottom-color: currentColor; }
-.nav a.current { opacity: 1; border-bottom-color: currentColor; }
+.nav > a:hover,
+.nav .nav-parent:hover { opacity: 1; border-bottom-color: currentColor; }
+.nav > a.current,
+.nav .nav-parent.current { opacity: 1; border-bottom-color: currentColor; }
+
+/* Desktop submenu (About) */
+.nav-item.has-submenu {
+  position: relative;
+}
+.nav-submenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 12.5rem;
+  padding: 10px 0;
+  background: var(--cream);
+  border: 1px solid var(--ink-line);
+  box-shadow: 0 10px 28px rgba(38, 58, 43, 0.1);
+  z-index: 60;
+}
+.nav-submenu a {
+  display: block;
+  color: var(--text);
+  text-decoration: none;
+  opacity: 0.85;
+  padding: 8px 18px;
+  border-bottom: none;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.nav-submenu a:hover {
+  opacity: 1;
+  background: var(--ink-wash);
+}
+.nav-submenu a.current {
+  opacity: 1;
+  color: var(--ink);
+  font-weight: 500;
+}
+/* Open on hover / keyboard focus */
+.nav-item.has-submenu:hover .nav-submenu,
+.nav-item.has-submenu:focus-within .nav-submenu {
+  display: block;
+}
+/* Small caret on About */
+.nav-parent::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 6px;
+  margin-bottom: 1px;
+  border-left: 3.5px solid transparent;
+  border-right: 3.5px solid transparent;
+  border-top: 4px solid currentColor;
+  opacity: 0.7;
+  vertical-align: middle;
+}
+.site-header.over-hero .nav-submenu {
+  background: rgba(15, 25, 18, 0.96);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+.site-header.over-hero .nav-submenu a {
+  color: rgba(243, 234, 210, 0.9);
+}
+.site-header.over-hero .nav-submenu a:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* About hub page cards */
+a.about-card {
+  display: block;
+  padding: 28px 30px 32px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+a.about-card:hover {
+  border-color: rgba(168, 138, 74, 0.55);
+  box-shadow: 0 2px 0 rgba(38, 58, 43, 0.04);
+}
 
 /* mobile menu toggle */
 .nav-toggle {
@@ -852,14 +935,48 @@ section { position: relative; }
     position: absolute;
     top: 100%; left: 0; right: 0;
     flex-direction: column;
+    align-items: stretch;
     background: var(--cream);
     border-top: 1px solid var(--ink-line);
     padding: 14px var(--gutter);
-    gap: 14px;
+    gap: 4px;
+    max-height: min(80vh, 520px);
+    overflow-y: auto;
   }
   .site-header.over-hero .nav.open {
     background: rgba(15,25,18,0.92);
     border-color: rgba(255,255,255,0.12);
+  }
+  /* Mobile: About submenu is always expanded under the parent */
+  .nav.open .nav-item.has-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .nav.open .nav-submenu {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    transform: none;
+    min-width: 0;
+    padding: 4px 0 8px 14px;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    gap: 2px;
+  }
+  .nav.open .nav-submenu a {
+    padding: 8px 0;
+    white-space: normal;
+  }
+  .nav.open > a,
+  .nav.open .nav-parent {
+    padding: 10px 0;
+    border-bottom: none;
+  }
+  .nav.open .nav-parent::after {
+    display: none; /* no caret needed when list is expanded */
   }
   .nav-toggle { display: inline-block; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
