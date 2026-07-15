@@ -12,6 +12,8 @@ on:
   push:
     branches:
       - '**'
+  pull_request:
+    types: [opened, reopened]  # post the preview link on PRs opened after the branch was pushed
   workflow_dispatch:  # lets the refresh-sermons job publish after pushing to main
 
 permissions:
@@ -20,6 +22,8 @@ permissions:
 
 jobs:
   deploy:
+    # Build + deploy only on pushes; PR events are handled by preview-comment
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -85,5 +89,43 @@ jobs:
             } else {
               await github.rest.issues.createComment({
                 owner, repo, issue_number: pr.number, body,
+              });
+            }
+
+  preview-comment:
+    # A PR opened (or reopened) after its branch was already pushed missed the
+    # push run's comment step — that run found no open PR to comment on. This
+    # posts the preview link for the already-deployed branch.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post preview URL on the new PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            if (branch === 'main') return;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const previewUrl =
+              `https://${owner}.github.io/${repo}/previews/${branch}/`;
+
+            const issue_number = context.payload.pull_request.number;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner, repo, issue_number,
+            });
+
+            const marker = '<!-- gh-pages-preview -->';
+            const body = `${marker}\n**Preview:** ${previewUrl}`;
+            const existing = comments.find(c =>
+              c.user.login === 'github-actions[bot]' && c.body.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner, repo, comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number, body,
               });
             }
