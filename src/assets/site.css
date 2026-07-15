@@ -522,7 +522,6 @@ section { position: relative; }
 .gcal-embed {
   width: 100%;
   max-width: 960px;
-  border: 1px solid var(--ink-line);
   background: var(--cream);
   padding: 12px;
   box-sizing: border-box;
