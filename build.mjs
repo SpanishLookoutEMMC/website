@@ -166,6 +166,15 @@ function buildTimeline() {
       ? `<p class="tl-detail">${esc(e.detail)}</p>`
       : '';
     const imgAttr = e.image ? ` data-image="images/timeline/${esc(e.image)}"` : '';
+    const photoIcon = e.image
+      ? `<span class="tl-photo-icon" title="Has photo" aria-label="Has photo">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <circle cx="12" cy="12" r="3.25"/>
+            <circle cx="17.5" cy="8.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </span>`
+      : '';
     const yearHtml = showYear
       ? `<span class="tl-year">${esc(year)}</span>`
       : `<span class="tl-year tl-year--spacer" aria-hidden="true"></span>`;
@@ -177,6 +186,7 @@ function buildTimeline() {
         </div>
         <div class="tl-branch" aria-hidden="true"></div>
         <div class="tl-block">
+          ${photoIcon}
           <div class="tl-date">${esc(e.date)}</div>
           <h3 class="tl-title">${esc(e.title)}</h3>
           ${detail}
