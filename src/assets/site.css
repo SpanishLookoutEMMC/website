@@ -864,5 +864,5 @@ section { position: relative; }
   .nav-toggle { display: inline-block; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
   .hero-photo .content { min-height: 560px; padding-top: 100px; }
-  .sec-pad { padding: 64px 0; }
+  .sec-pad { padding: 34px 0; }
 }
