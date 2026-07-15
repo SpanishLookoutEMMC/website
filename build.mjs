@@ -16,7 +16,7 @@ function applyData(str) {
   return out;
 }
 
-// Top-level order: About (submenu), Staff & Board, Sermons, Events, Contact
+// Top-level order: About (submenu), Sermons, Events, Contact
 const NAV = [
   {
     key: 'about',
@@ -27,9 +27,9 @@ const NAV = [
       { key: 'faith',      href: 'faith.html',      label: 'Our Mission' },
       { key: 'confession', href: 'confession.html', label: 'Confession of Faith' },
       { key: 'history',    href: 'history.html',    label: 'Our History' },
+      { key: 'team',       href: 'team.html',       label: 'Staff &amp; Board' },
     ],
   },
-  { key: 'team',    href: 'team.html',    label: 'Staff &amp; Board' },
   { key: 'sermons', href: 'sermons.html', label: 'Sermons' },
   { key: 'events',  href: 'events.html',  label: 'Events' },
   { key: 'contact', href: 'contact.html', label: 'Contact' },
@@ -232,7 +232,7 @@ function buildTimeline() {
 <section class="sec-pad tl-section" id="history">
   <div class="wrap">
     <div class="label">Our history</div>
-    <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Thirty years of God’s faithfulness.</h2>
+    <h2 class="display h-1" style="margin-top:14px; max-width:720px;">Important events in our history</h2>
     <p class="lead" style="margin-top:20px; max-width:640px;">From the first worship service in 1995 to the life of the church today — a timeline of Spanish Lookout EMMC.</p>
   </div>
   <div class="tl-layout wrap" data-tl>
