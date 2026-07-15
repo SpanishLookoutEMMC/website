@@ -524,6 +524,8 @@ section { position: relative; }
   max-width: 960px;
   border: 1px solid var(--ink-line);
   background: var(--cream);
+  padding: 12px;
+  box-sizing: border-box;
   overflow: hidden;
 }
 .gcal-embed iframe {
@@ -531,8 +533,12 @@ section { position: relative; }
   width: 100%;
   height: 600px;
   border: 0;
+  background: var(--cream);
 }
 @media (max-width: 680px) {
+  .gcal-embed {
+    padding: 8px;
+  }
   .gcal-embed iframe {
     height: 480px;
   }
