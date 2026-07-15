@@ -256,10 +256,12 @@ a { color: var(--ink); }
   color: var(--ink);
   font-weight: 500;
 }
-/* Open on hover / keyboard focus */
-.nav-item.has-submenu:hover .nav-submenu,
-.nav-item.has-submenu:focus-within .nav-submenu {
-  display: block;
+/* Desktop only: open on hover / keyboard focus (avoid sticky-hover reflow on touch) */
+@media (hover: hover) and (pointer: fine) {
+  .nav-item.has-submenu:hover .nav-submenu,
+  .nav-item.has-submenu:focus-within .nav-submenu {
+    display: block;
+  }
 }
 /* Small caret on About */
 .nav-parent::after {
@@ -946,6 +948,8 @@ section { position: relative; }
     gap: 4px;
     max-height: min(80vh, 520px);
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
   .site-header.over-hero .nav.open {
     background: rgba(15,25,18,0.92);
@@ -956,6 +960,9 @@ section { position: relative; }
     display: flex;
     flex-direction: column;
     gap: 2px;
+    /* Undo desktop hover-bridge (padding/negative margin causes scroll stutter) */
+    padding-bottom: 0;
+    margin-bottom: 0;
   }
   .nav.open .nav-submenu {
     display: flex;
@@ -963,15 +970,15 @@ section { position: relative; }
     position: static;
     transform: none;
     min-width: 0;
-    padding: 4px 0 8px 14px;
+    padding: 2px 0 6px 14px;
     margin: 0;
     background: transparent;
     border: 0;
     box-shadow: none;
-    gap: 2px;
+    gap: 0;
   }
   .nav.open .nav-submenu a {
-    padding: 8px 0;
+    padding: 10px 0;
     white-space: normal;
   }
   .nav.open > a,
