@@ -27,7 +27,7 @@ const NAV = [
       { key: 'faith',      href: 'faith.html',      label: 'Our Mission' },
       { key: 'confession', href: 'confession.html', label: 'Confession of Faith' },
       { key: 'history',    href: 'history.html',    label: 'Our History' },
-      { key: 'team',       href: 'team.html',       label: 'Staff &amp; Board' },
+      { key: 'team',       href: 'team.html',       label: 'Staff' },
     ],
   },
   { key: 'sermons', href: 'sermons.html', label: 'Sermons' },
