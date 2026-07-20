@@ -1,5 +1,14 @@
 [
   {
+    "videoId": "2UYHthRvwoU",
+    "title": "Think About Such Things",
+    "dateStr": "July 19, 2026",
+    "date": "2026-07-20",
+    "speaker": "Blaine Dueck",
+    "thumbnail": "https://i3.ytimg.com/vi/2UYHthRvwoU/hqdefault.jpg",
+    "description": ""
+  },
+  {
     "videoId": "stSAGMVTK38",
     "title": "In Every Situation",
     "dateStr": "July 12, 2026",
@@ -10,10 +19,10 @@
   },
   {
     "videoId": "_u2BOyzat18",
-    "title": "July 5, 2026 -- Ben Dueck",
-    "dateStr": "July 6, 2026",
+    "title": "Romans 12",
+    "dateStr": "July 5, 2026",
     "date": "2026-07-06",
-    "speaker": "",
+    "speaker": "Ben Dueck",
     "thumbnail": "https://i4.ytimg.com/vi/_u2BOyzat18/hqdefault.jpg",
     "description": ""
   },
