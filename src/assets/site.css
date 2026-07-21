@@ -593,6 +593,15 @@ section { position: relative; }
   font-weight: 400;
 }
 
+/* Team page portraits — right-aligned next to bio; centered when stacked */
+.team-photo {
+  width: 50%;
+  margin: 0 0 0 auto;
+  aspect-ratio: 4 / 5;
+  background-size: cover;
+  background-position: center 20%;
+}
+
 /* ── Sermon list row (archive) ─────────────────────────────── */
 .sermon-row {
   display: grid;
@@ -994,6 +1003,7 @@ section { position: relative; }
 @media (max-width: 960px) {
   .grid-3, .triptych { grid-template-columns: 1fr 1fr; }
   .grid-bias-right, .grid-bias-left { grid-template-columns: 1fr; gap: 48px; }
+  .team-photo { margin: 0 auto; }
   .service-strip .cols { grid-template-columns: repeat(2, 1fr); gap: 22px; }
   .site-footer .cols { grid-template-columns: 1fr 1fr; }
   .quilt { grid-template-columns: 1fr; height: auto; }
