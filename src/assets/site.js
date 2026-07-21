@@ -68,21 +68,62 @@
     referenceEl.textContent = verse.ref;
   }
 
-  // Contact form — compose a mailto: so the message leaves via the visitor's email app
+  // Contact form — submit via Web3Forms (no visitor email client required)
   var contactForm = document.getElementById('contact-form');
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      var to = contactForm.getAttribute('data-to') || '';
+      var statusEl = contactForm.querySelector('.form-status');
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
       var name = (contactForm.elements.name && contactForm.elements.name.value || '').trim();
+      var message = (contactForm.elements.message && contactForm.elements.message.value || '').trim();
+      if (!name || !message) return;
+
+      function setStatus(text, ok) {
+        if (!statusEl) return;
+        statusEl.textContent = text;
+        statusEl.style.display = 'inline';
+        statusEl.style.color = ok ? 'var(--gold)' : '#a33';
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+      setStatus('Sending…', true);
+
+      var payload = {
+        access_key: contactForm.elements.access_key && contactForm.elements.access_key.value,
+        subject: contactForm.elements.subject && contactForm.elements.subject.value || 'Website contact form',
+        name: name,
+        message: message
+      };
       var email = (contactForm.elements.email && contactForm.elements.email.value || '').trim();
-      var msg = (contactForm.elements.msg && contactForm.elements.msg.value || '').trim();
-      if (!to || !name || !email || !msg) return;
-      var subject = encodeURIComponent('Website message from ' + name);
-      var body = encodeURIComponent('From: ' + name + ' <' + email + '>\n\n' + msg);
-      var done = contactForm.querySelector('.done');
-      if (done) done.style.display = 'inline';
-      window.location.href = 'mailto:' + to + '?subject=' + subject + '&body=' + body;
+      if (email) {
+        payload.email = email;
+        payload.replyto = email;
+      }
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (result.ok && result.data && result.data.success) {
+            setStatus('Message sent', true);
+            contactForm.reset();
+          } else {
+            setStatus('Could not send. Please try again or use another contact option above.', false);
+          }
+        })
+        .catch(function () {
+          setStatus('Could not send. Please try again or use another contact option above.', false);
+        })
+        .then(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
     });
   }
 

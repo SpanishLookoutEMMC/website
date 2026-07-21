@@ -20,14 +20,16 @@ current: contact
     </div>
 
     <div class="grid grid-bias-left" style="gap: 72px; align-items:start; margin-top: 48px;">
-      <form class="form" id="contact-form" data-to="{{email}}" style="margin-top: 0;">
+      <form class="form" id="contact-form" style="margin-top: 0;">
+        <input type="hidden" name="access_key" value="{{web3forms_key}}">
+        <input type="hidden" name="subject" value="Website contact form">
         <div class="label" style="margin-bottom: 6px;">Send a message</div>
         <label><span class="lbl">Your name</span><input type="text" name="name" required autocomplete="name"></label>
-        <label><span class="lbl">Email</span><input type="email" name="email" required autocomplete="email"></label>
-        <label><span class="lbl">Message</span><textarea name="msg" rows="5" required></textarea></label>
+        <label><span class="lbl">Email <span style="text-transform:none; letter-spacing:0; opacity:0.65;">(optional)</span></span><input type="email" name="email" autocomplete="email"></label>
+        <label><span class="lbl">Message</span><textarea name="message" rows="5" required></textarea></label>
         <div style="display:flex; gap:16px; align-items:center; margin-top:6px;">
           <button type="submit" class="btn" style="border:0; cursor:pointer;">Send →</button>
-          <span class="done" style="display:none; font-size:13px; color:var(--gold);">Opening your email app…</span>
+          <span class="form-status" style="display:none; font-size:13px;" aria-live="polite"></span>
         </div>
       </form>
 
