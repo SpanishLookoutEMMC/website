@@ -1113,6 +1113,7 @@ section { position: relative; }
   .nav.open .nav-item.has-submenu {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
   }
   .nav.open .nav-item.has-submenu::after {
