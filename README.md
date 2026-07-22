@@ -49,7 +49,8 @@ The build script (`build.mjs`):
 - **Pages:** edit the corresponding `.html` file in `src/pages/`. Use placeholders where generated content should appear (see below).
 - **Sermons:** run `npm run fetch-sermons` to pull the latest videos from YouTube into `src/sermons.json`, then re-run the build. New videos are added to the existing list (older sermons are kept). This runs weekly on its own — see [Automated sermon refresh](#automated-sermon-refresh).
 - **Church timeline:** edit `src/timeline.json` (date, title, detail, image). Photos live in `src/images/timeline/`. Rebuild to refresh the church page.
-- **Site config:** edit `src/data.json` to update contact details, YouTube channel, maps link, Google Calendar embed URL (`gcal`), etc.
+- **Site config:** edit `src/data.json` to update contact details, YouTube channel, maps link, Google Calendar embed URL (`gcal`), Web3Forms access key (`web3forms_key`), etc.
+- **Contact form:** the form on `contact.html` submits via [Web3Forms](https://web3forms.com) to the church email. Email is optional. The access key lives in `src/data.json` as `web3forms_key`.
 - **Layout/nav:** edit `src/layout.html` or the `NAV` array in `build.mjs` (supports nested `children` for submenus such as About).
 
 ### Template placeholders
