@@ -88,6 +88,12 @@ Only the sermon is kept — singing and announcements are cut.
 See [`scripts/transcripts/README.md`](scripts/transcripts/README.md) for the
 four-step workflow.
 
+All sermons currently in `src/sermons.json` have been transcribed. The one
+exception is the ECS 2026 Year End Program (`D5WDYtxk0zU`), which is a school
+programme with no sermon in it. Two recordings contain a message inside a larger
+event — the Father's Day dedication service and the ECS graduation — and only the
+message itself is transcribed; each file says so in a note.
+
 ## Deploying
 
 The build writes the final site into `dist/`. Serve that directory.

@@ -49,7 +49,7 @@ for id in $ids; do
   fi
 
   echo "[$n/$total] $id — transcribing" | tee -a "$LOG"
-  "$DIR/.venv/bin/python" "$DIR/transcribe.py" "$id" --model "$MODEL" >> "$LOG" 2>&1 \
+  "$DIR/.venv/bin/python" "$DIR/transcribe.py" --model "$MODEL" -- "$id" >> "$LOG" 2>&1 \
     || echo "         TRANSCRIBE FAILED for $id" | tee -a "$LOG"
 done
 

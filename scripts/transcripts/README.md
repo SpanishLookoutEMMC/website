@@ -94,6 +94,42 @@ sermon, and `--note` to record an editing decision in the file itself.
 Always `--dry-run` first and read the start and end of the output — that is the
 check that the boundaries are right.
 
+## Doing the whole channel at once
+
+```bash
+./prepare_batch.sh
+```
+
+Downloads and transcribes every video in `src/sermons.json` that doesn't have a
+raw transcript yet, skipping what's already done — so re-run it after a failure.
+It stops there on purpose: boundaries still get decided per recording with
+outline.py and extract.py.
+
+Watch it with `tail -f work/batch.log`.
+
+### Two things that will bite you
+
+**Video ids starting with `-`** (e.g. `-ewPWv9X2eU`) look like command-line flags.
+Put options first and separate the id with `--`:
+
+```bash
+./.venv/bin/python transcribe.py --model small -- -ewPWv9X2eU
+./.venv/bin/python outline.py --bucket 150 -- -ewPWv9X2eU
+```
+
+**Downloads fail intermittently with 403.** YouTube rate-limits repeated
+requests; the same command usually works a minute later. `prepare_batch.sh`
+retries three times, and if it still gives up, just run `./fetch_audio.sh <id>`
+by hand afterwards.
+
+## Not every recording has a sermon
+
+The channel includes school programs and ceremonies. Check the outline before
+assuming there's a message to extract — if there isn't one, don't write a file.
+`D5WDYtxk0zU` (ECS 2026 Year End Program) is an example: class presentations,
+recitations, awards and speeches, no sermon. Where a message is embedded in a
+larger event, extract just the message and use `--note` to say so.
+
 ## What is committed
 
 - `src/transcripts/*.md` — the finished sermon transcripts.

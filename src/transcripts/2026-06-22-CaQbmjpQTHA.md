@@ -1,8 +1,8 @@
 ---
 videoId: CaQbmjpQTHA
 date: 2026-06-22
-speaker: Parent / Child Dedication
-title: Parent / Child Dedication
+speaker: Blaine Dueck
+title: Psalm 139
 youtube: https://www.youtube.com/watch?v=CaQbmjpQTHA
 sermonStart: 0:58:28
 sermonEnd: 1:19:06
@@ -10,9 +10,9 @@ words: 2735
 transcribedWith: whisper-small
 ---
 
-# Parent / Child Dedication
+# Psalm 139
 
-**Parent / Child Dedication** · June 21, 2026
+**Blaine Dueck** · June 21, 2026
 
 [Watch on YouTube (jumps to the sermon)](https://www.youtube.com/watch?v=CaQbmjpQTHA&t=3508s)
 
