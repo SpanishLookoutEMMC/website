@@ -33,7 +33,7 @@ YTDLP="$DIR/.venv/bin/yt-dlp"
 # installed here. Without it every media URL comes back 403.
 # Don't add --download-sections either — that hands the URL to ffmpeg, which
 # fetches without yt-dlp's headers and also 403s.
-"$YTDLP" --js-runtimes node \
+"$YTDLP" --js-runtimes node --no-progress \
   -f bestaudio -x --audio-format wav \
   --postprocessor-args "-ar 16000 -ac 1" \
   -o "$DIR/work/$VIDEO_ID.%(ext)s" \
