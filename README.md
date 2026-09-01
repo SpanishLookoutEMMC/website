@@ -22,6 +22,7 @@ build.mjs             Build script — reads src/, writes output files to dist/
 serve.mjs             Dev server on http://localhost:3000
 scripts/
   fetch-sermons.mjs   Fetches latest sermons from YouTube and writes src/sermons.json
+  transcripts/        Tools for transcribing sermons locally (see its own README)
 
 dist/                 Built output (generated — do not edit directly)
   *.html              Built top-level pages
@@ -70,6 +71,28 @@ Keys from `src/data.json` are also replaced everywhere (e.g. `{{email}}`, `{{wha
 ## Automated sermon refresh
 
 `.github/workflows/refresh-sermons.yml` runs every Monday (and on manual dispatch). It runs `scripts/fetch-sermons.mjs`, which takes the **10 latest** videos on the church YouTube channel fresh from the feed (so edited titles/speakers are picked up) and keeps any older entries already in `src/sermons.json`. If anything changed, it commits and pushes straight to `main`, then triggers the deploy workflow to publish — a push made with the workflow's `GITHUB_TOKEN` doesn't start other workflows on its own, so the deploy is dispatched explicitly.
+
+## Sermon transcripts
+
+`src/transcripts/*.md` holds text transcripts of sermons, so the preaching can be
+used as a reference for what the church teaches. They are **not** part of the built
+site — nothing in `dist/` reads them.
+
+YouTube's own auto-captions only exist for about half the channel's videos and
+often never appear for a given service, so transcripts are produced locally with
+Whisper instead. This is deliberately a manual, agent-driven process rather than
+part of the weekly refresh: each recording runs ~80 minutes, of which the sermon
+is roughly 40, and deciding where the sermon starts and ends takes judgement.
+Only the sermon is kept — singing and announcements are cut.
+
+See [`scripts/transcripts/README.md`](scripts/transcripts/README.md) for the
+four-step workflow.
+
+All sermons currently in `src/sermons.json` have been transcribed. The one
+exception is the ECS 2026 Year End Program (`D5WDYtxk0zU`), which is a school
+programme with no sermon in it. Two recordings contain a message inside a larger
+event — the Father's Day dedication service and the ECS graduation — and only the
+message itself is transcribed; each file says so in a note.
 
 ## Deploying
 
