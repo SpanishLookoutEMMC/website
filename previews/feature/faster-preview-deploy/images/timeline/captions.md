@@ -1,0 +1,210 @@
+# Timeline captions (from PDF, left-to-right)
+
+- EMMC leaders 1st visit to Spanish Lookout
+- 2nd worship service; Blue
+- Creek began once a
+- August 25, 1995
+- May 28, 1995
+- 1st child born -
+- month visits
+- Roxy Wiebe
+- 1st worship service
+- March 9, 1995
+- April 30, 1995
+- Land purchased where current
+- 1st church building
+- 1995/1996
+- 1st communion service
+- church stands
+- October 20, 1996
+- Melvin, Anna, Jacob, Victor, Helen, Gerald
+- 1996
+- October 6, 1996
+- 1st baptism
+- Evening services with Diedrich Harms (Diedrich & Judy came countless times to invest
+- November 14-17, 1996
+- into countless lives!)
+- 2nd church building dedication
+- Pastor House purchased
+- Approx. 1996-1997
+- August 10, 1997
+- Sept 13, 1997 1st wedding - Joseph & Eva
+- Friesen
+- (Served from Nov 1997 - June 1998)
+- 1st Pastor Commissioning -
+- November 16, 1997
+- Peter & Ella Zacharias
+- Jake & Margaret Wiebe - Pastor
+- (Served from Oct 1998 - Apr 1999)
+- October 1998
+- Elmer & Liesbeth, Walter & Betty, Frank & Tina,
+- These couples all put in countless hours leading this
+- congregation and other ministries over the years!
+- Leadership commissioning
+- April 25, 1999
+- Hermie & Sara.
+- Len hands Hermie a donation from Bolivia churches (this, we are told, was LIEAB’s ﬁrst
+- 2000 2005 2010 2015 2020 2025
+- Henry Teigrob serves
+- November 1999
+- for 3 months
+- mission contribution)
+- accountability & structure
+- Len Sawatzky & Frank
+- Peters help with
+- New building construction began
+- May 2000
+- 2001
+- 1st time Gordon Brown serves for 3 months
+- (it is estimated Gordon came approximately 15 times!)
+- Services with Diedrich Harms
+- 2002
+- March 2002
+- Moved into 3rd church building
+- Sunday School begins
+- January 2003
+- December 2002
+- Evening Services with John Penner
+- Paul Brandt concert at
+- October 2003
+- December 2002
+- church
+- Don & Beth Janzen help with English
+- November 2003
+- Services
+- Hosted EMMC Project Macedonia team
+- New rug put into building
+- Dual Services begin (German & English)
+- July 2004
+- November 2004
+- March 20, 2005
+- Walter & Betty sent to SBC
+- Pastor commissioning - Isaac & Lynn Harms
+- August 2005
+- November 25, 2005
+- (served until 2010)
+- 22 young people baptised
+- August 2006
+- Pastor commissioning - Walter & Betty Thiessen
+- September 2007
+- (served until 2015)
+- Frank & Tina Rempel - Pastoral ministry
+- (Served in the church and in many diﬀerent
+- Elmer & Liesbeth begin ministry in Campeche
+- areas for many years)
+- March 2007
+- July 2006
+- EMMC School begins
+- August 2007
+- Foundation (EMMC Youth Convention)
+- Large group of youth to Treasured
+- Washrooms/Kitchen construction
+- Hopelchen church opening
+- December 2007
+- SEAN Courses with Isaac Harms
+- May 2009
+- July 2008
+- August 2009
+- Children’s Fun Fest
+- October 2009
+- Michael & Vicki Coverdale - Youth
+- Pastor (served until Nov 2012)
+- Youth leading the worship service on the 5th Sunday of the month begins August 28, 2011
+- Leadership Retreat with
+- July 2009
+- Diedrich Harms
+- October 2009
+- January 2010
+- Pastor House addition
+- Volleyball court cemented
+- July 2011
+- Spanish services hosted at Countryside Park with Ruben
+- Youth visit Hopelchen
+- July 2011
+- December 2011
+- August 2011
+- Pastor commissioning - James & Darlene Peters
+- Mercado
+- (served until 2013)
+- Monthly Trips to Hopelchen begin
+- Preparing the Yearly Christmas Hampers
+- Marriage Retreat with Gordon Brown
+- 2012
+- Gord Penner teaches Berean classes
+- December 2012
+- July 2013
+- January 2012
+- Ben & Grace Friesen begin
+- (served until 2016 & remained
+- Albert & Eileen Reimer -
+- as Youth Pastor (served until 2017)
+- involved in leadership)
+- November 2013
+- April 2014
+- Pastor
+- Host Regional Gathering “Church: Why Bother?”
+- Building extension begins
+- November 2014
+- April 2015
+- Darrell & Elaine Kehler visit & Spanish
+- structure adopted
+- August 2015 Elder board
+- Building extension complete
+- July 2015
+- Services
+- Len & Ella Sawatzky ministry visit
+- Pastor House moved to new lot in Bloomington
+- (came a total of 5 times)
+- January 2016
+- Friesen help with church ministry &
+- June 2017
+- Arturo & Neta
+- July 2016
+- choir
+- Leading With Vision Workshop
+- 18 young people baptised
+- November 19, 2017
+- February 2018
+- Pastor Commissioning - Blaine & Melissa Dueck
+- July 30, 2017
+- 1st Facebook Livestream - Bolivia Report by Abe & Margaret Harder
+- Galatians Course with Ernie Koop
+- August 24, 2019
+- Sunrise Easter Service
+- Hosted Regional Gathering;
+- April 23, 2019
+- March 2019
+- “Enlarge My Vision”
+- August 2018
+- Oﬃce moved to the church land in
+- 1st Youtube Livestream
+- June - November 2020 A period of online services
+- June 7, 2020
+- Bloomington
+- May 2020
+- Oﬃce moved to current location
+- February 2021
+- Jesse Penner - Youth
+- (served until end of 2022)
+- Hosted Regional Ministerial & Men’s
+- June 2021
+- Pastor
+- February 2022
+- Retreat
+- Financial Course with Ruben Dyck
+- August 2023
+- Thiessen - Youth Pastor
+- Junior Youth Camp at Banana Bank
+- Sherwin & Amberly
+- February 2023
+- July 2023
+- November 2023 25 people baptised
+- Completion of renovations to the old church building; Library, Mother & Toddler room, Storage and the Upper
+- Hosted the Regional Ladies Retreat
+- February 2024
+- 2023 & 2024
+- Room
+- Journey to the Cross
+- March 2024
+- Special Fathers Day Night
+- June 2024
