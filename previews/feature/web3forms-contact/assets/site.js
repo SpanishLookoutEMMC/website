@@ -1,0 +1,344 @@
+// Shared site behavior: mobile nav, year stamp.
+(function () {
+  // Year in footer
+  const yr = document.querySelector('[data-year]');
+  if (yr) yr.textContent = String(new Date().getFullYear());
+
+  // Mobile nav: hamburger toggle, backdrop, escape, body scroll lock
+  var toggle = document.querySelector('.nav-toggle');
+  var nav = document.querySelector('.nav');
+  var backdrop = document.querySelector('[data-nav-backdrop]');
+  if (toggle && nav) {
+    function setNavOpen(open) {
+      nav.classList.toggle('open', open);
+      toggle.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+      if (backdrop) {
+        if (open) backdrop.removeAttribute('hidden');
+        else backdrop.setAttribute('hidden', '');
+      }
+    }
+
+    toggle.addEventListener('click', function () {
+      setNavOpen(!nav.classList.contains('open'));
+    });
+
+    if (backdrop) {
+      backdrop.addEventListener('click', function () {
+        setNavOpen(false);
+      });
+    }
+
+    // Close after choosing a link
+    nav.addEventListener('click', function (e) {
+      var a = e.target.closest('a');
+      if (!a || !nav.classList.contains('open')) return;
+      setNavOpen(false);
+    });
+
+    // Escape closes the drawer
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setNavOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+
+  // Rotating homepage scripture — pick a random verse on each visit
+  var scriptureEl = document.getElementById('hero-scripture');
+  var referenceEl = document.getElementById('hero-reference');
+  if (scriptureEl && referenceEl) {
+    var verses = [
+      { text: '“Enter his gates with thanksgiving, and his courts with praise.”', ref: 'Psalm 100:4' },
+      { text: '“For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.”', ref: 'John 3:16' },
+      { text: '“Come to me, all you who are weary and burdened, and I will give you rest.”', ref: 'Matthew 11:28' },
+      { text: '“Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.”', ref: 'Proverbs 3:5–6' },
+      { text: '“But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.”', ref: 'Isaiah 40:31' },
+      { text: '“And we know that in all things God works for the good of those who love him, who have been called according to his purpose.”', ref: 'Romans 8:28' },
+      { text: '“God is our refuge and strength, an ever-present help in trouble.”', ref: 'Psalm 46:1' },
+      { text: '“Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.”', ref: 'Joshua 1:9' },
+      { text: '“He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.”', ref: 'Micah 6:8' },
+      { text: '“Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.”', ref: 'Philippians 4:6' }
+    ];
+    var verse = verses[Math.floor(Math.random() * verses.length)];
+    scriptureEl.textContent = verse.text;
+    referenceEl.textContent = verse.ref;
+  }
+
+  // Contact form — submit via Web3Forms (no visitor email client required)
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var statusEl = contactForm.querySelector('.form-status');
+      var submitBtn = contactForm.querySelector('button[type="submit"]');
+      var name = (contactForm.elements.name && contactForm.elements.name.value || '').trim();
+      var message = (contactForm.elements.message && contactForm.elements.message.value || '').trim();
+      if (!name || !message) return;
+
+      function setStatus(text, ok) {
+        if (!statusEl) return;
+        statusEl.textContent = text;
+        statusEl.style.display = 'inline';
+        statusEl.style.color = ok ? 'var(--gold)' : '#a33';
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+      setStatus('Sending…', true);
+
+      var payload = {
+        access_key: contactForm.elements.access_key && contactForm.elements.access_key.value,
+        subject: contactForm.elements.subject && contactForm.elements.subject.value || 'Website contact form',
+        name: name,
+        message: message
+      };
+      var email = (contactForm.elements.email && contactForm.elements.email.value || '').trim();
+      if (email) {
+        payload.email = email;
+        payload.replyto = email;
+      }
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
+        .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+        .then(function (result) {
+          if (result.ok && result.data && result.data.success) {
+            setStatus('Message sent', true);
+            contactForm.reset();
+          } else {
+            setStatus('Could not send. Please try again or use another contact option above.', false);
+          }
+        })
+        .catch(function () {
+          setStatus('Could not send. Please try again or use another contact option above.', false);
+        })
+        .then(function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
+    });
+  }
+
+  // Church history: highlight bottom-most fully visible event + show its image.
+  // Click pins an entry until the user scrolls again.
+  // L-shaped connector: event → horizontal → vertical → image.
+  var tlRoot = document.querySelector('[data-tl]');
+  if (tlRoot) {
+    var events = tlRoot.querySelectorAll('[data-tl-event]');
+    var figure = tlRoot.querySelector('[data-tl-figure]');
+    var figureImg = tlRoot.querySelector('[data-tl-figure-img]');
+    var connector = document.querySelector('[data-tl-connector]');
+    var connectorPath = document.querySelector('[data-tl-connector-path]');
+    var activeEl = null;
+    var pinnedEl = null;
+    var ticking = false;
+
+    function isFullyInViewport(el) {
+      var r = el.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      // Fully visible: top and bottom inside the viewport
+      return r.top >= 0 && r.bottom <= vh && r.height > 0;
+    }
+
+    function isFloatingFigure() {
+      return window.matchMedia('(max-width: 900px)').matches;
+    }
+
+    function sizeFigureToEvent(eventEl) {
+      if (!figure || !eventEl) return;
+      var block = eventEl.querySelector('.tl-block');
+      if (!block) return;
+
+      // Narrow viewports: fixed float in the top half (CSS), size ~2× card, cap to viewport
+      if (isFloatingFigure()) {
+        var targetFloat = Math.round(block.getBoundingClientRect().width * 2);
+        var maxFloat = Math.min(window.innerWidth * 0.92, 28 * 16); // ~28rem
+        var wFloat = Math.max(160, Math.min(targetFloat, maxFloat));
+        figure.style.justifySelf = '';
+        figure.style.width = wFloat + 'px';
+        figure.style.maxWidth = wFloat + 'px';
+        return;
+      }
+
+      // Desktop: measure the image grid track by stretching to 100% first
+      figure.style.justifySelf = 'stretch';
+      figure.style.width = '100%';
+      figure.style.maxWidth = '100%';
+      var trackW = figure.getBoundingClientRect().width;
+      // Target ≈ 2× event card, but stay inside the right column only
+      var target = Math.round(block.getBoundingClientRect().width * 2);
+      var w = Math.max(160, Math.min(target, trackW));
+      figure.style.width = w + 'px';
+      figure.style.maxWidth = '100%';
+      figure.style.justifySelf = 'end';
+    }
+
+    function updateConnector() {
+      if (!connector || !connectorPath) return;
+      // No connector on narrow layouts where the image floats at the top
+      if (isFloatingFigure() || !activeEl || !figure || !figure.classList.contains('is-visible')) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var block = activeEl.querySelector('.tl-block');
+      var frame = figure.querySelector('.tl-figure-frame') || figure;
+      if (!block) {
+        connector.classList.remove('is-visible');
+        connectorPath.setAttribute('d', '');
+        return;
+      }
+      var br = block.getBoundingClientRect();
+      var fr = frame.getBoundingClientRect();
+      // Stroke is centered on the path; CSS border sits in [fr.left, fr.left+bw].
+      // Align path to the center of the left border so it coincides with that edge.
+      var bw = parseFloat(window.getComputedStyle(frame).borderLeftWidth) || 2;
+      var half = bw / 2;
+      var x1 = br.right;
+      var y1 = br.top + br.height / 2;
+      var xBorder = fr.left + half;
+      // Attach to the left border at the same y when possible; otherwise
+      // run vertical along the border center until we hit the frame edge.
+      var yTop = fr.top + half;
+      var yBot = fr.bottom - half;
+      var yAttach = y1;
+      if (y1 < yTop) yAttach = yTop;
+      else if (y1 > yBot) yAttach = yBot;
+
+      // Horizontal first → to the border centerline, then vertical along it if needed
+      var d = 'M ' + x1 + ' ' + y1 + ' L ' + xBorder + ' ' + y1;
+      if (Math.abs(yAttach - y1) > 0.5) {
+        d += ' L ' + xBorder + ' ' + yAttach;
+      }
+      connectorPath.setAttribute('d', d);
+      connector.classList.add('is-visible');
+    }
+
+    function setFigure(eventEl) {
+      if (!figure || !figureImg) return;
+      var src = eventEl && eventEl.getAttribute('data-image');
+      var title = eventEl && eventEl.getAttribute('data-title');
+      if (!src) {
+        figure.classList.remove('is-visible');
+        figureImg.removeAttribute('src');
+        figureImg.alt = '';
+        figure.style.width = '';
+        figure.style.maxWidth = '';
+        updateConnector();
+        return;
+      }
+      if (figureImg.getAttribute('src') !== src) {
+        figureImg.src = src;
+        figureImg.alt = title || '';
+      }
+      figure.classList.add('is-visible');
+      sizeFigureToEvent(eventEl);
+      // After layout / image load, redraw path
+      if (figureImg.complete) {
+        updateConnector();
+      } else {
+        figureImg.addEventListener('load', updateConnector, { once: true });
+        // still draw toward the frame box immediately
+        updateConnector();
+      }
+    }
+
+    function applyActive(next) {
+      if (next !== activeEl) {
+        if (activeEl) activeEl.classList.remove('is-active');
+        activeEl = next;
+        if (activeEl) {
+          activeEl.classList.add('is-active');
+          setFigure(activeEl);
+        } else {
+          setFigure(null);
+        }
+      } else if (activeEl) {
+        // Same event — still refresh size/connector (scroll moves sticky image)
+        sizeFigureToEvent(activeEl);
+        updateConnector();
+      } else {
+        updateConnector();
+      }
+    }
+
+    function pickScrollActive() {
+      var fully = [];
+      for (var i = 0; i < events.length; i++) {
+        if (isFullyInViewport(events[i])) fully.push(events[i]);
+      }
+
+      if (fully.length) {
+        // Bottom-most fully visible = last in document order among fully visible
+        return fully[fully.length - 1];
+      }
+
+      // Fallback: nearest event whose top is above the viewport bottom
+      var vh = window.innerHeight || 0;
+      var best = null;
+      var bestBottom = -Infinity;
+      for (var j = 0; j < events.length; j++) {
+        var r = events[j].getBoundingClientRect();
+        if (r.top < vh && r.bottom > bestBottom) {
+          bestBottom = r.bottom;
+          best = events[j];
+        }
+      }
+      return best;
+    }
+
+    function updateActive() {
+      ticking = false;
+      if (pinnedEl) {
+        applyActive(pinnedEl);
+        return;
+      }
+      applyActive(pickScrollActive());
+    }
+
+    function requestUpdate() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateActive);
+      }
+    }
+
+    for (var c = 0; c < events.length; c++) {
+      events[c].addEventListener('click', function () {
+        pinnedEl = this;
+        applyActive(this);
+      });
+      events[c].addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        e.preventDefault();
+        pinnedEl = this;
+        applyActive(this);
+      });
+      // Clickable without changing semantics for assistive tech
+      if (!events[c].hasAttribute('tabindex')) {
+        events[c].setAttribute('tabindex', '0');
+        events[c].setAttribute('role', 'button');
+      }
+    }
+
+    window.addEventListener('scroll', function () {
+      // Any real scroll returns control to the auto “bottom-most” rule
+      if (pinnedEl) pinnedEl = null;
+      requestUpdate();
+    }, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+    updateActive();
+  }
+})();
+
+
+
+
