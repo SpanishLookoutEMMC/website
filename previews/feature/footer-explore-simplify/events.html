@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — Spanish Lookout EMMC</title>
+<meta name="description" content="Upcoming gatherings and events at Spanish Lookout EMMC — view our church calendar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">
+      <img src="images/emmc-logo.png" alt="EMMC">
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+      <span class="nav-toggle-box" aria-hidden="true">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </span>
+    </button>
+    <nav class="nav" id="site-nav">
+      <div class="nav-item has-submenu">
+        <a href="about.html" class="nav-parent">About</a>
+        <div class="nav-submenu" role="group" aria-label="About">
+          <a href="church.html">The Church</a>
+          <a href="faith.html">Our Mission</a>
+          <a href="confession.html">Confession of Faith</a>
+          <a href="history.html">Our History</a>
+          <a href="team.html">Staff &amp; Board</a>
+        </div>
+      </div>
+      <a href="sermons.html">Sermons</a>
+      <a href="events.html" class="current">Events</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+  <div class="nav-backdrop" data-nav-backdrop hidden></div>
+</header>
+
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="label">What’s on</div>
+    <h1 class="display h-1" style="margin-top:12px; max-width:36rem;">Church calendar</h1>
+
+    <div class="gcal-embed" style="margin-top:36px;">
+      <iframe
+        src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23f5efdf&ctz=America%2FBelize&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&showTz=0&src=7011c1a843ea07bd4642313baf5a8f8b11f9c4201e3ec8f56b2bffac275172b8%40group.calendar.google.com&color=%230B8043"
+        title="Spanish Lookout EMMC calendar"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <p style="margin-top:20px; font-size:14px; color:var(--muted); max-width:36rem;">
+      <a href="contact.html" class="tlink">Questions? Get in touch →</a>
+    </p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="index.html">
+          <img src="images/emmc-logo.png" alt="Spanish Lookout EMMC">
+        </a>
+        <div class="note">A Mennonite congregation in Spanish Lookout, Cayo District, Belize. Part of the Evangelical Mennonite Mission Conference.</div>
+      </div>
+      <div>
+        <h4>Visit Sundays</h4>
+        <ul>
+          <li>9:15 AM - Coffee &amp; Fellowship</li>
+          <li>10:00 AM - Worship Service</li>
+          <li>Route 35 West, Spanish Lookout</li>
+          <li><a href="https://maps.app.goo.gl/DXfggQx4m7jUkBGM9">Google Maps →</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="contact.html">Contact →</a></li>
+          <li><a href="mailto:splemmchurch@gmail.com">splemmchurch@gmail.com</a></li>
+        </ul>
+        <div class="footer-social">
+          <a href="https://www.facebook.com/splemmc" aria-label="Facebook" title="Facebook">
+            <span class="icon icon-facebook" aria-hidden="true"></span>
+          </a>
+          <a href="https://www.youtube.com/@SpanishLookoutEMMC" aria-label="YouTube" title="YouTube">
+            <span class="icon icon-youtube" aria-hidden="true"></span>
+          </a>
+          <a href="https://wa.me/5016152728" aria-label="WhatsApp" title="WhatsApp">
+            <span class="icon icon-whatsapp" aria-hidden="true"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© <span data-year>2026</span> Spanish Lookout EMMC</span>
+      <span>emmc.ca · Encourage | Equip | Send</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
