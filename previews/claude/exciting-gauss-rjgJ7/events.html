@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — Spanish Lookout EMMC</title>
+<meta name="description" content="Upcoming events at Spanish Lookout EMMC — Bible studies, youth nights, meetings, and gatherings.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<link rel="icon" type="image/png" sizes="512x512" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+<style>
+  .event-row {
+    display: grid;
+    grid-template-columns: 84px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--ink-line);
+    text-decoration: none;
+    color: inherit;
+  }
+  .event-row:hover { background: var(--ink-wash); }
+  .event-date {
+    text-align: center;
+    border-right: 1px solid var(--ink-line);
+    padding-right: 12px;
+  }
+  .event-date .mon {
+    font-family: var(--body);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+  }
+  .event-date .day {
+    font-family: var(--display);
+    font-size: 44px;
+    color: var(--ink);
+    line-height: 1;
+    margin-top: 2px;
+    font-variant-numeric: tabular-nums;
+  }
+  .event-date .dow {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 4px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .event-row h3 {
+    font-family: var(--display);
+    font-size: 26px;
+    line-height: 1.18;
+    margin: 0 0 6px;
+    color: var(--ink);
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+  .event-row .time {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+  .event-row .time .dot { color: var(--gold); margin: 0 8px; }
+  .event-row .arrow { font-size: 14px; color: var(--gold); }
+  @media (max-width: 680px) {
+    .event-row { grid-template-columns: 68px 1fr; gap: 20px; }
+    .event-row .arrow { display: none; }
+    .event-date .day { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">
+      <img src="images/emmc-logo.png" alt="EMMC">
+      <div class="brand-sep"></div>
+      <div>
+        <div class="brand-name">Spanish Lookout EMMC</div>
+        <div class="brand-sub">Making disciples · Connecting churches</div>
+      </div>
+    </a>
+    <button class="nav-toggle" aria-label="Menu">Menu</button>
+    <nav class="nav">
+      <a href="church.html">The Church</a>
+      <a href="team.html">The Team</a>
+      <a href="sermons.html">Sermons</a>
+      <a href="faith.html">Our Faith</a>
+      <a href="events.html" class="current">Events</a>
+      <a href="news.html">News</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="trail">Home · Events</div>
+    <h1><em>What's on</em><br>this week and ahead.</h1>
+    <p class="sub">Upcoming gatherings at Spanish Lookout EMMC — Bible studies, youth nights, and fellowship events, in date order.</p>
+  </div>
+</section>
+
+<section class="sec-pad">
+  <div class="wrap">
+        <div class="label">This week</div>
+    <hr class="hr" style="margin-top:8px;">
+
+    <a class="event-row" href="#">
+      <div class="event-date">
+        <div class="mon">Apr</div>
+        <div class="day">28</div>
+        <div class="dow">Tue</div>
+      </div>
+      <div>
+        <h3>Men's Breakfast</h3>
+        <div class="time">Tuesday</div>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="index.html" style="gap:10px;"><img src="images/emmc-logo.png" alt="EMMC" style="height:30px;"></a>
+        <div class="blurb">Spanish Lookout EMMC</div>
+        <div class="note">A Mennonite congregation in Spanish Lookout, Cayo District, Belize. Part of the Evangelical Mennonite Mission Conference.</div>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li>Sundays · 10 AM</li>
+          <li>Spanish Lookout, Belize</li>
+          <li><a href="https://maps.app.goo.gl/DXfggQx4m7jUkBGM9">Google Maps →</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="church.html">The Church</a></li>
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="faith.html">Our Faith</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="news.html">News</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Blaine Dueck · Pastor</li>
+          <li>615-2728</li>
+          <li><a href="contact.html">All contacts →</a></li>
+          <li><a href="https://www.youtube.com/@SpanishLookoutEMMC">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© <span data-year>2026</span> Spanish Lookout EMMC</span>
+      <span>emmc.ca · Making disciples, connecting churches</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
