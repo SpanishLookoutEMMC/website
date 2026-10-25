@@ -17,3 +17,7 @@ node_modules/
 
 # Build output
 dist/
+
+# Sermon transcription toolkit (scripts/transcripts/)
+scripts/transcripts/.venv/
+scripts/transcripts/work/
