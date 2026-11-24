@@ -1,0 +1,668 @@
+[
+  {
+    "file": "img-000.jpg",
+    "source": "img-000.jpg",
+    "orig_w": 4032,
+    "orig_h": 3024,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 91563
+  },
+  {
+    "file": "img-001.jpg",
+    "source": "img-001.jpg",
+    "orig_w": 1175,
+    "orig_h": 781,
+    "web_w": 900,
+    "web_h": 598,
+    "bytes": 105195
+  },
+  {
+    "file": "img-002.jpg",
+    "source": "img-002.jpg",
+    "orig_w": 3524,
+    "orig_h": 2334,
+    "web_w": 900,
+    "web_h": 596,
+    "bytes": 127250
+  },
+  {
+    "file": "img-003.jpg",
+    "source": "img-003.jpg",
+    "orig_w": 923,
+    "orig_h": 742,
+    "web_w": 900,
+    "web_h": 723,
+    "bytes": 137444
+  },
+  {
+    "file": "img-004.jpg",
+    "source": "img-004.png",
+    "orig_w": 1200,
+    "orig_h": 1600,
+    "web_w": 675,
+    "web_h": 900,
+    "bytes": 67373
+  },
+  {
+    "file": "img-005.jpg",
+    "source": "img-005.jpg",
+    "orig_w": 1184,
+    "orig_h": 1792,
+    "web_w": 594,
+    "web_h": 900,
+    "bytes": 86090
+  },
+  {
+    "file": "img-006.jpg",
+    "source": "img-006.jpg",
+    "orig_w": 1760,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 613,
+    "bytes": 137425
+  },
+  {
+    "file": "img-007.jpg",
+    "source": "img-007.jpg",
+    "orig_w": 3504,
+    "orig_h": 2353,
+    "web_w": 900,
+    "web_h": 604,
+    "bytes": 79670
+  },
+  {
+    "file": "img-008.jpg",
+    "source": "img-008.jpg",
+    "orig_w": 3324,
+    "orig_h": 2340,
+    "web_w": 900,
+    "web_h": 633,
+    "bytes": 89127
+  },
+  {
+    "file": "img-009.jpg",
+    "source": "img-009.jpg",
+    "orig_w": 3288,
+    "orig_h": 2219,
+    "web_w": 900,
+    "web_h": 607,
+    "bytes": 106165
+  },
+  {
+    "file": "img-010.jpg",
+    "source": "img-010.png",
+    "orig_w": 318,
+    "orig_h": 623,
+    "web_w": 318,
+    "web_h": 623,
+    "bytes": 29432
+  },
+  {
+    "file": "img-011.jpg",
+    "source": "img-011.jpg",
+    "orig_w": 1500,
+    "orig_h": 963,
+    "web_w": 900,
+    "web_h": 577,
+    "bytes": 72300
+  },
+  {
+    "file": "img-012.jpg",
+    "source": "img-012.jpg",
+    "orig_w": 1200,
+    "orig_h": 1792,
+    "web_w": 602,
+    "web_h": 900,
+    "bytes": 78495
+  },
+  {
+    "file": "img-013.jpg",
+    "source": "img-013.jpg",
+    "orig_w": 1184,
+    "orig_h": 745,
+    "web_w": 900,
+    "web_h": 566,
+    "bytes": 101963
+  },
+  {
+    "file": "img-014.jpg",
+    "source": "img-014.jpg",
+    "orig_w": 890,
+    "orig_h": 1774,
+    "web_w": 451,
+    "web_h": 900,
+    "bytes": 97662
+  },
+  {
+    "file": "img-015.jpg",
+    "source": "img-015.jpg",
+    "orig_w": 1500,
+    "orig_h": 996,
+    "web_w": 900,
+    "web_h": 597,
+    "bytes": 106348
+  },
+  {
+    "file": "img-016.jpg",
+    "source": "img-016.jpg",
+    "orig_w": 1184,
+    "orig_h": 1792,
+    "web_w": 594,
+    "web_h": 900,
+    "bytes": 83089
+  },
+  {
+    "file": "img-017.jpg",
+    "source": "img-017.jpg",
+    "orig_w": 1200,
+    "orig_h": 1824,
+    "web_w": 592,
+    "web_h": 900,
+    "bytes": 66467
+  },
+  {
+    "file": "img-018.jpg",
+    "source": "img-018.jpg",
+    "orig_w": 3700,
+    "orig_h": 2349,
+    "web_w": 900,
+    "web_h": 571,
+    "bytes": 94351
+  },
+  {
+    "file": "img-019.jpg",
+    "source": "img-019.jpg",
+    "orig_w": 2032,
+    "orig_h": 1524,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 121299
+  },
+  {
+    "file": "img-020.jpg",
+    "source": "img-020.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 108707
+  },
+  {
+    "file": "img-021.jpg",
+    "source": "img-021.jpg",
+    "orig_w": 3503,
+    "orig_h": 2227,
+    "web_w": 900,
+    "web_h": 572,
+    "bytes": 69566
+  },
+  {
+    "file": "img-022.jpg",
+    "source": "img-022.jpg",
+    "orig_w": 2592,
+    "orig_h": 1944,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 128346
+  },
+  {
+    "file": "img-023.jpg",
+    "source": "img-023.png",
+    "orig_w": 604,
+    "orig_h": 402,
+    "web_w": 604,
+    "web_h": 402,
+    "bytes": 39012
+  },
+  {
+    "file": "img-024.jpg",
+    "source": "img-024.jpg",
+    "orig_w": 3414,
+    "orig_h": 2298,
+    "web_w": 900,
+    "web_h": 605,
+    "bytes": 87629
+  },
+  {
+    "file": "img-025.jpg",
+    "source": "img-025.jpg",
+    "orig_w": 1200,
+    "orig_h": 1824,
+    "web_w": 592,
+    "web_h": 900,
+    "bytes": 80465
+  },
+  {
+    "file": "img-026.jpg",
+    "source": "img-026.jpg",
+    "orig_w": 720,
+    "orig_h": 720,
+    "web_w": 720,
+    "web_h": 720,
+    "bytes": 47482
+  },
+  {
+    "file": "img-027.jpg",
+    "source": "img-027.jpg",
+    "orig_w": 1698,
+    "orig_h": 2041,
+    "web_w": 748,
+    "web_h": 900,
+    "bytes": 139797
+  },
+  {
+    "file": "img-028.jpg",
+    "source": "img-028.jpg",
+    "orig_w": 2272,
+    "orig_h": 1704,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 151736
+  },
+  {
+    "file": "img-029.jpg",
+    "source": "img-029.jpg",
+    "orig_w": 1365,
+    "orig_h": 2048,
+    "web_w": 599,
+    "web_h": 900,
+    "bytes": 134755
+  },
+  {
+    "file": "img-030.jpg",
+    "source": "img-030.png",
+    "orig_w": 3264,
+    "orig_h": 2448,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 121751
+  },
+  {
+    "file": "img-031.jpg",
+    "source": "img-031.jpg",
+    "orig_w": 410,
+    "orig_h": 564,
+    "web_w": 410,
+    "web_h": 564,
+    "bytes": 67751
+  },
+  {
+    "file": "img-032.jpg",
+    "source": "img-032.png",
+    "orig_w": 456,
+    "orig_h": 683,
+    "web_w": 456,
+    "web_h": 683,
+    "bytes": 43507
+  },
+  {
+    "file": "img-033.jpg",
+    "source": "img-033.png",
+    "orig_w": 598,
+    "orig_h": 485,
+    "web_w": 598,
+    "web_h": 485,
+    "bytes": 43209
+  },
+  {
+    "file": "img-034.jpg",
+    "source": "img-034.png",
+    "orig_w": 474,
+    "orig_h": 318,
+    "web_w": 474,
+    "web_h": 318,
+    "bytes": 29185
+  },
+  {
+    "file": "img-035.jpg",
+    "source": "img-035.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 109126
+  },
+  {
+    "file": "img-036.jpg",
+    "source": "img-036.jpg",
+    "orig_w": 1500,
+    "orig_h": 1013,
+    "web_w": 900,
+    "web_h": 607,
+    "bytes": 86172
+  },
+  {
+    "file": "img-037.jpg",
+    "source": "img-037.jpg",
+    "orig_w": 2272,
+    "orig_h": 1704,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 48371
+  },
+  {
+    "file": "img-038.jpg",
+    "source": "img-038.jpg",
+    "orig_w": 3353,
+    "orig_h": 2272,
+    "web_w": 900,
+    "web_h": 609,
+    "bytes": 104953
+  },
+  {
+    "file": "img-039.jpg",
+    "source": "img-039.jpg",
+    "orig_w": 3324,
+    "orig_h": 2314,
+    "web_w": 900,
+    "web_h": 626,
+    "bytes": 111057
+  },
+  {
+    "file": "img-040.jpg",
+    "source": "img-040.jpg",
+    "orig_w": 5724,
+    "orig_h": 4587,
+    "web_w": 900,
+    "web_h": 721,
+    "bytes": 127554
+  },
+  {
+    "file": "img-041.jpg",
+    "source": "img-041.png",
+    "orig_w": 604,
+    "orig_h": 402,
+    "web_w": 604,
+    "web_h": 402,
+    "bytes": 27076
+  },
+  {
+    "file": "img-042.jpg",
+    "source": "img-042.png",
+    "orig_w": 720,
+    "orig_h": 540,
+    "web_w": 720,
+    "web_h": 540,
+    "bytes": 41729
+  },
+  {
+    "file": "img-043.jpg",
+    "source": "img-043.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 94840
+  },
+  {
+    "file": "img-044.jpg",
+    "source": "img-044.jpg",
+    "orig_w": 1177,
+    "orig_h": 802,
+    "web_w": 900,
+    "web_h": 613,
+    "bytes": 83754
+  },
+  {
+    "file": "img-045.jpg",
+    "source": "img-045.jpg",
+    "orig_w": 1184,
+    "orig_h": 1808,
+    "web_w": 589,
+    "web_h": 900,
+    "bytes": 81986
+  },
+  {
+    "file": "img-046.jpg",
+    "source": "img-046.jpg",
+    "orig_w": 1783,
+    "orig_h": 1220,
+    "web_w": 900,
+    "web_h": 615,
+    "bytes": 75259
+  },
+  {
+    "file": "img-047.jpg",
+    "source": "img-047.jpg",
+    "orig_w": 1180,
+    "orig_h": 803,
+    "web_w": 900,
+    "web_h": 612,
+    "bytes": 94594
+  },
+  {
+    "file": "img-048.jpg",
+    "source": "img-048.png",
+    "orig_w": 1602,
+    "orig_h": 895,
+    "web_w": 900,
+    "web_h": 502,
+    "bytes": 31937
+  },
+  {
+    "file": "img-049.jpg",
+    "source": "img-049.png",
+    "orig_w": 1300,
+    "orig_h": 827,
+    "web_w": 900,
+    "web_h": 572,
+    "bytes": 58389
+  },
+  {
+    "file": "img-050.jpg",
+    "source": "img-050.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 86516
+  },
+  {
+    "file": "img-051.jpg",
+    "source": "img-051.jpg",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 87865
+  },
+  {
+    "file": "img-052.jpg",
+    "source": "img-052.png",
+    "orig_w": 853,
+    "orig_h": 1280,
+    "web_w": 599,
+    "web_h": 900,
+    "bytes": 76902
+  },
+  {
+    "file": "img-053.jpg",
+    "source": "img-053.png",
+    "orig_w": 1280,
+    "orig_h": 622,
+    "web_w": 900,
+    "web_h": 437,
+    "bytes": 63086
+  },
+  {
+    "file": "img-054.jpg",
+    "source": "img-054.jpg",
+    "orig_w": 4032,
+    "orig_h": 1960,
+    "web_w": 900,
+    "web_h": 437,
+    "bytes": 69108
+  },
+  {
+    "file": "img-055.jpg",
+    "source": "img-055.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 179658
+  },
+  {
+    "file": "img-056.jpg",
+    "source": "img-056.png",
+    "orig_w": 2272,
+    "orig_h": 1704,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 178252
+  },
+  {
+    "file": "img-057.jpg",
+    "source": "img-057.png",
+    "orig_w": 4128,
+    "orig_h": 2322,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 97270
+  },
+  {
+    "file": "img-058.jpg",
+    "source": "img-058.jpg",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 86548
+  },
+  {
+    "file": "img-059.jpg",
+    "source": "img-059.jpg",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 125210
+  },
+  {
+    "file": "img-060.jpg",
+    "source": "img-060.jpg",
+    "orig_w": 5528,
+    "orig_h": 3685,
+    "web_w": 900,
+    "web_h": 599,
+    "bytes": 105981
+  },
+  {
+    "file": "img-061.jpg",
+    "source": "img-061.jpg",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 57264
+  },
+  {
+    "file": "img-062.jpg",
+    "source": "img-062.jpg",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 111683
+  },
+  {
+    "file": "img-063.jpg",
+    "source": "img-063.png",
+    "orig_w": 724,
+    "orig_h": 329,
+    "web_w": 724,
+    "web_h": 329,
+    "bytes": 26230
+  },
+  {
+    "file": "img-064.jpg",
+    "source": "img-064.jpg",
+    "orig_w": 4160,
+    "orig_h": 3120,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 120764
+  },
+  {
+    "file": "img-065.jpg",
+    "source": "img-065.jpg",
+    "orig_w": 1182,
+    "orig_h": 665,
+    "web_w": 899,
+    "web_h": 506,
+    "bytes": 71067
+  },
+  {
+    "file": "img-066.jpg",
+    "source": "img-066.png",
+    "orig_w": 4000,
+    "orig_h": 3000,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 156422
+  },
+  {
+    "file": "img-067.jpg",
+    "source": "img-067.png",
+    "orig_w": 2272,
+    "orig_h": 1704,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 97532
+  },
+  {
+    "file": "img-068.jpg",
+    "source": "img-068.png",
+    "orig_w": 1600,
+    "orig_h": 1200,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 99777
+  },
+  {
+    "file": "img-069.jpg",
+    "source": "img-069.png",
+    "orig_w": 2016,
+    "orig_h": 1512,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 78659
+  },
+  {
+    "file": "img-070.jpg",
+    "source": "img-070.jpg",
+    "orig_w": 1024,
+    "orig_h": 768,
+    "web_w": 900,
+    "web_h": 675,
+    "bytes": 155588
+  },
+  {
+    "file": "img-071.jpg",
+    "source": "img-071.jpg",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 72892
+  },
+  {
+    "file": "img-072.jpg",
+    "source": "img-072.png",
+    "orig_w": 4032,
+    "orig_h": 2268,
+    "web_w": 900,
+    "web_h": 506,
+    "bytes": 58712
+  },
+  {
+    "file": "img-073.jpg",
+    "source": "img-073.jpg",
+    "orig_w": 1365,
+    "orig_h": 1377,
+    "web_w": 892,
+    "web_h": 900,
+    "bytes": 112203
+  }
+]
